@@ -17,10 +17,13 @@
   "dependencies": {
     "@sanity/document-internationalization": "^1.0.3",
     "@sanity/vision": "^3.0.0",
+    "get-youtube-id": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
+    "react-lite-youtube-embed": "^2.3.52",
     "sanity": "^3.0.0",
+    "sanity-plugin-media": "^2.0.2",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
