@@ -3,6 +3,7 @@ import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import {withDocumentI18nPlugin, getDocumentList} from '@sanity/document-internationalization'
+import {media, mediaAssetSource} from 'sanity-plugin-media'
 
 export default defineConfig({
   name: 'default',
@@ -16,6 +17,9 @@ export default defineConfig({
       structure: (S, {schema}) => getDocumentList({S, schema, config: pluginConfig}),
     }),
     visionTool(),
+    media({
+      originalFilename: false
+    }),
   ]), {
     includeDeskTool: false,
     languages: [
@@ -30,6 +34,19 @@ export default defineConfig({
     ],
     idStructure: "subpath"
   }),
+
+  form: {
+    file: {
+      assetSources: () => [mediaAssetSource],
+      originalFilename: false,
+      directUploads: true
+    },
+    image: {
+      assetSources: () => [mediaAssetSource],
+      originalFilename: false,
+      directUploads: true
+    }
+  },
 
   schema: {
     types: schemaTypes,
