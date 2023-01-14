@@ -20,6 +20,10 @@ export default {
       of: [
         {type: 'gigs'},
         {
+          title: 'Richtext',
+          type: 'arrayRichtext'
+        },
+        {
           type: 'reference',
           title: 'Release',
           to: [{type: 'release'}],
