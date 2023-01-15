@@ -1,4 +1,4 @@
-import {FiDatabase} from 'react-icons/fi'
+import {FiBox, FiCalendar, FiCopy, FiDatabase, FiLayout, FiLink2, FiMusic, FiShoppingBag, FiTag} from 'react-icons/fi'
 
 export const structure = (S) =>
   S.list()
@@ -10,14 +10,16 @@ export const structure = (S) =>
           S.documentList()
             .title('Modular Pages')
             .filter('_type == "modular" && __i18n_lang == "de"')
-        ),
+        )
+        .icon(FiLayout),
       S.listItem()
         .title('Releases')
         .child(
           S.documentList()
             .title('Releases')
             .filter('_type == "release" && __i18n_lang == "de"')
-        ),
+        )
+        .icon(FiMusic),
       S.listItem()
         .title('Gigs')
         .child(
@@ -34,7 +36,41 @@ export const structure = (S) =>
                   fetch('https://highvoltage-v4.vercel.app/api/populate-gigs')
                 })
             ])
-        ),
+        )
+        .icon(FiCalendar),
+      S.listItem()
+        .title('Shop')
+        .child(
+          S.list()
+            .title('Shop')
+            .items([
+              S.listItem()
+                .title('Variant Controllers')
+                .child(
+                  S.documentList()
+                    .title('Variant Controllers')
+                    .filter('_type == "productVariant" && __i18n_lang == "de"')
+                  )
+                  .icon(FiCopy),
+              S.listItem()
+                .title('SKUs')
+                .child(
+                  S.documentList()
+                    .title('SKUs')
+                    .filter('_type == "productSku" && __i18n_lang == "de"')
+                )
+                .icon(FiBox),
+              S.listItem()
+                .title('Categories')
+                .child(
+                  S.documentList()
+                    .title('Categories')
+                    .filter('_type == "productCategory" && __i18n_lang == "de"')
+                )
+                .icon(FiTag)
+            ])
+        )
+        .icon(FiShoppingBag),
       S.divider(),
       S.listItem()
         .title('Reference Types')
@@ -72,4 +108,5 @@ export const structure = (S) =>
                 )
             ])
         )
+        .icon(FiLink2)
     ])
