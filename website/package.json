@@ -1,0 +1,34 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx @11ty/eleventy",
+    "clean": "rm -rf dist",
+    "dev": "DEV=true npx @11ty/eleventy --serve",
+    "dev:nocache": "NO_CACHE=true npx @11ty/eleventy --serve",
+    "start": "npm run clean && vercel dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timonforrer/highvoltage-v4.git"
+  },
+  "keywords": [
+    "eleventy"
+  ],
+  "author": "Timon Forrer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/timonforrer/highvoltage-v4/issues"
+  },
+  "homepage": "https://github.com/timonforrer/highvoltage-v4#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.0-canary.30",
+    "@11ty/eleventy-fetch": "^3.0.0",
+    "@11ty/eleventy-plugin-webc": "^0.8.1",
+    "@portabletext/to-html": "^1.0.4",
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.0"
+  }
+}
