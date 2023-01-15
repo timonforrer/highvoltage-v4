@@ -11,6 +11,9 @@ import video from "./object/video";
 import gig from "./pageTypes/gig";
 import modular from "./pageTypes/modular";
 import release from "./pageTypes/release";
+import productCategory from "./pageTypes/productCategory";
+import productSku from "./pageTypes/productSku";
+import productVariant from "./pageTypes/productVariant";
 
 export const schemaTypes = [
   // objects
@@ -23,6 +26,9 @@ export const schemaTypes = [
   // page types
   gig,
   modular,
+  productCategory,
+  productSku,
+  productVariant,
   release,
   // refs
   providers,
