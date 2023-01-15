@@ -2,19 +2,20 @@ import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
-import {withDocumentI18nPlugin, getDocumentList} from '@sanity/document-internationalization'
+import {withDocumentI18nPlugin} from '@sanity/document-internationalization'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
+import {structure} from './deskStructure'
 
 export default defineConfig({
   name: 'default',
-  title: 'highvoltage-v4',
+  title: 'Voltage Arc',
 
   projectId: '0j5eyb7h',
   dataset: 'production',
 
   plugins: withDocumentI18nPlugin((pluginConfig) => ([
     deskTool({
-      structure: (S, {schema}) => getDocumentList({S, schema, config: pluginConfig}),
+      structure,
     }),
     visionTool(),
     media({
