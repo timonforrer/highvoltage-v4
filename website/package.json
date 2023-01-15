@@ -4,11 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx @11ty/eleventy",
-    "clean": "rm -rf dist",
-    "dev": "DEV=true npx @11ty/eleventy --serve",
-    "dev:nocache": "NO_CACHE=true npx @11ty/eleventy --serve",
-    "start": "npm run clean && vercel dev"
+    "start": ""
   },
   "repository": {
     "type": "git",
