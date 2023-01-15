@@ -20,13 +20,22 @@ export default {
       of: [
         {type: 'gigs'},
         {
+          name: 'richtext',
           title: 'Richtext',
           type: 'arrayRichtext'
         },
         {
-          type: 'reference',
+          name: 'release',
           title: 'Release',
+          type: 'reference',
           to: [{type: 'release'}],
+          options: {filter: filterRefByLang}
+        },
+        {
+          name: 'productCategory',
+          title: 'Product Category',
+          type: 'reference',
+          to: [{type: 'productCategory'}],
           options: {filter: filterRefByLang}
         }
       ],
