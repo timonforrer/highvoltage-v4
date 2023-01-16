@@ -25,3 +25,6 @@
 # Typescript
 **/*.tsbuildinfo
 .vercel
+
+# MISC
+**/.env*
