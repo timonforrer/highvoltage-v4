@@ -10,6 +10,25 @@ export default {
     {
       name: 'meta',
       type: 'meta'
+    },
+    {
+      name: 'internal',
+      type: 'object',
+      options: {
+        collapsable: true,
+        collapsed: true,
+      },
+      fields: [
+        {
+          name: 'airtableId',
+          title: 'Airtable ID',
+          type: 'string'
+        },
+        {
+          name: 'startDate',
+          type: 'date'
+        }
+      ]
     }
   ],
   preview: {
