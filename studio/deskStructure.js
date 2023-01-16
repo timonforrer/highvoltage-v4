@@ -36,6 +36,7 @@ export const structure = (S) =>
                   fetch('https://highvoltage-v4.vercel.app/api/populate-gigs')
                 })
             ])
+            .defaultOrdering([{field: 'internal.startDate', direction: 'desc'}])
         )
         .icon(FiCalendar),
       S.listItem()
