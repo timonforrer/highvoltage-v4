@@ -70,6 +70,16 @@ export const structure = (S) =>
                 )
                 .icon(FiTag)
             ])
+            .menuItems([
+              S.menuItem()
+                .title('Pull data from Airtable')
+                .icon(FiDatabase)
+                .action(() => {
+                  // would be neat, if we could output a success/error message
+                  // but couldn't get toast working
+                  fetch('https://highvoltage-v4.vercel.app/api/populate-shop')
+                })
+            ])
         )
         .icon(FiShoppingBag),
       S.divider(),
