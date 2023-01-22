@@ -28,3 +28,4 @@
 
 # MISC
 **/.env*
+**/api/delete.js
