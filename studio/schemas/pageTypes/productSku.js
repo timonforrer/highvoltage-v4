@@ -19,6 +19,11 @@ export default {
       type: 'string'
     },
     {
+      name: 'variantId',
+      title: 'Variant ID',
+      type: 'string'
+    },
+    {
       name: 'bullets',
       type: 'object',
       description: 'These bullets will overridden the bullets specified on the variant controller',
