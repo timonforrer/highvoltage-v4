@@ -25,25 +25,25 @@ export default async function handler(req, res) {
 
   // prepare fields for creation in sanity
   let gigs = airtableGigs.map(({ fields: {
-    Slug: slug,
     Id: id,
     Name: name,
-    Start: start
+    Slug: slug,
+    Start: start,
   }}) => ({
     __i18n_lang: 'de',
     _id: `airtable-gig-${id}`,
     _type: 'gig',
+    internal: {
+      airtableId: id,
+      startDate: start.split('T')[0],
+    },
     meta: {
-      title: name,
       slug: {
         _type: 'slug',
         current: `/konzerte/${slug}`
-      }
+      },
+      title: name,
     },
-    internal: {
-      airtableId: id,
-      startDate: start.split('T')[0]
-    }
   }));
 
   // prepare transactions

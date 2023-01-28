@@ -39,23 +39,23 @@ export default async function handler(req, res) {
   // prepare SKU fields for creation in sanity
   let SKUs = airtableSKUs.map(({ fields: {
     Artikelname: name,
-    Zusatzinfos: variant,
     Artikelnummer: id,
-    'Gruppen ID': variantId
+    'Gruppen ID': variantId,
+    Zusatzinfos: variant,
   }}) => ({
     __i18n_lang: 'de',
-    _type: 'productSku',
     _id: `airtable-product-sku-${id.toLowerCase()}`,
+    _type: 'productSku',
     meta: {
-      title: `${name} – ${variant}`,
       slug: {
         _type: 'slug',
         current: `/shop/${id.toLowerCase()}`
-      }
+      },
+      title: `${name} – ${variant}`,
     },
     sku: id,
     variant: variant,
-    variantId: variantId
+    variantId: variantId,
   }));
 
   // prepare category fields for creation in sanity
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
     __i18n_lang: 'de',
     _id: `airtable-product-category-${slugify(type, { lower: true })}`,
     _type: 'productCategory',
-    title: type
+    title: type,
   }));
 
   // remove duplicates
@@ -79,8 +79,8 @@ export default async function handler(req, res) {
     // prepare the fields for sanity
     filteredSkus = filteredSkus.map(({ _id }) => ({
       _key: _id,
+      _ref: _id,
       _type: 'productSku',
-      _ref: _id
     }));
 
     // generate the id for the category
@@ -89,8 +89,8 @@ export default async function handler(req, res) {
     let filteredCategory = categories.filter(({ _id }) => categoryId === _id)[0];
     // prepare the fields for sanity
     const category = {
+      _ref: filteredCategory._id,
       _type: 'reference',
-      _ref: filteredCategory._id
     };
 
     return {
@@ -101,7 +101,7 @@ export default async function handler(req, res) {
       productSkus: filteredSkus,
       meta: {
         title: title
-      }
+      },
     }
   });
 
