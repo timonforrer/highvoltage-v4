@@ -24,44 +24,31 @@ export default async function handler(req, res) {
   });
 
   // prepare fields for creation in sanity
-  airtableGigs = airtableGigs.map(({ fields: { Slug: slug, Id: id, Name: name, Start: start } }) => (
-    {
-      __i18n_lang: 'de',
-      _type: 'gig',
-      meta: {
-        title: name,
-        slug: {
-          _type: 'slug',
-          current: `/konzerte/${slug}`
-        }
-      },
-      internal: {
-        airtableId: id,
-        startDate: start.split('T')[0]
+  let gigs = airtableGigs.map(({ fields: {
+    Slug: slug,
+    Id: id,
+    Name: name,
+    Start: start
+  }}) => ({
+    __i18n_lang: 'de',
+    _id: `airtable-gig-${id}`,
+    _type: 'gig',
+    meta: {
+      title: name,
+      slug: {
+        _type: 'slug',
+        current: `/konzerte/${slug}`
       }
-    })
-  );
-
-  // sanity query
-  const sanityQuery = `*[_type=="gig"]{
-    internal {
-      airtableId
+    },
+    internal: {
+      airtableId: id,
+      startDate: start.split('T')[0]
     }
-  }`;
+  }));
 
-  // get gigs from sanity
-  let sanityGigs = await sanity.fetch(sanityQuery, {});
-
-  // filter out any gig, that is present in airtable and in the sanity database
-  const onlyInAirtable = airtableGigs.filter(airtableValue => {
-    return !sanityGigs.find(({ internal: { airtableId } }) => airtableValue.internal.airtableId === airtableId);
-  });
-
-  // prepare transactions for any document, that is missing in sanity
+  // prepare transactions
   let transaction = sanity.transaction();
-  onlyInAirtable.forEach(doc => {
-    transaction.create(doc);
-  });
+  gigs.forEach(doc => transaction.createIfNotExists(doc));
 
   // execute transaction
   transaction
