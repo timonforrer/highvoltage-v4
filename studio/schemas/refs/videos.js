@@ -13,8 +13,9 @@ export default {
       of: [
         {
           name: 'video',
-          type: 'video'
-        },
+          type: 'reference',
+          to: [{type: 'video'}]
+        }
       ],
     }
   ],
