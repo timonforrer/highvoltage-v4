@@ -103,7 +103,20 @@ export default {
     {
       name: 'cta',
       title: 'CTA',
-      type: 'cta',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          type: 'string'
+        },
+        {
+          name: 'page',
+          type: 'reference',
+          to: [
+            {type: 'modular'},
+          ]
+        }
+      ],
     }
   ],
 }

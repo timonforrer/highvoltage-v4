@@ -1,5 +1,4 @@
 import arrayRichtext from "./object/arrayRichtext";
-import cta from "./object/cta";
 import gigs from "./object/gigs";
 import inlinevideo from "./object/inlinevideo";
 import internalCollection from "./object/internalCollection";
@@ -24,7 +23,6 @@ import videos from "./refs/videos";
 export const schemaTypes = [
   // objects
   arrayRichtext,
-  cta,
   gigs,
   inlinevideo,
   internalCollection,
