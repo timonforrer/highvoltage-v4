@@ -1,8 +1,3 @@
-/**
- * Todo: Add functionality to add global components
- * best solution possibly a generic document type that takes in a key and filtering/sorting
- */
-
 export default {
   name: 'section',
   title: 'Section',
@@ -65,8 +60,7 @@ export default {
       }
     },
     {
-      name: 'children',
-      title: 'Children',
+      name: 'blocks',
       type: 'array',
       of: [
         {
