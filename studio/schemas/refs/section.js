@@ -55,7 +55,11 @@ export default {
           {
             title: 'release',
             value: '_type == "release" && __i18n_lang == $lang'
-          }
+          },
+          {
+            title: 'productVariant',
+            value: '_type == "productVariant" && __i18n_lang == $lang'
+          },
         ]
       }
     },
@@ -69,7 +73,8 @@ export default {
           type: 'reference',
           to: [
             {type: 'video'},
-            {type: 'release'}
+            {type: 'release'},
+            {type: 'productVariant'},
           ],
           options: {
             filter: ({document}) => {
