@@ -3,7 +3,7 @@ import YoutubeEmbed from "../../components/YoutubeEmbed";
 export default {
   name: 'video',
   title: 'Video',
-  type: 'object',
+  type: 'document',
   fields: [
     {
       name: 'title',
