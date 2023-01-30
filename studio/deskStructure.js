@@ -104,6 +104,13 @@ export const structure = (S) =>
                     .filter('_type == "reviews" && __i18n_lang == "de"')
                 ),
               S.listItem()
+                .title('Section')
+                .child(
+                  S.documentList()
+                    .title('Section')
+                    .filter('_type == "section" && __i18n_lang == "de"')
+                ),
+              S.listItem()
                 .title('Tracks')
                 .child(
                   S.documentList()
@@ -130,13 +137,6 @@ export const structure = (S) =>
                   S.documentList()
                     .title('Videos')
                     .filter('_type == "videos"')
-                ),
-              S.listItem()
-                .title('Video Section')
-                .child(
-                  S.documentList()
-                    .title('Video Section')
-                    .filter('_type == "videoSection" && __i18n_lang == "de"')
                 ),
             ])
         )
