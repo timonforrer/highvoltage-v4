@@ -18,18 +18,28 @@ export default {
       title: 'Blocks',
       type: 'array',
       of: [
-        {type: 'gigs'},
         {
           name: 'richtext',
           title: 'Richtext',
           type: 'arrayRichtext'
         },
         {
-          name: 'release',
-          title: 'Release',
+          name: 'videoHero',
+          title: 'Video Hero',
           type: 'reference',
-          to: [{type: 'release'}],
+          to: [{type: 'videoHero'}],
           options: {filter: filterRefByLang}
+        },
+        {
+          name: 'section',
+          title: 'Section',
+          type: 'reference',
+          to: [{type: 'section'}],
+          options: {filter: filterRefByLang}
+        },
+        {
+          name: 'internalCollection',
+          type: 'internalCollection'
         },
         {
           name: 'productCategory',
@@ -37,7 +47,7 @@ export default {
           type: 'reference',
           to: [{type: 'productCategory'}],
           options: {filter: filterRefByLang}
-        }
+        },
       ],
     },
   ],
