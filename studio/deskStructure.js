@@ -111,12 +111,33 @@ export const structure = (S) =>
                     .filter('_type == "tracks"')
                 ),
               S.listItem()
+                .title('Video')
+                .child(
+                  S.documentList()
+                    .title('Video')
+                    .filter('_type == "video"')
+                ),
+              S.listItem()
+                .title('Video Hero')
+                .child(
+                  S.documentList()
+                    .title('Video Hero')
+                    .filter('_type == "videoHero" && __i18n_lang == "de"')
+                ),
+              S.listItem()
                 .title('Videos')
                 .child(
                   S.documentList()
                     .title('Videos')
                     .filter('_type == "videos"')
-                )
+                ),
+              S.listItem()
+                .title('Video Section')
+                .child(
+                  S.documentList()
+                    .title('Video Section')
+                    .filter('_type == "videoSection" && __i18n_lang == "de"')
+                ),
             ])
         )
         .icon(FiLink2)
