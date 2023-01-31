@@ -49,16 +49,20 @@ export default {
       options: {
         list: [
           {
-            title: 'video',
-            value: '_type == "video"'
+            title: 'milestone',
+            value: '_type == "milestone" && __i18n_lang == $lang'
+          },
+          {
+            title: 'productVariant',
+            value: '_type == "productVariant" && __i18n_lang == $lang'
           },
           {
             title: 'release',
             value: '_type == "release" && __i18n_lang == $lang'
           },
           {
-            title: 'productVariant',
-            value: '_type == "productVariant" && __i18n_lang == $lang'
+            title: 'video',
+            value: '_type == "video"'
           },
         ]
       }
@@ -75,6 +79,7 @@ export default {
             {type: 'video'},
             {type: 'release'},
             {type: 'productVariant'},
+            {type: 'milestone'},
           ],
           options: {
             filter: ({document}) => {
