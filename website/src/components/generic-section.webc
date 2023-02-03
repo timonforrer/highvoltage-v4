@@ -1,0 +1,12 @@
+<!-- <pre @html="dump(decode(data))"></pre>
+
+<section>
+  <h2 @html="decode(data).title"></h2>
+  <div webc:nokeep webc:if="decode(data).cta">
+    <a :href="decode(data).cta?.slug" @html="decode(data).cta?.title"></a>
+  </div>
+</section> -->
+<script webc:type="js" webc:is="template">
+    console.log(this.prop);
+    `<slot></slot>`
+</script>

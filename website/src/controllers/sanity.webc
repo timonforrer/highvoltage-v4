@@ -1,0 +1,5 @@
+<blocks-controller :blocks="current_page.blocks">test</blocks-controller>
+<details>
+  <summary>data</summary>
+  <pre @html="dump(current_page.blocks)"></pre>
+</details>

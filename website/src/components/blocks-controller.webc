@@ -1,0 +1,21 @@
+<script webc:type="render" webc:is="template">
+  module.exports = function() {
+    const blockMap = {
+      'richText': 'rich-text',
+      'videoHero': 'video-hero',
+      'section': 'generic-section',
+      'internalCollection': 'internal-collection',
+      'productCategory': 'product-category',
+      'gallery': 'gallery'
+    };
+
+    const { blocks } = this;
+
+    return blocks.map(block => {
+      const blockName = blockMap[block._type];
+      // if (blockName === undefined) throw new Error('Component not specified');
+      // return `<${blockName} data="${encodeURIComponent(JSON.stringify(block))}"></${blockName}>`
+      return `<${blockName} prop="true"></${blockName}>`
+    }).join('');
+  }
+</script>

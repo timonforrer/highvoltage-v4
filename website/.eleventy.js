@@ -23,6 +23,16 @@ module.exports = function(config) {
     components: 'src/components/*.webc'
   });
 
+  config.addJavaScriptFunction('dump', function(input) {
+    return JSON.stringify(input, null, 2);
+  });
+  config.addJavaScriptFunction('encode', function(input) {
+    return JSON.stringify(encodeURIComponent(input));
+  });
+  config.addJavaScriptFunction('decode', function(input) {
+    return JSON.parse(decodeURIComponent(input))
+  })
+
   // config.addJavaScriptFunction('getLangs', getLangs);
   // config.addJavaScriptFunction('portableTextToHTML', portableTextToHTML);
 
