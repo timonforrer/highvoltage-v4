@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+import {getSanityData} from '../lib/sanity';
+import {modularPages} from '../lib/queries'
+import Section from '../components/Section.astro';
+import VideoHero from '../components/VideoHero.astro';
+import RichText from '../components/RichText.astro';
+
+export async function getStaticPaths() {
+  const allModularPages = await getSanityData({query: modularPages});
+
+  return allModularPages.map(page => {
+    let { slug: { current: slug } } = page.meta;
+    slug = slug === "/" ? undefined : slug.replace(/(^\/+)|(\/+$)/g, "");
+    return {
+      params: {
+        modularSlug: slug,
+      },
+      props: {page}
+    }  
+    });
+};
+
+const {page} = Astro.props;
+---
+<Layout title={page.meta.title}>
+  <>
+    {page.blocks.map(block => {
+
+      switch (block._type) {
+        case 'videoHero':
+          return <VideoHero></VideoHero>
+        case 'section':
+          let {title, description, blocks, cta, layout} = block;
+          return <Section
+            {title}
+            {description}
+            {blocks}
+            {cta}
+            {layout}>
+          </Section>
+        case 'richtext':
+          let {content} = block;
+          return <RichText {content} />
+        default:
+          return `No component specified for \`${block._type}\``
+      }
+    })}
+
+    <details>
+      <summary>data</summary>
+      <pre>{JSON.stringify(page, null, 2)}</pre>
+    </details>
+    </>
+</Layout>

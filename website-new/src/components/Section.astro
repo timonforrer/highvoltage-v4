@@ -1,0 +1,16 @@
+---
+import {toHTML} from '@portabletext/to-html'
+const { title, description, blocks, cta } = Astro.props;
+---
+
+<section>
+  <h2>{title}</h2>
+  {description && <Fragment set:html={toHTML(description)} /> }
+  <details>
+    <summary>data</summary>
+    <pre>{JSON.stringify(blocks, null, 2)}</pre>
+  </details>
+  
+  <br />
+  {cta && <a href={cta.slug}>{cta.title}</a>}
+</section>
