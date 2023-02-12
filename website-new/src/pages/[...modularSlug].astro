@@ -30,7 +30,7 @@ const {page} = Astro.props;
       let type = block._type;
 
       if (type === 'videoHero') {
-        let {backgroundImage, backgroundVideo, cta, description, title, video} = block;
+        let {backgroundImage, backgroundVideo, cta, description, title, video, renderTitle} = block;
         return <VideoHero
           {block}
           {backgroundImage}
@@ -39,18 +39,20 @@ const {page} = Astro.props;
           {description}
           {title}
           {video}
+          {renderTitle}
           >
         </VideoHero>;
       };
 
       if (type === 'section') {
-        let {title, description, blocks, cta, layout} = block;
+        let {title, description, blocks, cta, layout, renderTitle} = block;
         return <Section
           {title}
           {description}
           {blocks}
           {cta}
-          {layout}>
+          {layout}
+          {renderTitle}>
         </Section>;
       };
 
@@ -58,7 +60,7 @@ const {page} = Astro.props;
         let {content} = block;
         return <RichText {content} />
       };
-      return `No component specified for \`${block._type}\``;
+      return `No component specified for \`${type}\``;
     })};
 
     <details>
