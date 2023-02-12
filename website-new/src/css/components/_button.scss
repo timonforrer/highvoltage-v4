@@ -38,7 +38,7 @@
   border-radius: 4px;
   color: var(--color-secondary);
   display: inline-flex;
-  gap: var(--space-2xs);
+  gap: var(--space-xs);
   padding-block: var(--space-xs);
   padding-inline: var(--space-m);
   text-decoration: none;
@@ -47,6 +47,10 @@
   & > svg:first-child {
     margin-block: calc(var(--space-3xs) * -1);
     margin-inline-start: calc(var(--space-3xs) * -1);
+  }
+  & > svg:last-child {
+    margin-block: calc(var(--space-3xs) * -1);
+    margin-inline-end: calc(var(--space-3xs) * -1);
   }
   &--rounded {
     border-radius: 50%;
