@@ -3,21 +3,12 @@ import RichText from "./RichText.astro";
 import Button from "./Button.astro";
 import Icon from './Icon.astro';
 import Video from './Video.astro';
+import getYoutubeId from 'get-youtube-id';
 
 const {backgroundImage, backgroundVideo, cta, description, block, title, video} = Astro.props;
 ---
 
 <section class="video-hero">
-  <div class="pin center-v content">
-    <div class="center stack-m">
-      <div class="stack-xs">
-        <h1>{title}</h1>
-        <RichText content={description} />
-      </div>
-      <Button id="load-video"><Icon icon="play" />{cta}</Button>
-    </div>
-  </div>
-
   <video
     autoplay
     playsinline
@@ -27,17 +18,22 @@ const {backgroundImage, backgroundVideo, cta, description, block, title, video} 
     src={backgroundVideo.asset.url}
   >
   </video>
+  <div class="pin center-v content">
+    <div class="center stack-m">
+      <div class="stack-xs">
+        <h1>{title}</h1>
+        <RichText content={description} />
+      </div>
+      <Button id="load-video" href="#video-frame"><Icon name="play" />{cta}</Button>
+    </div>
+  </div>
 </section>
 
-<Video class="center" videoId="3pU6jITPmNI" id="video-frame" />
-
-<details open="true">
-  <summary>data</summary>
-  <pre>{JSON.stringify(block, null, 2)}</pre>
-</details>
+<Video class="center" videoId={getYoutubeId(video.url)} id="video-frame" />
 
 <style lang="scss" is:global>
   .video-hero {
+    margin-bottom: -4em;
     position: relative;
     p {
       font-size: var(--step-1);
@@ -59,14 +55,39 @@ const {backgroundImage, backgroundVideo, cta, description, block, title, video} 
       z-index: 1;
     }
   }
+  #video-frame {
+    margin-bottom: var(--space-xs);
+    & + * {
+      margin-bottom: 0;
+    }
+  }
+  @supports selector(:target) {
+    #video-frame {
+      display: none;
+      &:target {
+        display: block;
+      }
+    }
+  }
+  @media (max-width: 760px) {
+    .pin {
+      position: relative;
+    }
+    video {
+      margin-bottom: var(--space-s);
+    }
+    #video-frame {
+      padding-inline: 0;
+    }
+    .video-hero {
+      margin-bottom: var(--space-l);
+    }
+  }
 </style>
 
 <script>
-  const button = document.querySelector('button#load-video');
-  const video = document.querySelector('sp-video#video-frame');
+  const button = document.querySelector('#load-video');
+  const video = document.querySelector('#video-frame');
 
-  button.addEventListener('click', () => {
-    video.scrollIntoView();
-    video.setAttribute('video-loaded', '');
-  });
+  button.addEventListener('click', () => video.setAttribute('video-loaded', ''));
 </script>
