@@ -1,0 +1,72 @@
+---
+import RichText from "./RichText.astro";
+import Button from "./Button.astro";
+import Icon from './Icon.astro';
+import Video from './Video.astro';
+
+const {backgroundImage, backgroundVideo, cta, description, block, title, video} = Astro.props;
+---
+
+<section class="video-hero">
+  <div class="pin center-v content">
+    <div class="center stack-m">
+      <div class="stack-xs">
+        <h1>{title}</h1>
+        <RichText content={description} />
+      </div>
+      <Button id="load-video"><Icon icon="play" />{cta}</Button>
+    </div>
+  </div>
+
+  <video
+    autoplay
+    playsinline
+    loop
+    muted
+    poster={backgroundImage.asset.url}
+    src={backgroundVideo.asset.url}
+  >
+  </video>
+</section>
+
+<Video class="center" videoId="3pU6jITPmNI" id="video-frame" />
+
+<details open="true">
+  <summary>data</summary>
+  <pre>{JSON.stringify(block, null, 2)}</pre>
+</details>
+
+<style lang="scss" is:global>
+  .video-hero {
+    position: relative;
+    p {
+      font-size: var(--step-1);
+      font-weight: bold;
+      opacity: 0.8;
+      max-width: 30ch;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(180deg,hsla(0,0%,5%,0),hsla(0,0%,5%,.72) 72.79%,#0e0e0e);
+      display: block;
+    }
+    .content {
+      z-index: 1;
+    }
+  }
+</style>
+
+<script>
+  const button = document.querySelector('button#load-video');
+  const video = document.querySelector('sp-video#video-frame');
+
+  button.addEventListener('click', () => {
+    video.scrollIntoView();
+    video.setAttribute('video-loaded', '');
+  });
+</script>
