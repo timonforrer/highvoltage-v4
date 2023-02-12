@@ -2,8 +2,8 @@
 
 .center {
   box-sizing: content-box;
-  flex-basis: 90ch;
-  max-inline-size: 90ch;
+  flex-basis: 70rem;
+  max-inline-size: 70rem;
   margin-inline: auto;
   padding-inline: var(--space-s);
 }
@@ -23,4 +23,35 @@
 .pin {
   inset: 0;
   position: absolute;
+}
+
+.grid {
+  display: grid;
+  &--gap-s {
+    gap: var(--space-xs);
+  }
+  &--gap-m {
+    gap: var(--space-m);
+  }
+  &--gap-l {
+    gap: var(--space-l);
+  }
+}
+
+@supports (width: min(250px, 100%)) {
+  .grid {
+    &--2-columns {
+      grid-template-columns: repeat(auto-fit, minmax(min(450px, 100%), 1fr));
+    }
+    &--3-columns {
+      grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+    }
+    &--4-columns {
+      grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr));
+    }
+  }
+}
+
+.right-aligned {
+  text-align: right;
 }
