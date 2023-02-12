@@ -25,6 +25,10 @@ export const modularPages = `
             ...,
             asset->,
           },
+          backgroundVideo{
+            ...,
+            asset->,
+          },
         },
         _type == "section" => {
           ...,
