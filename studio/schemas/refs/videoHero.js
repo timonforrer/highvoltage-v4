@@ -31,6 +31,14 @@ export default {
       options: {
         hotspot: true
       }
+    },
+    {
+      name: 'backgroundVideo',
+      title: 'Background Video',
+      type: 'file',
+      options: {
+        accept: 'video/*'
+      }
     }
   ],
 }
