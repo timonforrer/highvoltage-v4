@@ -1,0 +1,26 @@
+@use 'variables';
+
+.center {
+  box-sizing: content-box;
+  flex-basis: 90ch;
+  max-inline-size: 90ch;
+  margin-inline: auto;
+  padding-inline: var(--space-s);
+}
+
+.center-v {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+@each $name, $value in variables.$spaces {
+  .stack-#{$name} > * ~ * {
+    margin-block-start: $value;
+  }
+}
+
+.pin {
+  inset: 0;
+  position: absolute;
+}

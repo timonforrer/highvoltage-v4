@@ -1,0 +1,60 @@
+// Typographic sizes
+/* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,22,1.25,5,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+$steps: (
+  '-1': clamp(0.83rem, calc(0.74rem + 0.46vw), 1.10rem),
+  '0': clamp(1.00rem, calc(0.87rem + 0.65vw), 1.38rem),
+  '1': clamp(1.20rem, calc(1.02rem + 0.90vw), 1.72rem),
+  '2': clamp(1.44rem, calc(1.19rem + 1.23vw), 2.15rem),
+  '3': clamp(1.73rem, calc(1.40rem + 1.67vw), 2.69rem),
+  '4': clamp(2.07rem, calc(1.63rem + 2.23vw), 3.36rem),
+  '5': clamp(2.49rem, calc(1.89rem + 2.97vw), 4.20rem)
+);
+
+// Spacing sizes
+/* @link https://utopia.fyi/space/calculator?c=320,16,1.2,1240,22,1.25,5,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,&g=s,l,xl,12 */
+$spaces: (
+  /* Space 3xs: 4px → 6px */
+  '3xs': clamp(0.25rem, calc(0.21rem + 0.22vw), 0.38rem),
+  /* Space 2xs: 8px → 11px */
+  '2xs': clamp(0.50rem, calc(0.43rem + 0.33vw), 0.69rem),
+  /* Space xs: 12px → 17px */
+  'xs': clamp(0.75rem, calc(0.64rem + 0.54vw), 1.06rem),
+  /* Space s: 16px → 22px */
+  's': clamp(1.00rem, calc(0.87rem + 0.65vw), 1.38rem),
+  /* Space m: 24px → 33px */
+  'm': clamp(1.50rem, calc(1.30rem + 0.98vw), 2.06rem),
+  /* Space l: 32px → 44px */
+  'l': clamp(2.00rem, calc(1.74rem + 1.30vw), 2.75rem),
+  /* Space xl: 48px → 66px */
+  'xl': clamp(3.00rem, calc(2.61rem + 1.96vw), 4.13rem),
+  /* Space 2xl: 64px → 88px */
+  '2xl': clamp(4.00rem, calc(3.48rem + 2.61vw), 5.50rem),
+  /* Space 3xl: 96px → 132px */
+  '3xl': clamp(6.00rem, calc(5.22rem + 3.91vw), 8.25rem),
+  /* One-up pairs */
+  /* Space 3xs-2xs: 4px → 11px */
+  '3xs-2xs': clamp(0.25rem, calc(0.10rem + 0.76vw), 0.69rem),
+  /* Space 2xs-xs: 8px → 17px */
+  '2xs-xs': clamp(0.50rem, calc(0.30rem + 0.98vw), 1.06rem),
+  /* Space xs-s: 12px → 22px */
+  'xs-s': clamp(0.75rem, calc(0.53rem + 1.09vw), 1.38rem),
+  /* Space s-m: 16px → 33px */
+  's-m': clamp(1.00rem, calc(0.63rem + 1.85vw), 2.06rem),
+  /* Space m-l: 24px → 44px */
+  'm-l': clamp(1.50rem, calc(1.07rem + 2.17vw), 2.75rem),
+  /* Space l-xl: 32px → 66px */
+  'l-xl': clamp(2.00rem, calc(1.26rem + 3.70vw), 4.13rem),
+  /* Space xl-2xl: 48px → 88px */
+  'xl-2xl': clamp(3.00rem, calc(2.13rem + 4.35vw), 5.50rem),
+  /* Space 2xl-3xl: 64px → 132px */
+  '2xl-3xl': clamp(4.00rem, calc(2.52rem + 7.39vw), 8.25rem),
+);
+
+// Colors
+$colors: (
+  'brand-primary': #981711,
+  'brand-lighter': #d92626,
+  'dark-primary': #0E0E0E,
+  'light-primary': #FAFAFA,
+  'light-lighter': #FFFFFF,
+);

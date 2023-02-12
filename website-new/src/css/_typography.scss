@@ -1,0 +1,54 @@
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: local('Barlow Black'), local('Barlow-Black'), url('/fonts/Barlow-Black.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('IBM Plex Sans Regular'), local('IBM-Plex-Sans-Regular'), url('/fonts/IBMPlexSans-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('IBM Plex Sans Bold'), local('IBM-Plex-Sans-Bold'), url('/fonts/IBMPlexSans-Bold.woff') format('woff');
+}
+
+/* Body text styles are specified in _reset.scss */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Barlow';
+}
+
+h1 {
+  font-size: var(--step-5);
+  line-height: 1em;
+}
+
+h2 {
+  font-size: var(--step-4);
+}
+
+h3 {
+  font-size: var(--step-3);
+}
+
+h4 {
+  font-size: var(--step-2);
+}
+
+.uppercase {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1em;
+  text-transform: uppercase;
+}
