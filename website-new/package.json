@@ -13,7 +13,8 @@
   "dependencies": {
     "@portabletext/to-html": "^1.0.4",
     "@spartan-components/sp-video": "^0.1.2",
-    "astro": "^2.0.9"
+    "astro": "^2.0.9",
+    "get-youtube-id": "^1.0.1"
   },
   "overrides": {
     "@portabletext/toolkit": "^2.0.1"
