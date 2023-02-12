@@ -1,0 +1,51 @@
+.button {
+  &--light {
+    --color-primary: var(--color-light-primary);
+    --color-secondary: var(--color-dark-primary);
+    &:hover {
+      --color-primary: var(--color-dark-primary);
+      --color-secondary: var(--color-light-primary);
+    }
+  }
+  &--dark {
+    --color-primary: var(--color-dark-primary);
+    --color-secondary: var(--color-light-primary);
+    &:hover {
+      --color-primary: var(--color-light-primary);
+      --color-secondary: var(--color-dark-primary);
+    }
+  }
+  &--outlined {
+    background-color: transparent;
+    box-shadow: var(--color-primary) 0 0 0 2.5px;
+    color: var(--color-primary);
+    &:hover {
+      background-color: var(--color-primary);
+      color: var(--color-secondary);
+    }
+  }
+  align-items: center;
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 4px;
+  color: var(--color-secondary);
+  display: inline-flex;
+  gap: var(--space-2xs);
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-m);
+  text-decoration: none;
+  transition: 200ms;
+  transition-property: background-color, color;
+  & > svg:first-child {
+    margin-block: calc(var(--space-3xs) * -1);
+    margin-inline-start: calc(var(--space-3xs) * -1);
+  }
+  &--rounded {
+    border-radius: 50%;
+    padding: var(--space-s);
+    > svg:first-child {
+      margin: 0;
+      pointer-events: none;
+    }
+  }
+}
