@@ -12,7 +12,7 @@ const {class: className, hideButton, id, videoId} = Astro.props;
     src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
     alt=""
   />
-  <button class="button button--light button--rounded" slot="controller"><Icon class="play-icon" icon="play"/></button>
+  <button class="button button--light button--rounded" slot="controller"><Icon class="play-icon" name="play"/></button>
   <!-- Fallback for browsers that don't support custom elements, has to use class="fallback-link" -->
   <a
     href={`https://www.youtube.com/watch?v=${videoId}`}
@@ -28,5 +28,9 @@ const {class: className, hideButton, id, videoId} = Astro.props;
   .play-icon {
     position: relative;
     right: -2px;
+  }
+  sp-video {
+    border-radius: 4px;
+    overflow: hidden;
   }
 </style>
