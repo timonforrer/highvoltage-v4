@@ -27,26 +27,39 @@ const {page} = Astro.props;
 <Layout title={page.meta.title}>
   <>
     {page.blocks.map(block => {
+      let type = block._type;
 
-      switch (block._type) {
-        case 'videoHero':
-          return <VideoHero></VideoHero>
-        case 'section':
-          let {title, description, blocks, cta, layout} = block;
-          return <Section
-            {title}
-            {description}
-            {blocks}
-            {cta}
-            {layout}>
-          </Section>
-        case 'richtext':
-          let {content} = block;
-          return <RichText {content} />
-        default:
-          return `No component specified for \`${block._type}\``
-      }
-    })}
+      if (type === 'videoHero') {
+        let {backgroundImage, backgroundVideo, cta, description, title, video} = block;
+        return <VideoHero
+          {block}
+          {backgroundImage}
+          {backgroundVideo}
+          {cta}
+          {description}
+          {title}
+          {video}
+          >
+        </VideoHero>;
+      };
+
+      if (type === 'section') {
+        let {title, description, blocks, cta, layout} = block;
+        return <Section
+          {title}
+          {description}
+          {blocks}
+          {cta}
+          {layout}>
+        </Section>;
+      };
+
+      if (type === 'richtext') {
+        let {content} = block;
+        return <RichText {content} />
+      };
+      return `No component specified for \`${block._type}\``;
+    })};
 
     <details>
       <summary>data</summary>
