@@ -1,0 +1,32 @@
+---
+import Icon from "./Icon.astro";
+const {class: className, hideButton, id, videoId} = Astro.props;
+---
+
+<sp-video provider="youtube-nocookie" video-id={videoId} {id} class={className}>
+  <img
+    slot="thumbnail"
+    width="720"
+    height="405"
+    loading="lazy"
+    src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+    alt=""
+  />
+  <button class="button button--light button--rounded" slot="controller"><Icon class="play-icon" icon="play"/></button>
+  <!-- Fallback for browsers that don't support custom elements, has to use class="fallback-link" -->
+  <a
+    href={`https://www.youtube.com/watch?v=${videoId}`}
+    class="fallback-link"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Open video in new tab
+  </a>
+</sp-video>
+
+<style lang="scss">
+  .play-icon {
+    position: relative;
+    right: -2px;
+  }
+</style>
