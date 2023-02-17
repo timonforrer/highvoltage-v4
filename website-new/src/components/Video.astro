@@ -1,17 +1,18 @@
 ---
+import Image from "./Image.astro";
 import Icon from "./Icon.astro";
-const {class: className, hideButton, id, videoId} = Astro.props;
+const {class: className, hideButton, id, videoId, pictureMediaSizes} = Astro.props;
 ---
 
 <sp-video provider="youtube-nocookie" video-id={videoId} {id} class={className}>
-  <img
-    slot="thumbnail"
-    width="720"
-    height="405"
-    loading="lazy"
-    src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-    alt=""
-  />
+  <div slot="thumbnail">
+    <Image
+      class="thumbnail"
+      url={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+      aspectRatio={16/9}
+      sizes={pictureMediaSizes}
+    />
+  </div>
   <button class="button button--light button--rounded" slot="controller"><Icon class="play-icon" name="play"/></button>
   <!-- Fallback for browsers that don't support custom elements, has to use class="fallback-link" -->
   <a
@@ -32,5 +33,9 @@ const {class: className, hideButton, id, videoId} = Astro.props;
   sp-video {
     border-radius: 4px;
     overflow: hidden;
+    .thumbnail {
+      position: absolute;
+      inset: 0;
+    }
   }
 </style>
