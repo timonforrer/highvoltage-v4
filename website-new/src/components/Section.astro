@@ -4,23 +4,36 @@ import Video from './Video.astro';
 import getYoutubeId from 'get-youtube-id';
 import Button from './Button.astro';
 import Icon from './Icon.astro'
+import Release from './Release.astro';
+import ProductVariant from './ProductVariant.astro';
+
 const { title, description, blocks, cta, layout, renderTitle } = Astro.props;
 const { columns, gap } = layout;
 const classes = 'center' + (columns && ` grid grid--${columns}-columns`) + (gap && ` grid--gap-${gap}`);
 ---
 
 <section class="stack-s">
-  {renderTitle && <h2>{title}</h2>}
-  {description && <Fragment set:html={toHTML(description)} /> }
+  <div class="center">
+    {renderTitle && <h2>{title}</h2>}
+    {description && <Fragment set:html={toHTML(description)} /> }
+  </div>
 
   { blocks && 
     <div class={classes}>
       {blocks.map(block => {
-        const type = block._type;
-        if (type === 'video') {
-          return <Video videoId={getYoutubeId(block.url)} />
+        let type = block._type;
+        switch (type) {
+          case 'video':
+            return <Video videoId={getYoutubeId(block.url)} />;
+          case 'release':
+            return <Release artwork={block.artwork} meta={block.meta} />;
+          case 'productVariant':
+            return <ProductVariant
+              image={block.mainImage}
+            />
+          default:
+            return `No component specified for \`${type}\``
         }
-        return `No component specified for \`${type}\``;
       })}
     </div>
   }
