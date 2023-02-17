@@ -1,0 +1,15 @@
+---
+import { Picture } from '@astrojs/image/components';
+
+const { image, sizes } = Astro.props;
+let { url } = image.asset;
+const { aspectRatio } = image.asset.metadata.dimensions;
+---
+
+<Picture
+  alt=""
+  src={url}
+  widths={[300, 600, 900, 1200, 1500, 1800, 2100, 2300]}
+  {aspectRatio}
+  {sizes}
+/>
