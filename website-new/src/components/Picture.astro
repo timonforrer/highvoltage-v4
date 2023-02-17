@@ -1,0 +1,44 @@
+---
+import { getWidthAndHeight, getUrl } from '../lib/sanity';
+
+const { aspectDesktop, aspectMobile, image } = Astro.props;
+const { url } = image.asset;
+const { width, height } = image.asset.metadata.dimensions;
+const { x: focalPointX, y: focalPointY } = image.hotspot || {};
+
+const mobileSizes = getWidthAndHeight({
+  aspect: aspectMobile,
+  originalHeight: height,
+  originalWidth: width,
+  outputWidth: 1200
+});
+
+const desktopSizes = getWidthAndHeight({
+  aspect: aspectDesktop,
+  originalHeight: height,
+  originalWidth: width,
+  outputWidth: 2400
+});
+
+const mobileUrl = getUrl({
+  focalPointX,
+  focalPointY,
+  width: mobileSizes.width,
+  height: mobileSizes.height,
+  baseUrl: url
+});
+
+const desktopUrl = getUrl({
+  focalPointX,
+  focalPointY,
+  width: desktopSizes.width,
+  height: desktopSizes.height,
+  baseUrl: url
+});
+
+
+
+---
+
+<p>{mobileUrl}</p>
+<p>{desktopUrl}</p>
