@@ -1,13 +1,14 @@
 ---
 import { Picture } from '@astrojs/image/components';
 
-const { image, sizes } = Astro.props;
-let { url } = image.asset;
-const { aspectRatio } = image.asset.metadata.dimensions;
+const { class: className, image, sizes } = Astro.props;
+let { url } = image?.asset || Astro.props;
+const { aspectRatio } = image?.asset.metadata.dimensions || Astro.props;
 ---
 
 <Picture
   alt=""
+  class={className}
   src={url}
   widths={[300, 600, 900, 1200, 1500, 1800, 2100, 2300]}
   {aspectRatio}
