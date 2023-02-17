@@ -1,0 +1,11 @@
+---
+import Image from './Image.astro'
+const { artwork, meta } = Astro.props;
+
+---
+
+<Image
+  image={artwork}
+  sizes="(max-width: 800px) calc(100vw - 2rem), 255px"
+/>
+<h2>{meta.title}</h2>
