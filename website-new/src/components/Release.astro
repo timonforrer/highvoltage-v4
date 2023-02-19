@@ -1,7 +1,12 @@
 ---
-import Image from './Image.astro'
-const { artwork, meta, releaseDate, type, numberOfTracks } = Astro.props;
+import Image from './Image.astro';
 
+import Spotify from '../icons/spotify.svg?raw';
+import AppleMusicDE from '../icons/apple-music-de.svg?raw';
+import AppleMusicEN from '../icons/apple-music-en.svg?raw';
+import YoutubeMusic from '../icons/youtube-music.svg?raw';
+
+const { artwork, meta, releaseDate, type, numberOfTracks, providers, lang } = Astro.props;
 ---
 
 <div class="release">
@@ -9,15 +14,44 @@ const { artwork, meta, releaseDate, type, numberOfTracks } = Astro.props;
     image={artwork}
     sizes="(max-width: 800px) calc(100vw - 2rem), 255px"
   />
-  <div>
-    <p>{type} &middot; {(new Date(releaseDate)).getFullYear()} &middot; {numberOfTracks} Songs</p>
-    <h3>{meta.title}</h3>
+  <div class="content">
+    <div class="stack-m">
+      <div>
+        <p class="uppercase">{type} &middot; {(new Date(releaseDate)).getFullYear()} &middot; {numberOfTracks} Songs</p>
+        <h3>{meta.title}</h3>
+      </div>
+      <div class="providers">
+        <a href={providers.youtubeMusic}>
+          <Fragment set:html={YoutubeMusic} />
+        </a>
+        <a href={providers.spotify}>
+          <Fragment set:html={Spotify} />
+        </a>
+        <a href={providers.appleMusic}>
+          { lang === 'de' ? <Fragment set:html={AppleMusicDE} /> : <Fragment set:html={AppleMusicEN} /> }
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
 <style lang="scss">
   .release {
     display: flex;
-    gap: var(--space-s)
+    flex-wrap: wrap;
+    gap: var(--space-m);
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .providers {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-m);
+    }
   }
 </style>
