@@ -42,12 +42,14 @@ const {
   .video-hero {
     margin-bottom: -4em;
     position: relative;
+
     p {
       font-size: var(--step-1);
       font-weight: bold;
       opacity: 0.8;
       max-width: 30ch;
     }
+
     &::after {
       content: "";
       position: absolute;
@@ -58,16 +60,20 @@ const {
       background: linear-gradient(180deg,hsla(0,0%,5%,0),hsla(0,0%,5%,.72) 72.79%,#0e0e0e);
       display: block;
     }
+
     .content {
       z-index: 1;
     }
   }
+
   #video-frame {
     margin-bottom: var(--space-xs);
     & + * {
+      margin-top: 0;
       margin-bottom: 0;
     }
   }
+
   @supports selector(:target) {
     #video-frame {
       display: none;
@@ -76,16 +82,20 @@ const {
       }
     }
   }
+
   @media (max-width: 760px) {
     .pin {
       position: relative;
     }
+
     video {
       margin-bottom: var(--space-s);
     }
+
     #video-frame {
       padding-inline: 0;
     }
+
     .video-hero {
       margin-bottom: var(--space-l);
     }
