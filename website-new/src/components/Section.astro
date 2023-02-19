@@ -7,9 +7,34 @@ import Icon from './Icon.astro'
 import Release from './Release.astro';
 import ProductVariant from './ProductVariant.astro';
 
-const { title, description, blocks, cta, layout, renderTitle } = Astro.props;
+const {
+  blocks,
+  cta,
+  description,
+  lang,
+  layout,
+  renderTitle,
+  title,
+} = Astro.props;
+
 const { columns, gap } = layout;
-const classes = 'center' + (columns && ` grid grid--${columns}-columns`) + (gap && ` grid--gap-${gap}`);
+
+const columnsClass = columns && `grid--${columns}-columns`;
+const gapClass = gap && `grid--gap-${gap}`;
+
+let pictureMediaSizes;
+
+if (columns) {
+  pictureMediaSizes =
+    columns === 3 ? '(max-width): calc(100vw - 2em), 400px' :
+    columns === 2 ? '(max-width): calc(100vw - 2em), 600px' :
+    '(max-width): calc(100vw - 2em), 1200px';
+}
+
+const Components = {
+  video: Video
+};
+
 ---
 
 <section class="stack-s">
@@ -19,35 +44,22 @@ const classes = 'center' + (columns && ` grid grid--${columns}-columns`) + (gap 
   </div>
 
   { blocks && 
-    <div class={classes}>
+    <div class:list={['center', 'grid', columnsClass, gapClass]}>
       {blocks.map(block => {
-        let type = block._type;
-        let pictureMediaSizes =
-          columns === 3 ? '(max-width): calc(100vw - 2em), 400px' :
-          columns === 2 ? '(max-width): calc(100vw - 2em), 600px' :
-          '(max-width): calc(100vw - 2em), 1200px';
-
-        switch (type) {
-          case 'video':
-            return <Video
-                videoId={getYoutubeId(block.url)}
-                pictureMediaSizes={pictureMediaSizes}
-              />;
-          case 'release':
-            return <Release
-                artwork={block.artwork}
-                meta={block.meta}
-                releaseDate={block.releaseDate}
-                type={block.type}
-                numberOfTracks={block.tracks.items.length}
-              />;
-          case 'productVariant':
-            return <ProductVariant
-              image={block.mainImage}
-            />
-          default:
-            return `No component specified for \`${type}\``
+        const type = block._type;
+        const Component = Components[type];
+        
+        if (Component === undefined) {
+          return <p>No component specified for `{type}`</p>;
         }
+
+        let attributes = {lang};
+
+        if (type === 'video') {
+          attributes['videoId'] = getYoutubeId(block.url)
+        }
+
+        return <Component {...block} {...attributes}></Component>
       })}
     </div>
   }
@@ -57,9 +69,4 @@ const classes = 'center' + (columns && ` grid grid--${columns}-columns`) + (gap 
       <Button href={cta.slug}>{cta.title}<Icon name="chevron" /></Button>
     </div>
   }
-
-  <details>
-    <summary>data</summary>
-    <pre>{JSON.stringify(Astro.props, null, 2)}</pre>
-  </details>
 </section>
