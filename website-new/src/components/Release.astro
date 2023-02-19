@@ -5,8 +5,17 @@ import Spotify from '../icons/spotify.svg?raw';
 import AppleMusicDE from '../icons/apple-music-de.svg?raw';
 import AppleMusicEN from '../icons/apple-music-en.svg?raw';
 import YoutubeMusic from '../icons/youtube-music.svg?raw';
+import Icon from './Icon.astro';
 
-const { artwork, meta, releaseDate, type, numberOfTracks, providers, lang } = Astro.props;
+const {
+  artwork,
+  lang,
+  meta,
+  numberOfTracks,
+  providers,
+  releaseDate,
+  type,
+} = Astro.props;
 ---
 
 <div class="release">
@@ -15,43 +24,90 @@ const { artwork, meta, releaseDate, type, numberOfTracks, providers, lang } = As
     sizes="(max-width: 800px) calc(100vw - 2rem), 255px"
   />
   <div class="content">
-    <div class="stack-m">
+    <div class="stack-s">
       <div>
         <p class="uppercase">{type} &middot; {(new Date(releaseDate)).getFullYear()} &middot; {numberOfTracks} Songs</p>
-        <h3>{meta.title}</h3>
+        <a href={meta.slug.current}><h3>{meta.title}</h3></a>
       </div>
       <div class="providers">
-        <a href={providers.youtubeMusic}>
+        <a href={providers.highlighted.youtubeMusic}>
           <Fragment set:html={YoutubeMusic} />
         </a>
-        <a href={providers.spotify}>
+        <a href={providers.highlighted.spotify}>
           <Fragment set:html={Spotify} />
         </a>
-        <a href={providers.appleMusic}>
+        <a href={providers.highlighted.appleMusic}>
           { lang === 'de' ? <Fragment set:html={AppleMusicDE} /> : <Fragment set:html={AppleMusicEN} /> }
         </a>
       </div>
     </div>
+    <a href={meta.slug.current} class="breakout-link"><Icon size={36} name="chevron" /></a>
   </div>
 </div>
 
-<style lang="scss">
+<style lang="scss" is:global>
   .release {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-m);
+    position: relative;
+
+    picture {
+      flex-basis: 12em;
+      flex-grow: 1;
+      margin-inline: auto;
+      max-width: 20em;
+      z-index: 1;
+
+      img {
+        height: auto;
+        width: 100%;
+      }
+    }
 
     .content {
+      align-items: center;
       display: flex;
-      flex-direction: column;
+      flex-basis: 0;
+      flex-grow: 999;
       justify-content: center;
+      min-inline-size: 50%;
+
+      div:first-child {
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-direction: column;
+      }
     }
 
     .providers {
       align-items: center;
       display: flex;
       flex-wrap: wrap;
-      gap: var(--space-m);
+      gap: var(--space-2xs) var(--space-m);
+      width: fit-content;
+      z-index: 1;
+      
+      a {
+        flex-basis: 7em;
+        flex-grow: 0;
+        flex-shrink: 1;
+        transition: 200ms ease;
+        transition-property: opacity;
+      }
+
+      &:hover > a {
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    .breakout-link {
+      flex-shrink: 0;
     }
   }
 </style>
