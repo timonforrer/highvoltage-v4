@@ -2,10 +2,16 @@
 import Layout from '../layouts/Layout.astro'
 
 import {getSanityData} from '../lib/sanity';
-import {modularPages} from '../lib/queries'
+import {modularPages} from '../lib/queries';
 import Section from '../components/Section.astro';
 import VideoHero from '../components/VideoHero.astro';
 import RichText from '../components/RichText.astro';
+
+const Components = {
+  section: Section,
+  videoHero: VideoHero,
+  richtext: RichText,
+}
 
 export async function getStaticPaths() {
   const allModularPages = await getSanityData({query: modularPages});
@@ -24,45 +30,19 @@ export async function getStaticPaths() {
 
 const {page} = Astro.props;
 ---
+
 <Layout title={page.meta.title}>
   <>
     {page.blocks.map(block => {
-      let type = block._type;
+      const type = block._type;
+      const Component = Components[type];
 
-      if (type === 'videoHero') {
-        let {backgroundImage, backgroundVideo, cta, description, title, video, renderTitle} = block;
-        return <VideoHero
-          {block}
-          {backgroundImage}
-          {backgroundVideo}
-          {cta}
-          {description}
-          {title}
-          {video}
-          {renderTitle}
-          >
-        </VideoHero>;
-      };
+      if ( Component === undefined) {
+        return <p>No component specified for `{type}`</p>;
+      }
 
-      if (type === 'section') {
-        let {title, description, blocks, cta, layout, renderTitle} = block;
-        return <Section
-          {title}
-          {description}
-          {blocks}
-          {cta}
-          {layout}
-          {renderTitle}>
-        </Section>;
-      };
-
-      if (type === 'richtext') {
-        let {content} = block;
-        return <RichText {content} />
-      };
-      return `No component specified for \`${type}\``;
-    })};
-
+      return <Component {...block} lang={page.__i18n_lang}></Component>
+    })}
     <details>
       <summary>data</summary>
       <pre>{JSON.stringify(page, null, 2)}</pre>
