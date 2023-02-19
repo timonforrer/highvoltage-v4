@@ -32,12 +32,14 @@ if (columns) {
 }
 
 const Components = {
+  productVariant: ProductVariant,
+  release: Release,
   video: Video
 };
 
 ---
 
-<section class="stack-s">
+<section class="stack-m">
   <div class="center">
     {renderTitle && <h2>{title}</h2>}
     {description && <Fragment set:html={toHTML(description)} /> }
