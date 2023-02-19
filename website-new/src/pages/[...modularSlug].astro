@@ -32,7 +32,7 @@ const {page} = Astro.props;
 ---
 
 <Layout title={page.meta.title}>
-  <>
+  <div class="stack-xl-2xl">
     {page.blocks.map(block => {
       const type = block._type;
       const Component = Components[type];
@@ -47,5 +47,5 @@ const {page} = Astro.props;
       <summary>data</summary>
       <pre>{JSON.stringify(page, null, 2)}</pre>
     </details>
-    </>
+    </div>
 </Layout>
