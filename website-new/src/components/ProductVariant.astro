@@ -1,10 +1,11 @@
 ---
 import Picture from './Picture.astro';
-const { image } = Astro.props;
+const { mainImage } = Astro.props;
+
 ---
 
 <Picture
   aspectMobile="4:5"
   aspectDesktop="4:5"
-  image={image}
+  image={mainImage}
 />
