@@ -6,11 +6,13 @@ import {modularPages} from '../lib/queries';
 import Section from '../components/Section.astro';
 import VideoHero from '../components/VideoHero.astro';
 import RichText from '../components/RichText.astro';
+import InternalCollection from '../components/InternalCollection.astro';
 
 const Components = {
   section: Section,
   videoHero: VideoHero,
   richtext: RichText,
+  internalCollection: InternalCollection,
 }
 
 export async function getStaticPaths() {
@@ -37,7 +39,7 @@ const {page} = Astro.props;
       const type = block._type;
       const Component = Components[type];
 
-      if ( Component === undefined) {
+      if (Component === undefined) {
         return <p>No component specified for `{type}`</p>;
       }
 
