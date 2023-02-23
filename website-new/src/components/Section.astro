@@ -6,18 +6,27 @@ import Button from './Button.astro';
 import Icon from './Icon.astro'
 import Release from './Release.astro';
 import ProductVariant from './ProductVariant.astro';
+import InternalCollection from './InternalCollection.astro';
+
+const Components = {
+  productVariant: ProductVariant,
+  release: Release,
+  video: Video,
+  internalCollection: InternalCollection,
+};
 
 const {
   blocks,
   cta,
   description,
   lang,
-  layout,
+  layout: {
+    columns,
+    gap
+  },
   renderTitle,
   title,
 } = Astro.props;
-
-const { columns, gap } = layout;
 
 const columnsClass = columns && `grid--${columns}-columns`;
 const gapClass = gap && `grid--gap-${gap}`;
@@ -31,19 +40,16 @@ if (columns) {
     '(max-width): calc(100vw - 2em), 1200px';
 }
 
-const Components = {
-  productVariant: ProductVariant,
-  release: Release,
-  video: Video
-};
 
 ---
 
 <section class="stack-m">
-  <div class="center">
-    {renderTitle && <h2>{title}</h2>}
-    {description && <Fragment set:html={toHTML(description)} /> }
-  </div>
+  { (renderTitle || description) &&
+    <div class="center">
+      {renderTitle && <h2>{title}</h2>}
+      {description && <Fragment set:html={toHTML(description)} /> }
+    </div>
+  }
 
   { blocks && 
     <div class:list={['center', 'grid', columnsClass, gapClass]}>
