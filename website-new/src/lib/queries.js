@@ -82,3 +82,5 @@ export const modularPages = `
   },
 }
 `;
+
+export const allGigs = `*[_type == "gig"]`;
