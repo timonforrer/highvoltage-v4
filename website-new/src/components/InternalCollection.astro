@@ -1,0 +1,37 @@
+---
+import { getSanityData } from '../lib/sanity';
+import { allGigs } from '../lib/queries';
+
+const {
+  collectionName,
+  filterGigs,
+  limitGigs,
+} = Astro.props;
+
+let internalData;
+
+if (collectionName === 'allGigs') {
+
+  // todo: fetch and mix both sanity and airtable data
+  let gigs = await getSanityData({query: allGigs});
+
+  if (filterGigs === 'upcoming') {
+    gigs = gigs.filter(gig => {
+      const gigDate = new Date(gig.internal.startDate);
+      const currentDate = new Date();
+      return gigDate >= currentDate;
+    }).sort((gigA, gigB) => {
+      let dateGigA = new Date(gigA.internal.startDate);
+      let dateGigB = new Date(gigB.internal.startDate);
+      return dateGigA - dateGigB;
+    })
+  }
+
+  internalData = gigs;
+}
+
+---
+
+<Fragment>
+  { internalData.map(gig => <p>{gig.internal.startDate}</p>) }
+</Fragment>
