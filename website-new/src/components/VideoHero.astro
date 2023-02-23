@@ -68,9 +68,8 @@ const {
 
   #video-frame {
     margin-bottom: var(--space-xs);
-    & + * {
-      margin-top: 0;
-      margin-bottom: 0;
+    &, & + * {
+      margin-block-start: 0;
     }
   }
 
