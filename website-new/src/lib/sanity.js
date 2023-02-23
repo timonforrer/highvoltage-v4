@@ -9,6 +9,11 @@ export async function getSanityData({query}) {
     version: 'v2023-02-03'
   };
 
+
+  /**
+   * TODO: Add interface for parameters
+   */
+
   // complete url consisting of <project_id>.api.sanity.io/<api version as YYYY-MM-DD>
   let url = `https://${config.projectId}.api.sanity.io/${config.version}/data/query/${config.dataset}?query=${encodedQuery}`;
 
