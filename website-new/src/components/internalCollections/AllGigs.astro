@@ -1,0 +1,106 @@
+---
+import { getSanityData } from '../../lib/sanity';
+import { pastGigs, upcomingGigs } from '../../lib/queries';
+import { getAirtableData } from '../../lib/airtable';
+import Icon from '../Icon.astro';
+
+const {
+  filterGigs,
+  limitGigs,
+  lang
+} = Astro.props;
+
+let gigs = filterGigs === 'upcoming'
+  ? await getSanityData({query: upcomingGigs})
+  : await getSanityData({query: pastGigs});
+
+if (limitGigs !== undefined) {
+  gigs = gigs.splice(0, limitGigs)
+}
+
+let airtableGigs = await getAirtableData({
+  base: 'master',
+  table: 'Gigs',
+  filter: '{Status}="Definitiv"'
+});
+
+let airtableVenues = await getAirtableData({
+  base: 'master',
+  table: 'Lokale',
+});
+
+airtableGigs = airtableGigs.map(gig => {
+  let venue = airtableVenues.filter(venue => venue.id === gig['Lokal'][0])[0];
+  return {
+    ...gig,
+    Lokal: venue
+  };
+});
+
+gigs = gigs.map(gig => {
+  const { airtableId } = gig.internal;
+  const airtableRecord = airtableGigs.filter(airtableGig => airtableId === airtableGig.id)[0];
+  return {
+    ...gig,
+    airtableFields: airtableRecord
+  }
+});
+
+const formatter = new Intl.DateTimeFormat(lang, {
+  weekday: 'short',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+---
+<ul class="gig-previews hover-list grid grid--1-columns grid--gap-m">
+  {gigs.map(gig => {
+    let {
+      'Start': start,
+      'Lokal': {
+        'Name': venueName,
+        'Stadt': venueCity,
+        'Kanton': venueCanton,
+      }
+    } = gig.airtableFields;
+    return (
+      <article class="gig-preview hover-list__target">
+        <div class="stack-3xs">
+          <p class="tight">{formatter.format(new Date(start))}</p>
+          <div class="stack-2xs">
+            <h3>{gig.meta.title}</h3>
+            <p class="uppercase">{venueName} {venueCity}, {venueCanton}</p>
+          </div>
+        </div>
+        <a href={gig.meta.slug.current} class="breakout-link">
+          <Icon size={36} name="chevron" />
+        </a>
+      </article>
+    )
+  })}
+</ul>
+
+<style lang="scss" is:global>
+  .gig-previews {
+    padding: 0;
+  }
+
+  .gig-preview {
+    align-items: center;
+    display: flex;
+    margin-inline: -1em;
+    justify-content: space-between;
+    padding: 1em;
+    position: relative;
+
+    &:not(:first-child)::before {
+      content: '';
+      background-color: rgba(250, 250, 250, 0.2);
+      height: 2px;
+      position: absolute;
+      top: calc(var(--space-m) * -0.5);
+      width: calc(100% - 2em);
+    }
+  }
+</style>
