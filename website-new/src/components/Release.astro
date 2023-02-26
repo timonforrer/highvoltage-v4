@@ -20,14 +20,18 @@ const {
 
 <div class="release">
   <Image
+    class="rounded"
     image={artwork}
     sizes="(max-width: 800px) calc(100vw - 2rem), 255px"
   />
   <div class="content">
     <div class="stack-s">
       <div>
-        <p class="uppercase">{type} &middot; {(new Date(releaseDate)).getFullYear()} &middot; {tracks.items.length} Songs</p>
-        <a href={meta.slug.current}><h3>{meta.title}</h3></a>
+        <p class="uppercase">
+          {type}
+          &middot; {(new Date(releaseDate)).getFullYear()}
+          &middot; {tracks.items.length} {tracks.items.length === 1 ? 'Song' : 'Songs'}</p>
+        <h3>{meta.title}</h3>
       </div>
       <div class="providers">
         <a href={providers.highlighted.youtubeMusic}>
