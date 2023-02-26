@@ -44,7 +44,7 @@ let palette = Object.keys(_palette).map(color => {
   </div>
   
   <Picture
-    aspectMobile="1:1"
+    aspectMobile="4:5"
     aspectDesktop="21:9"
     class="milestone__image"
     {image}
@@ -111,6 +111,10 @@ let palette = Object.keys(_palette).map(color => {
     }
     &:last-child {
       h3 {
+        &::before {
+          bottom: 1.475rem;
+          top: unset;
+        }
         &::after {
           bottom: 1.475rem;
           top: unset;
@@ -128,5 +132,12 @@ let palette = Object.keys(_palette).map(color => {
       background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e);
       display: block;
     }
+  }
+  @media screen and (max-width: 600px) {
+  .milestone {
+    &::after {
+      background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e), rgba(0,0,0,0.5);
+    }
+  }
   }
 </style>
