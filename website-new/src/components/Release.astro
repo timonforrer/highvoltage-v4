@@ -11,9 +11,9 @@ const {
   artwork,
   lang,
   meta,
-  numberOfTracks,
   providers,
   releaseDate,
+  tracks,
   type,
 } = Astro.props;
 ---
@@ -26,7 +26,7 @@ const {
   <div class="content">
     <div class="stack-s">
       <div>
-        <p class="uppercase">{type} &middot; {(new Date(releaseDate)).getFullYear()} &middot; {numberOfTracks} Songs</p>
+        <p class="uppercase">{type} &middot; {(new Date(releaseDate)).getFullYear()} &middot; {tracks.items.length} Songs</p>
         <a href={meta.slug.current}><h3>{meta.title}</h3></a>
       </div>
       <div class="providers">
@@ -51,6 +51,8 @@ const {
     flex-wrap: wrap;
     gap: var(--space-m);
     position: relative;
+    margin-inline-end: -1em;
+    padding-inline-end: 1em;
 
     picture {
       flex-basis: 12em;
