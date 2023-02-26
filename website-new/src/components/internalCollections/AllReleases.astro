@@ -1,0 +1,37 @@
+---
+import Release from '../Release.astro';
+import { allReleases } from '../../lib/queries';
+import { getSanityData } from '../../lib/sanity';
+
+const {
+  lang,
+} = Astro.props;
+
+const releases = await getSanityData({
+  query: allReleases,
+  params: {
+    $lang: lang
+  }
+});
+---
+
+{releases.map(release => {
+  let {
+    artwork,
+    lang,
+    meta,
+    providers,
+    releaseDate,
+    tracks,
+    type,
+  } = release;
+  return <Release
+    {artwork}
+    {lang}
+    {meta}
+    {providers}
+    {releaseDate}
+    {tracks}
+    {type}
+  ></Release>
+})}
