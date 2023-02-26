@@ -28,20 +28,10 @@ let palette = Object.keys(_palette).map(color => {
 })
 
 ---
-<!-- <div class="boxes">
-  {palette.map(color => <div class="box" style={{backgroundColor:color.background, color: color.foreground}}>{color.name}</div>)}
-</div> -->
 
-<div
-  class="milestone"
-  style={{
-    '--background-color--from': image.asset.metadata.palette.darkVibrant.background + "00",
-    '--background-color--step': image.asset.metadata.palette.darkVibrant.background + "b7",
-    '--background-color--to': image.asset.metadata.palette.darkVibrant.background,
-    }}
->
+<div class="milestone">
   <div class="milestone__content center center-v pin-permanent">
-    <div class="narrow stack-s">
+    <div class="supernarrow stack-s">
       <div>
         <time class="uppercase bold" datetime={date}>{formatter.format(new Date(date))}</time>
         <h3>{title}</h3>
@@ -54,7 +44,7 @@ let palette = Object.keys(_palette).map(color => {
   </div>
   
   <Picture
-    aspectMobile="4:5"
+    aspectMobile="1:1"
     aspectDesktop="21:9"
     class="milestone__image"
     {image}
@@ -135,12 +125,7 @@ let palette = Object.keys(_palette).map(color => {
       right: 0;
       bottom: 0;
       left: 0;
-      background: linear-gradient(
-        -90deg,
-        var(--background-color--from),
-        var(--background-color--step) 72%,
-        var(--background-color--to));
-      // background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e);
+      background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e);
       display: block;
     }
   }
