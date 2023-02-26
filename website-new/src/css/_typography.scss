@@ -35,10 +35,12 @@ h1 {
 
 h2 {
   font-size: var(--step-4);
+  line-height: 1.1em;
 }
 
 h3 {
   font-size: var(--step-3);
+  line-height: 1.2em;
 }
 
 h4 {
@@ -50,4 +52,8 @@ h4 {
   letter-spacing: 0.12em;
   line-height: 1em;
   text-transform: uppercase;
+}
+
+.tight {
+  line-height: 1em;
 }
