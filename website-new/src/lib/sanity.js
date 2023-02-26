@@ -9,7 +9,6 @@ export async function getSanityData({query}) {
     version: 'v2023-02-03'
   };
 
-
   /**
    * TODO: Add interface for parameters
    */
