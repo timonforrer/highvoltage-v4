@@ -72,7 +72,8 @@ export const modularPages = `
               mainImage {
                 ...,
                 asset->
-              }
+              },
+              productSkus[]->,
             }
           },
           _type == "internalCollection" => @,
