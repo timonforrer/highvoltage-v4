@@ -1,0 +1,8 @@
+---
+import {toHTML} from "@portabletext/to-html";
+const {content} = Astro.props;
+---
+
+<div class="center">
+  <Fragment set:html={toHTML(content)} />
+</div>
