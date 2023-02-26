@@ -14,16 +14,6 @@ export default {
       type: 'meta'
     },
     {
-      name: 'layout',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Blank', value: 'blank'},
-          {title: 'With Title', value: 'with-title'},
-        ]
-      }
-    },
-    {
       name: 'blocks',
       title: 'Blocks',
       type: 'array',
