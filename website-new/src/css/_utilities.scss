@@ -90,3 +90,22 @@
     }
   }
 }
+
+.hover-list {
+  &__target {
+    transition: 300ms ease;
+    transition-property: opacity;
+  }
+  &:hover {
+    & .hover-list__target {
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.narrow {
+  max-inline-size: 50rem;
+}
