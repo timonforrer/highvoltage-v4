@@ -1,5 +1,6 @@
 ---
 import AllGigs from './internalCollections/AllGigs.astro';
+import AllReleases from './internalCollections/AllReleases.astro';
 
 const {
   collectionName,
@@ -11,7 +12,9 @@ const {
 ---
 
 <!-- For some reason `if` and `switch` didn't work -->
-
 { collectionName === 'allGigs' &&
   <AllGigs {filterGigs} {limitGigs} {lang}></AllGigs>
+}
+{ collectionName === 'allReleases' &&
+  <AllReleases {lang}></AllReleases>
 }
