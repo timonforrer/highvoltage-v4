@@ -78,5 +78,5 @@ export const getUrl = ({focalPointX, focalPointY, width, height, baseUrl}) => {
     url.searchParams.set('fp-y', focalPointY);
   }
 
-  return url;
+  return url.href;
 }
