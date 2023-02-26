@@ -1,7 +1,14 @@
 ---
+import { getPicture } from '@astrojs/image/dist/index';
 import { getWidthAndHeight, getUrl } from '../lib/sanity';
 
-const { aspectDesktop, aspectMobile, image } = Astro.props;
+const {
+  aspectDesktop,
+  aspectMobile,
+  class: className,
+  image,
+} = Astro.props;
+
 const { url } = image.asset;
 const { width, height } = image.asset.metadata.dimensions;
 const { x: focalPointX, y: focalPointY } = image.hotspot || {};
@@ -36,9 +43,30 @@ const desktopUrl = getUrl({
   baseUrl: url
 });
 
+const mobileImage = await getPicture({
+  src: mobileUrl,
+  widths: [300, 600, 900, 1200],
+  aspectRatio: aspectMobile,
+  formats: ['avif', 'webp'],
+  alt: ''
+});
 
+const desktopImage = await getPicture({
+  src: desktopUrl,
+  widths: [300, 600, 900, 1200],
+  aspectRatio: aspectDesktop,
+  formats: ['avif', 'webp'],
+  alt: ''
+});
 
 ---
 
-<p>{mobileUrl}</p>
-<p>{desktopUrl}</p>
+<picture class={className}>
+  {desktopImage.sources.map(source => (
+    <source media="(min-width: 800px)" type={source.type} srcset={source.srcset} />
+  ))}
+  {mobileImage.sources.map(source => (
+    <source type={source.type} srcset={source.srcset} />
+  ))}
+  <img {...mobileImage.image} />
+</picture>
