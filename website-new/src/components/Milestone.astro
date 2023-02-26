@@ -1,0 +1,147 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import RichText from './RichText.astro';
+import Picture from './Picture.astro';
+
+const {
+  cta,
+  date,
+  description,
+  image,
+  lang,
+  title
+} = Astro.props;
+
+const formatter = new Intl.DateTimeFormat(lang, {
+  year: 'numeric',
+  month: 'long',
+});
+
+let _palette = image.asset.metadata.palette;
+
+let palette = Object.keys(_palette).map(color => {
+  return {
+    name: color,
+    ..._palette[color]
+  }
+})
+
+---
+<!-- <div class="boxes">
+  {palette.map(color => <div class="box" style={{backgroundColor:color.background, color: color.foreground}}>{color.name}</div>)}
+</div> -->
+
+<div
+  class="milestone"
+  style={{
+    '--background-color--from': image.asset.metadata.palette.darkVibrant.background + "00",
+    '--background-color--step': image.asset.metadata.palette.darkVibrant.background + "b7",
+    '--background-color--to': image.asset.metadata.palette.darkVibrant.background,
+    }}
+>
+  <div class="milestone__content center center-v pin-permanent">
+    <div class="narrow stack-s">
+      <div>
+        <time class="uppercase bold" datetime={date}>{formatter.format(new Date(date))}</time>
+        <h3>{title}</h3>
+      </div>
+      <div class="stack-l">
+        <RichText content={description} />
+        { cta && <Button href={cta.slug}>{cta.title}<Icon name="chevron" /></Button> }
+      </div>
+    </div>
+  </div>
+  
+  <Picture
+    aspectMobile="4:5"
+    aspectDesktop="21:9"
+    class="milestone__image"
+    {image}
+  />
+</div>
+
+<style lang="scss" is:global>
+  .boxes {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .box {
+    padding: 1em 2em;
+  }
+
+  .milestone {
+    overflow: hidden;
+    position: relative;
+
+    &__content {
+      z-index: 1;
+
+      & > div {
+        padding-left: 2em;
+      }
+    }
+
+    &__image img {
+      width: 100%;
+    }
+
+    h3 {
+      position: relative;
+      &::before,
+      &::after {
+        content: "";
+        background-color: currentColor;
+        display: block;
+        position: absolute;
+        top: calc(0.6em - 0.125em);
+      }
+      
+      &::before {
+        border-radius: 50%;
+        height: 0.75rem;
+        left: -2rem;
+        width: 0.75rem;
+      }
+
+      &::after {
+        height: 999px;
+        left: calc(-2rem + 0.375rem - 1px);
+        width: 2px;
+      }
+    }
+
+    &:not(:first-child) {
+      h3 {
+        &::after {
+          top: -333px;
+        }
+      }
+    }
+    &:last-child {
+      h3 {
+        &::after {
+          bottom: 1.475rem;
+          top: unset;
+        }
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(
+        -90deg,
+        var(--background-color--from),
+        var(--background-color--step) 72%,
+        var(--background-color--to));
+      // background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e);
+      display: block;
+    }
+  }
+</style>
