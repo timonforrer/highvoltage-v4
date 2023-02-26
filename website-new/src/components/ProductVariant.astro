@@ -1,11 +1,67 @@
 ---
 import Picture from './Picture.astro';
-const { mainImage } = Astro.props;
+import Icon from './Icon.astro';
+import { getAirtableData } from '../lib/airtable';
+
+const airtableSkus = await getAirtableData({
+  table: 'Artikel',
+  base: 'shop',
+  view: 'Online',
+});
+
+const {
+  mainImage,
+  meta: {
+    title
+  },
+  productSkus,
+  lang
+} = Astro.props;
+
+const skus = airtableSkus.filter(airtableSku => {
+  return productSkus.some(sku => airtableSku['Artikelnummer'] === sku.sku);
+});
+
+const mainSku = skus[0];
+
+const formatter = new Intl.ListFormat(lang, { style: 'long', type: 'disjunction' })
+
+const variants = productSkus.map(sku => sku.variant);
 
 ---
 
-<Picture
-  aspectMobile="4:5"
-  aspectDesktop="4:5"
-  image={mainImage}
-/>
+<div class="product-card">
+  <Picture
+    aspectMobile="4:5"
+    aspectDesktop="4:5"
+    image={mainImage}
+  />
+  <div class="product-card__content">
+    <div class="stack-xs">
+      <h3 class="tight">{title}</h3>
+      <p class="uppercase">
+        <span class="bold">CHF {mainSku['Verkaufspreis Onlineshop']}</span>
+        { variants.length > 2 &&
+          <>&middot; {variants[0]} – {variants.at(-1)}</>
+        }
+        { variants.length == 2 &&
+          <>&middot; {formatter.format(variants)}</>
+        }
+      </p>
+    </div>
+    <a href={productSkus[0].meta.slug.current} class="breakout-link"><Icon size={36} name="chevron" /></a>
+  </div>
+</div>
+
+<style lang="scss" is:global>
+  .product-card {
+    position: relative;
+
+    &__content {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-s);
+    }
+  }
+</style>
