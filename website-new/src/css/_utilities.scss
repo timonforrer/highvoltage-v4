@@ -56,7 +56,8 @@
   text-align: right;
 }
 
-.breakout-link {
+.breakout-link,
+.breakout-button {
   &::before {
     height: 100%;
     width: 100%;
@@ -70,7 +71,9 @@
     position: absolute;
     top: 0;
   }
+}
 
+.breakout-link {
   &::after {
     background-color: transparent;
     border-radius: 4px;
