@@ -86,3 +86,14 @@ export const modularPages = `
 
 export const upcomingGigs = `*[_type == "gig" && internal.startDate >= now()] | order(internal.startDate asc)`;
 export const pastGigs = `*[_type == "gig" && internal.startDate < now()] | order(internal.startDate desc)`;
+
+export const allReleases = `*[_type == 'release' && __i18n_lang == $lang]|order(releaseDate desc){
+  ...,
+  artwork {
+    ...,
+    asset->
+  },
+  providers->,
+  tracks->,
+  videos->,
+}`;
