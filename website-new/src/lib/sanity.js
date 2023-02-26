@@ -1,4 +1,4 @@
-export async function getSanityData({query}) {
+export async function getSanityData({query, params = null}) {
   let encodedQuery = encodeURIComponent(query);
 
   const config = {
@@ -9,12 +9,20 @@ export async function getSanityData({query}) {
     version: 'v2023-02-03'
   };
 
-  /**
-   * TODO: Add interface for parameters
-   */
-
   // complete url consisting of <project_id>.api.sanity.io/<api version as YYYY-MM-DD>
-  let url = `https://${config.projectId}.api.sanity.io/${config.version}/data/query/${config.dataset}?query=${encodedQuery}`;
+  const baseUrl = `https://${config.projectId}.api.sanity.io/${config.version}/data/query/${config.dataset}`
+
+
+  let url = baseUrl + `?query=${encodedQuery}`;
+
+  if (params !== null) {
+    let paramString = ''
+    Object.keys(params).map(paramKey => {
+      let data = params[paramKey];
+      paramString = paramString + `&${paramKey}="${data}"`;
+    });
+    url = url + paramString;
+  };
 
   const fetchOptions = {
     headers: {
