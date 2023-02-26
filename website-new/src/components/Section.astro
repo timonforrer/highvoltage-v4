@@ -7,12 +7,14 @@ import Icon from './Icon.astro'
 import Release from './Release.astro';
 import ProductVariant from './ProductVariant.astro';
 import InternalCollection from './InternalCollection.astro';
+import Milestone from './Milestone.astro';
 
 const Components = {
   productVariant: ProductVariant,
   release: Release,
   video: Video,
   internalCollection: InternalCollection,
+  milestone: Milestone
 };
 
 const {
@@ -30,6 +32,7 @@ const {
 
 const columnsClass = columns && `grid--${columns}-columns`;
 const gapClass = gap && `grid--gap-${gap}`;
+const center = !blocks.every(block => block._type === 'milestone') && 'center';
 
 let pictureMediaSizes;
 
@@ -39,7 +42,6 @@ if (columns) {
     columns === 2 ? '(max-width): calc(100vw - 2em), 600px' :
     '(max-width): calc(100vw - 2em), 1200px';
 }
-
 
 ---
 
@@ -51,8 +53,8 @@ if (columns) {
     </div>
   }
 
-  { blocks && 
-    <div class:list={['center', 'grid', columnsClass, gapClass]}>
+  { blocks &&
+    <div class:list={[center, 'grid', columnsClass, gapClass]}>
       {blocks.map(block => {
         const type = block._type;
         const Component = Components[type];
