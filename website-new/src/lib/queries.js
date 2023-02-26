@@ -83,4 +83,5 @@ export const modularPages = `
 }
 `;
 
-export const allGigs = `*[_type == "gig"]`;
+export const upcomingGigs = `*[_type == "gig" && internal.startDate >= now()] | order(internal.startDate asc)`;
+export const pastGigs = `*[_type == "gig" && internal.startDate < now()] | order(internal.startDate desc)`;
