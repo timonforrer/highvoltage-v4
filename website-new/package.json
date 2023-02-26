@@ -14,6 +14,7 @@
     "@astrojs/image": "^0.15.0",
     "@portabletext/to-html": "^1.0.4",
     "@spartan-components/sp-video": "^0.1.2",
+    "airtable": "^0.11.6",
     "astro": "^2.0.13",
     "get-youtube-id": "^1.0.1",
     "sharp": "^0.31.3"
