@@ -45,9 +45,9 @@ if (columns) {
 
 <section class="stack-m">
   { (renderTitle || description) &&
-    <div class="center">
+    <div class="center stack-xs">
       {renderTitle && <h2>{title}</h2>}
-      {description && <Fragment set:html={toHTML(description)} /> }
+      {description && <div class="narrow"><Fragment set:html={toHTML(description)} /></div> }
     </div>
   }
 
