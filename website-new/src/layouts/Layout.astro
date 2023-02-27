@@ -1,10 +1,21 @@
 ---
 import '../css/main.scss'
-const { title } = Astro.props;
+
+import { getSanityData } from '../lib/sanity';
+import { globalSettings } from '../lib/queries';
+
+import Navigation from '../components/Navigation.astro';
+
+const { title, lang } = Astro.props;
+
+const home = lang === 'de' ? '/' : '/en/';
+
+const globalData = await getSanityData({query: globalSettings, params: { $lang: lang }});
+const { nav } = globalData;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html {lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -13,7 +24,10 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<Navigation navItems={nav} home={home}></Navigation>
+		<main>
+			<slot />
+		</main>
 	</body>
 	<script type="module">
 		const sources = {
