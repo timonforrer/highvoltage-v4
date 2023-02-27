@@ -1,0 +1,79 @@
+---
+import VALogo from '../svg/wordmark-chrome-outline.svg?raw';
+
+const {
+  home,
+  navItems,
+} = Astro.props;
+---
+
+<header>
+  <div class="space-between center center-v">
+    <a href={home} class="logo-link">
+      <Fragment set:html={VALogo}></Fragment>
+    </a>
+    <ul class="language-switcher">
+      <li><a href="/">DE</a></li>
+      <li><a href="/en/">EN</a></li>
+    </ul>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="center">
+    <ul class="reel hover-list">
+      {navItems.map(navItem => {
+        const { title, slug: { current: slug }} = navItem.meta;
+        return <li><a href={slug} class="hover-list__target uppercase">{title}</a></li>
+      })}
+    </ul>
+  </div>
+</nav>
+
+<style lang="scss" is:global>
+  header, nav.main-nav {
+    background-color: var(--color-dark-primary);
+  }
+  header {
+    .logo-link {
+      padding: var(--space-s) var(--space-m);
+      margin-inline-start: calc(var(--space-m) * -1);
+      svg {
+        height: auto;
+        width: 200px;
+      }
+    }
+    .language-switcher {
+      display: flex;
+      margin: unset;
+      li {
+        align-items: center;
+        display: flex;
+        &:not(:first-child) {
+          &::before {
+            content: '|';
+          }
+        }
+        a {
+          padding: var(--space-3xs);
+        }
+      }
+    }
+  }
+  nav.main-nav {
+    padding-block: var(--space-2xs);
+    position: sticky;
+    top: 0;
+    z-index: 777;
+    ul {
+      list-style: none;
+      margin-inline-start: calc(var(--space-m) * -1);
+      padding: 0;
+      a {
+        display: block;
+        padding: var(--space-s) var(--space-m);
+        text-decoration: none;
+      }
+    }
+  }
+</style>
