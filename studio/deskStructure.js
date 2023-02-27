@@ -1,4 +1,4 @@
-import {FiBox, FiCalendar, FiCopy, FiDatabase, FiLayout, FiLink2, FiMusic, FiShoppingBag, FiTag} from 'react-icons/fi'
+import {FiBox, FiCalendar, FiCopy, FiDatabase, FiLayout, FiLink2, FiMusic, FiSettings, FiShoppingBag, FiTag} from 'react-icons/fi'
 
 export const structure = (S) =>
   S.list()
@@ -140,5 +140,14 @@ export const structure = (S) =>
                 ),
             ])
         )
-        .icon(FiLink2)
-    ])
+        .icon(FiLink2),
+      S.divider(),
+      S.listItem()
+        .title('Global')
+        .child(
+          S.documentList()
+            .title('Global')
+            .filter('_type == "global" && __i18n_lang == "de"')
+        )
+        .icon(FiSettings),
+      ])
