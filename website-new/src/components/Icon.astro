@@ -1,6 +1,6 @@
 ---
 const {class: className, name, size = 24} = Astro.props;
-const { default: innerHTML } = await import(`../icons/${name}.svg?raw`);
+const { default: innerHTML } = await import(`../svg/${name}.svg?raw`);
 ---
 
 <svg
