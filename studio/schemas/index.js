@@ -7,6 +7,7 @@ import meta from "./object/meta";
 import richtext from "./object/richtext";
 
 import gig from "./pageTypes/gig";
+import global from "./pageTypes/global";
 import modular from "./pageTypes/modular";
 import release from "./pageTypes/release";
 import productCategory from "./pageTypes/productCategory";
@@ -34,6 +35,7 @@ export const schemaTypes = [
   richtext,
   // page types
   gig,
+  global,
   modular,
   productCategory,
   productSku,
