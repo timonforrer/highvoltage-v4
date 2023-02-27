@@ -97,3 +97,8 @@ export const allReleases = `*[_type == 'release' && __i18n_lang == $lang]|order(
   tracks->,
   videos->,
 }`;
+
+export const globalSettings = `*[_type=="global" && __i18n_lang == $lang]{
+  ...,
+  nav[]->
+}[0]`;
