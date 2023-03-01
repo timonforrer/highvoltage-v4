@@ -6,7 +6,8 @@ export const modularPages = `
     _type in [
       "videoHero",
       "section",
-      "productCategory"
+      "productCategory",
+      "gallery"
     ] => @-> {
       _type == "gallery" => {
         ...,
@@ -79,6 +80,7 @@ export const modularPages = `
           _type == "internalCollection" => @,
         },
       },
+      _type == "productCategory" => @
     },
   },
 }
