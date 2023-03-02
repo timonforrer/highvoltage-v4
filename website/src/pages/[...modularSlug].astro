@@ -37,7 +37,7 @@ const {page} = Astro.props;
 
 <Layout title={page.meta.title} lang={page.__i18n_lang}>
   <div class="stack-xl-2xl">
-    {page.blocks.map(block => {
+    {page.blocks && page.blocks.map(block => {
       const type = block._type;
       const Component = Components[type];
 
