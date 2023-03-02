@@ -30,9 +30,6 @@ const { nav } = globalData;
 		</main>
 	</body>
 	<script type="module">
-		const sources = {
-			'sp-video': '../../node_modules/@spartan-components/sp-video/sp-video.js'
-		};
 
 		const imported = {};
 		let observer = new IntersectionObserver((entries, observerRef) => {
@@ -42,9 +39,14 @@ const { nav } = globalData;
 					observerRef.unobserve(entry.target);
 
 					if (!imported[name]) {
+						switch (name) {
+							case 'sp-video':
+								import('../../node_modules/@spartan-components/sp-video/sp-video.js')
+								break;
+							default:
+								break;
+						}
 						imported[name] = true;
-
-						import(sources[name]);
 					}
 				}
 			});

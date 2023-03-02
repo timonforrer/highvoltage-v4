@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "copy:components": "mkdir -p dist/@spartan-components/sp-video && cp node_modules/@spartan-components/sp-video/* dist/@spartan-components/sp-video"
   },
   "dependencies": {
     "@astrojs/image": "^0.15.0",
