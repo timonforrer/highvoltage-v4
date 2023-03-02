@@ -104,7 +104,9 @@ const {
 
 <script>
   const button = document.querySelector('#load-video');
-  const video = document.querySelector('#video-frame');
 
-  button.addEventListener('click', () => video.setAttribute('video-loaded', ''));
+  if(button) {
+    const video = document.querySelector('#video-frame');
+    button.addEventListener('click', () => video.setAttribute('video-loaded', ''));
+  }
 </script>
