@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd website && npx @11ty/eleventy",
+    "build": "cd website && astro build",
     "clean": "rm -rf website/dist",
-    "dev": "cd website && DEV=true npx @11ty/eleventy --serve",
-    "dev:nocache": "cd website && NO_CACHE=true npx @11ty/eleventy --serve",
+    "dev": "cd website && DEV=true astro dev",
     "start": "npm run clean && vercel dev"
   },
   "repository": {
