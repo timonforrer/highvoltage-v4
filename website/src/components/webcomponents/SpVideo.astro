@@ -1,6 +1,7 @@
 ---
 import Image from "../Image.astro";
 import Icon from "../Icon.astro";
+// import SpVideo from "@spartan-components/sp-video";
 const {className, hideButton, id, videoId, pictureMediaSizes} = Astro.props;
 ---
 
@@ -26,7 +27,8 @@ const {className, hideButton, id, videoId, pictureMediaSizes} = Astro.props;
 </sp-video>
 
 <script>
-  const SpVideo = import('@spartan-components/sp-video');
+  const {SpVideo} = await import('@spartan-components/sp-video/src/SpVideo.js');
+  console.log(SpVideo);
 
   customElements.define('sp-video', SpVideo);
 </script>
