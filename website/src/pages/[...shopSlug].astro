@@ -1,0 +1,166 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import Picture from '../components/Picture.astro';
+
+import { replacer } from '../lib/utils';
+import { getSanityData } from '../lib/sanity';
+import { getAirtableData } from '../lib/airtable';
+import {
+  productSkus,
+  productVariantControllers
+} from '../lib/queries';
+import { log } from 'console';
+
+const sanityProductVariants = await getSanityData({
+  query: productVariantControllers
+});
+
+const airtableSkus = await getAirtableData({
+  table: 'Artikel',
+  base: 'shop',
+  view: 'Online',
+});
+
+const sanitySkus = await getSanityData({
+  query: productSkus
+});
+
+const skus = sanitySkus.map(sku => {
+  const variant = sanityProductVariants.find(variant => 
+    variant.productSkus.some(skuObject => skuObject.sku === sku.sku
+  ));
+
+  let supplementaryImages = [];
+
+  if (sku.supplementaryImages && sku.supplementaryImages.length > 0) {
+    supplementaryImages.push(...sku.supplementaryImages);
+  }
+  if (variant.supplementaryImages && variant.supplementaryImages.length > 0) {
+    supplementaryImages.push(...variant.supplementaryImages);
+  }
+
+  let blocks = [];
+
+  if (sku.blocks && sku.blocks.length > 0) {
+    blocks.push(...sku.blocks);
+  }
+  if (variant.blocks && variant.blocks.length > 0) {
+    blocks.push(...variant.blocks);
+  }
+
+  let bulletMap = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'];
+
+  let bullets = bulletMap.map(key => {
+    const skuBullet = sku.bullets && sku.bullets[key];
+    let variantBullet = variant.bullets && variant.bullets[key];
+    return {
+      key,
+      string: skuBullet ?? variantBullet};
+  });
+
+  bullets = bullets.filter(bullet => bullet.string !== undefined);
+  bullets = bullets.map(bullet => replacer({ string: bullet.string, data: sku }));
+
+  return {
+    ...sku,
+    blocks,
+    bullets,
+    mainImage: sku.mainImage ?? variant.mainImage,
+    supplementaryImages,
+    variants: variant.productSkus,
+    variantIdentifier: variant.variantIdentifier
+  }
+});
+
+export {skus};
+
+export async function getStaticPaths() {
+  const sanitySkus = await getSanityData({
+    query: productSkus
+  });
+
+  return sanitySkus.map(page => {
+    let { slug: { current: slug } } = page.meta;
+    slug = slug === "/" ? undefined : slug.replace(/(^\/+)|(\/+$)/g, "");
+    return {
+      params: {
+        shopSlug: slug,
+      },
+      props: {page}
+    }
+  });
+};
+
+const {page} = Astro.props;
+
+const {
+  bullets,
+  mainImage,
+  meta: {
+    title
+  },
+  supplementaryImages,
+  sku,
+  variants,
+  variantIdentifier
+} = skus.find(sku => sku.meta.title === page.meta.title);
+const all = skus.find(sku => sku.meta.title === page.meta.title);
+---
+
+<Layout title={page.meta.title} lang={page.__i18n_lang}>
+  <div class="stack-l">
+    <section>
+      <div class="center grid grid--2-columns grid--gap-m">
+        <Picture
+          aspectMobile="1:1"
+          aspectDesktop="1:1"
+          class="rounded"
+          image={mainImage}
+        />
+        <div class="stack-m">
+          <h1>{title}</h1>
+          <ul>
+            {bullets.map(bullet => <li>{bullet}</li>)}
+          </ul>
+          <div class="stack-xs">
+            <p>{variantIdentifier}</p>
+            {
+              variants && variants.map(variant => {
+                const isCurrent = sku === variant.sku;
+                return (
+                  <Button theme="light" outlined={!isCurrent} href={variant.meta.slug.current}>
+                    {variant.variant}
+                  </Button>
+                )
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <ul class="center grid grid--3-columns grid--gap-m">
+        {supplementaryImages.map(image => (
+          <li>
+            <Picture
+              aspectMobile="1:1"
+              aspectDesktop="1:1"
+              class="rounded"
+              image={image}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</Layout>
+
+<details>
+  <summary>data</summary>
+  <pre>{JSON.stringify(all, null, 2)}</pre>
+</details>
+
+<style lang="scss" is:global>
+
+</style>
