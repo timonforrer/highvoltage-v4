@@ -112,12 +112,14 @@ const all = skus.find(sku => sku.meta.title === page.meta.title);
   <div class="stack-l">
     <section>
       <div class="center grid grid--2-columns grid--gap-m">
-        <Picture
-          aspectMobile="1:1"
-          aspectDesktop="1:1"
-          class="rounded"
-          image={mainImage}
-        />
+        { mainImage &&
+          <Picture
+            aspectMobile="1:1"
+            aspectDesktop="1:1"
+            class="rounded"
+            image={mainImage}
+          />
+        }
         <div class="stack-m">
           <h1>{title}</h1>
           <ul>
@@ -140,18 +142,20 @@ const all = skus.find(sku => sku.meta.title === page.meta.title);
       </div>
     </section>
     <section>
-      <ul class="center grid grid--3-columns grid--gap-m">
-        {supplementaryImages.map(image => (
-          <li>
-            <Picture
-              aspectMobile="1:1"
-              aspectDesktop="1:1"
-              class="rounded"
-              image={image}
-            />
-          </li>
-        ))}
-      </ul>
+      { supplementaryImages &&
+        <ul class="center grid grid--3-columns grid--gap-m">
+          {supplementaryImages.map(image => (
+            <li>
+              <Picture
+                aspectMobile="1:1"
+                aspectDesktop="1:1"
+                class="rounded"
+                image={image}
+              />
+            </li>
+          ))}
+        </ul>
+      }
     </section>
   </div>
 </Layout>
