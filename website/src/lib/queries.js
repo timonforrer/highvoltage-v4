@@ -86,10 +86,13 @@ export const modularPages = `
 }
 `;
 
-export const upcomingGigs = `*[_type == "gig" && internal.startDate >= now()] | order(internal.startDate asc)`;
-export const pastGigs = `*[_type == "gig" && internal.startDate < now()] | order(internal.startDate desc)`;
+export const upcomingGigs = `
+*[_type == "gig" && internal.startDate >= now()] | order(internal.startDate asc)`;
+export const pastGigs = `
+*[_type == "gig" && internal.startDate < now()] | order(internal.startDate desc)`;
 
-export const allReleases = `*[_type == 'release' && __i18n_lang == $lang]|order(releaseDate desc){
+export const allReleases = `
+*[_type == 'release' && __i18n_lang == $lang]|order(releaseDate desc){
   ...,
   artwork {
     ...,
@@ -100,7 +103,64 @@ export const allReleases = `*[_type == 'release' && __i18n_lang == $lang]|order(
   videos->,
 }`;
 
-export const globalSettings = `*[_type=="global" && __i18n_lang == $lang]{
+export const globalSettings = `
+*[_type=="global" && __i18n_lang == $lang]{
   ...,
   nav[]->
 }[0]`;
+
+export const productSkus = `
+*[_type=="productSku"]{
+  ...,
+  blocks[] {
+    ...,
+    _type == "reviews" => @-> {
+      ...,
+      items[] {
+        ...,
+        image {
+          asset->
+        }
+      }
+    }
+  },
+  mainImage {
+    ...,
+    asset->
+  },
+  supplementaryImages[] {
+    ...,
+    asset->
+  }
+}`;
+
+export const productVariantControllers = `
+*[_type=="productVariant"]{
+  ...,
+  blocks[] {
+    ...,
+    _type == "reviews" => @-> {
+      ...,
+      items[] {
+        ...,
+        image {
+          asset->
+        }
+      }
+    }
+  },
+  mainImage {
+    ...,
+    asset->
+  },
+  productCategory->,
+  productSkus[]->{
+    meta,
+    sku,
+    variant
+  },
+  supplementaryImages[] {
+    ...,
+    asset->
+  }
+}`;
