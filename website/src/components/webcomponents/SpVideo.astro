@@ -1,7 +1,14 @@
 ---
-import Image from "../Image.astro";
-import Icon from "../Icon.astro";
-const {className, hideButton, id, videoId, pictureMediaSizes} = Astro.props;
+import Image from '../Image.astro';
+import Icon from '../Icon.astro';
+import {t} from '../../lib/translations';
+const {
+  className,
+  id,
+  lang,
+  pictureMediaSizes,
+  videoId,
+} = Astro.props;
 ---
 
 <sp-video provider="youtube-nocookie" video-id={videoId} {id} class={className}>
@@ -13,7 +20,13 @@ const {className, hideButton, id, videoId, pictureMediaSizes} = Astro.props;
       sizes={pictureMediaSizes}
     />
   </div>
-  <button class="breakout-button button button--light button--rounded" slot="controller"><Icon class="play-icon" name="play"/></button>
+  <button
+    class="breakout-button button button--light button--rounded"
+    title={t('play', lang, 'capitalize')}
+    slot="controller"
+  >
+    <Icon class="play-icon" name="play"/>
+  </button>
   <!-- Fallback for browsers that don't support custom elements, has to use class="fallback-link" -->
   <a
     href={`https://www.youtube.com/watch?v=${videoId}`}

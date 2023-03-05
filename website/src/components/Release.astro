@@ -1,5 +1,6 @@
 ---
 import Image from './Image.astro';
+import {t} from '../lib/translations';
 
 import Spotify from '../svg/spotify.svg?raw';
 import AppleMusicDE from '../svg/apple-music-de.svg?raw';
@@ -33,19 +34,25 @@ const {
           &middot; {tracks.items.length} {tracks.items.length === 1 ? 'Song' : 'Songs'}</p>
         <h3>{meta.title}</h3>
       </div>
-      <div class="providers">
-        <a href={providers.highlighted.youtubeMusic}>
+      <div class="providers hover-list">
+        <a class="hover-list__target" href={providers.highlighted.youtubeMusic} title="YouTube Music">
           <Fragment set:html={YoutubeMusic} />
         </a>
-        <a href={providers.highlighted.spotify}>
+        <a class="hover-list__target" href={providers.highlighted.spotify} title="Spotify">
           <Fragment set:html={Spotify} />
         </a>
-        <a href={providers.highlighted.appleMusic}>
+        <a class="hover-list__target" href={providers.highlighted.appleMusic} title="Apple Music">
           { lang === 'de' ? <Fragment set:html={AppleMusicDE} /> : <Fragment set:html={AppleMusicEN} /> }
         </a>
       </div>
     </div>
-    <a href={meta.slug.current} class="breakout-link"><Icon size={36} name="chevron" /></a>
+    <a
+      href={meta.slug.current}
+      class="breakout-link"
+      title={t('learnMore', lang, 'capitalize')}
+    >
+      <Icon size={36} name="chevron" />
+    </a>
   </div>
 </div>
 
@@ -92,22 +99,12 @@ const {
       flex-wrap: wrap;
       gap: var(--space-2xs) var(--space-m);
       width: fit-content;
-      z-index: 0;
+      z-index: 1;
       
       a {
         flex-basis: 7em;
         flex-grow: 0;
         flex-shrink: 1;
-        transition: 200ms ease;
-        transition-property: opacity;
-      }
-
-      &:hover > a {
-        opacity: 0.5;
-
-        &:hover {
-          opacity: 1;
-        }
       }
     }
 

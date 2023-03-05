@@ -10,6 +10,7 @@ const {
   backgroundVideo,
   cta,
   description,
+  lang,
   title,
   video
 } = Astro.props;
@@ -36,7 +37,7 @@ const {
   </div>
 </section>
 
-<SpVideo class="center" videoId={getYoutubeId(video.url)} id="video-frame" />
+<SpVideo {lang} class="center" videoId={getYoutubeId(video.url)} id="video-frame" />
 
 <style lang="scss" is:global>
   .video-hero {

@@ -3,6 +3,7 @@ import { getSanityData } from '../../lib/sanity';
 import { pastGigs, upcomingGigs } from '../../lib/queries';
 import { getAirtableData } from '../../lib/airtable';
 import Icon from '../Icon.astro';
+import { t } from '../../lib/translations';
 
 const {
   filterGigs,
@@ -65,18 +66,24 @@ const formatter = new Intl.DateTimeFormat(lang, {
       }
     } = gig.airtableFields;
     return (
-      <article class="gig-preview hover-list__target">
-        <div class="stack-3xs">
-          <p class="tight">{formatter.format(new Date(start))}</p>
-          <div class="stack-2xs">
-            <h3>{gig.meta.title}</h3>
-            <p class="uppercase">{venueName} {venueCity}, {venueCanton}</p>
+      <li>
+        <article class="gig-preview hover-list__target">
+          <div class="stack-3xs">
+            <p class="tight">{formatter.format(new Date(start))}</p>
+            <div class="stack-2xs">
+              <h3>{gig.meta.title}</h3>
+              <p class="uppercase">{venueName} {venueCity}, {venueCanton}</p>
+            </div>
           </div>
-        </div>
-        <a href={gig.meta.slug.current} class="breakout-link">
-          <Icon size={36} name="chevron" />
-        </a>
-      </article>
+          <a
+            class="breakout-link"
+            href={gig.meta.slug.current}
+            title={t('learnMore', lang, 'capitalize')}
+          >
+            <Icon size={36} name="chevron" />
+          </a>
+        </article>
+      </li>
     )
   })}
 </ul>
