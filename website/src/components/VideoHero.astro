@@ -2,7 +2,7 @@
 import RichText from "./RichText.astro";
 import Button from "./Button.astro";
 import Icon from './Icon.astro';
-import Video from './Video.astro';
+import SpVideo from './webcomponents/SpVideo.astro';
 import getYoutubeId from 'get-youtube-id';
 
 const {
@@ -36,7 +36,7 @@ const {
   </div>
 </section>
 
-<Video class="center" videoId={getYoutubeId(video.url)} id="video-frame" />
+<SpVideo class="center" videoId={getYoutubeId(video.url)} id="video-frame" />
 
 <style lang="scss" is:global>
   .video-hero {
