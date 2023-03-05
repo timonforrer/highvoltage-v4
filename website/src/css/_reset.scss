@@ -40,3 +40,8 @@ p, h1, h2, h3, h4, h5, h6 {
 a {
   color: var(--color-text);
 }
+/* 10. remove list style on any list with a class */
+ul[class] {
+  list-style: none;
+  padding: 0;
+}
