@@ -45,10 +45,10 @@
       grid-template-columns: repeat(auto-fit, minmax(min(450px, 100%), 1fr));
     }
     &--3-columns {
-      grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     }
     &--4-columns {
-      grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
     }
   }
 }
