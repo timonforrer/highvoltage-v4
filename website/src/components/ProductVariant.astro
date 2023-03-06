@@ -2,6 +2,7 @@
 import Picture from './Picture.astro';
 import Icon from './Icon.astro';
 import { getAirtableData } from '../lib/airtable';
+import { t } from '../lib/translations';
 
 const airtableSkus = await getAirtableData({
   table: 'Artikel',
@@ -49,7 +50,13 @@ const variants = productSkus.map(sku => sku.variant);
         }
       </p>
     </div>
-    <a href={productSkus[0].meta.slug.current} class="breakout-link"><Icon size={36} name="chevron" /></a>
+    <a
+      href={productSkus[0].meta.slug.current}
+      class="breakout-link"
+      title={t('learnMore', lang, 'capitalize')}
+    >
+      <Icon size={36} name="chevron" />
+    </a>
   </div>
 </div>
 
