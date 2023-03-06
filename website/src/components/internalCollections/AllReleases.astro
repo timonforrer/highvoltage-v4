@@ -6,7 +6,6 @@ import { getSanityData } from '../../lib/sanity';
 const {
   lang,
 } = Astro.props;
-
 const releases = await getSanityData({
   query: allReleases,
   params: {
@@ -18,7 +17,6 @@ const releases = await getSanityData({
 {releases.map(release => {
   let {
     artwork,
-    lang,
     meta,
     providers,
     releaseDate,
