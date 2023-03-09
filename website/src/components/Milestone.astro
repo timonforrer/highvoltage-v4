@@ -30,7 +30,14 @@ let palette = Object.keys(_palette).map(color => {
 ---
 
 <div class="milestone">
-  <div class="milestone__content center center-v pin-permanent">
+  <Picture
+    aspectMobile="16:9"
+    aspectDesktop="21:9"
+    class="milestone__image"
+    {image}
+  />
+
+  <div class="milestone__content center center-v pin">
     <div class="supernarrow stack-s">
       <div>
         <time class="uppercase bold" datetime={date}>{formatter.format(new Date(date))}</time>
@@ -42,13 +49,6 @@ let palette = Object.keys(_palette).map(color => {
       </div>
     </div>
   </div>
-  
-  <Picture
-    aspectMobile="4:5"
-    aspectDesktop="21:9"
-    class="milestone__image"
-    {image}
-  />
 </div>
 
 <style lang="scss" is:global>
@@ -122,22 +122,37 @@ let palette = Object.keys(_palette).map(color => {
       }
     }
 
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e);
-      display: block;
+    &__image {
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e);
+        display: block;
+      }
     }
   }
-  @media screen and (max-width: 600px) {
-  .milestone {
-    &::after {
-      background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e), rgba(0,0,0,0.5);
+  @media screen and (max-width: 760px) {
+    .milestone {
+      &__content {
+        margin-block-start: calc(var(--space-xl) * -1);
+        padding-block-end: var(--space-l);
+      }
+      &__image {
+        &::after {
+          background:
+            linear-gradient(
+              180deg,
+              hsla(0, 0%, 5%, 0),
+              hsla(0, 0%, 5%, 0.72) 72.79%,
+              #0e0e0e);
+          // background: linear-gradient(-90deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e), rgba(0,0,0,0.5);
+        }
+      }
     }
-  }
   }
 </style>
