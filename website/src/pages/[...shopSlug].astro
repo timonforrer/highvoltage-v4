@@ -10,10 +10,12 @@ import {
   productSkus,
   productVariantControllers
 } from '../lib/queries';
-import { log } from 'console';
 
 const sanityProductVariants = await getSanityData({
-  query: productVariantControllers
+  query: productVariantControllers,
+  params: {
+    $id: '*'
+  }
 });
 
 const airtableSkus = await getAirtableData({
@@ -72,8 +74,6 @@ const skus = sanitySkus.map(sku => {
     variantIdentifier: variant.variantIdentifier
   }
 });
-
-export {skus};
 
 export async function getStaticPaths() {
   const sanitySkus = await getSanityData({
