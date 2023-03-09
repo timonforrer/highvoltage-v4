@@ -1,0 +1,29 @@
+---
+const {
+  autoplay,
+  loop,
+  poster,
+  playbackId,
+  playsinline,
+  muted,
+} = Astro.props;
+---
+<mux-video
+  {autoplay}
+  {loop}
+  {poster}
+  playback-id={playbackId}
+  {playsinline}
+  {muted}
+  stream-type="on-demand"
+></mux-video>
+
+<script>
+  await import('@mux/mux-video');
+</script>
+
+<style lang="scss" is:global>
+  mux-video {
+    width: 100%;
+  }
+</style>
