@@ -30,6 +30,10 @@ export const modularPages = `
           ...,
           asset->,
         },
+        muxvideo{
+          ...,
+          asset->
+        }
       },
       _type == "section" => {
         ...,
