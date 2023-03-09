@@ -25,6 +25,11 @@ export default {
       type: 'video'
     },
     {
+      title: 'Video',
+      name: 'muxvideo',
+      type: 'mux.video'
+    },
+    {
       name: 'backgroundImage',
       title: 'Background Image',
       type: 'image',

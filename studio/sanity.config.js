@@ -4,6 +4,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import {withDocumentI18nPlugin} from '@sanity/document-internationalization'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
+import {muxInput} from 'sanity-plugin-mux-input'
 import {structure} from './deskStructure'
 
 export default defineConfig({
@@ -21,6 +22,7 @@ export default defineConfig({
     media({
       originalFilename: false
     }),
+    muxInput(),
   ]), {
     includeDeskTool: false,
     languages: [

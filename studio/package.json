@@ -24,6 +24,7 @@
     "react-lite-youtube-embed": "^2.3.52",
     "sanity": "^3.0.0",
     "sanity-plugin-media": "^2.0.2",
+    "sanity-plugin-mux-input": "2.0.16",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
