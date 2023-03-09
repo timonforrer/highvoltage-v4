@@ -1,14 +1,8 @@
 ---
 import Picture from './Picture.astro';
 import Icon from './Icon.astro';
-import { getAirtableData } from '../lib/airtable';
+import { basicPopulatedSkus } from '../lib/utils';
 import { t } from '../lib/translations';
-
-const airtableSkus = await getAirtableData({
-  table: 'Artikel',
-  base: 'shop',
-  view: 'Online',
-});
 
 const {
   mainImage,
@@ -19,10 +13,7 @@ const {
   lang
 } = Astro.props;
 
-const skus = airtableSkus.filter(airtableSku => {
-  return productSkus.some(sku => airtableSku['Artikelnummer'] === sku.sku);
-});
-
+const { skus } = await basicPopulatedSkus({ baseSkus: productSkus });
 const mainSku = skus[0];
 
 const formatter = new Intl.ListFormat(lang, { style: 'long', type: 'disjunction' })
@@ -32,11 +23,14 @@ const variants = productSkus.map(sku => sku.variant);
 ---
 
 <div class="product-card">
-  <Picture
-    aspectMobile="4:5"
-    aspectDesktop="1:1"
-    image={mainImage}
-  />
+  {
+    mainImage &&
+    <Picture
+      aspectMobile="4:5"
+      aspectDesktop="1:1"
+      image={mainImage}
+    />
+  }
   <div class="product-card__content">
     <div class="stack-xs">
       <h3 class="tight">{title}</h3>
