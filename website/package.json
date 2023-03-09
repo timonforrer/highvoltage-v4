@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.15.0",
+    "@mux/mux-player": "^1.8.0",
     "@portabletext/to-html": "^1.0.4",
     "@spartan-components/sp-video": "^0.1.2",
     "airtable": "^0.11.6",
