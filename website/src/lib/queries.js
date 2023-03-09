@@ -139,7 +139,7 @@ export const productSkus = `
 }`;
 
 export const productVariantControllers = `
-*[_type=="productVariant"]{
+*[_type=="productVariant" && productCategory._ref match $id]{
   ...,
   blocks[] {
     ...,
