@@ -3,12 +3,12 @@ import RichText from "./RichText.astro";
 import Button from "./Button.astro";
 import Icon from './Icon.astro';
 import SpVideo from './webcomponents/SpVideo.astro';
+import MuxVideo from './webcomponents/MuxVideo.astro';
 import getYoutubeId from 'get-youtube-id';
-import Image from "./Image.astro";
 
 const {
   backgroundImage,
-  backgroundVideo,
+  muxvideo,
   cta,
   description,
   lang,
@@ -18,18 +18,14 @@ const {
 ---
 
 <section class="video-hero">
-  <video
+  <MuxVideo
     autoplay
-    playsinline
     loop
+    poster={backgroundImage.asset.url+'?w=800&q=50'}
+    playbackId={muxvideo.asset.playbackId}
+    playsinline
     muted
-    src={backgroundVideo.asset.url}
-  >
-  </video>
-  <Image
-    class="poster pin-permanent"
-    image={backgroundImage}
-  ></Image>
+    ></MuxVideo>
   <div class="pin center-v content">
     <div class="center stack-m">
       <div class="stack-xs">
@@ -50,10 +46,6 @@ const {
     min-height: 70vh;
     position: relative;
     z-index: 0;
-
-    .poster img {
-      width: 100%;
-    }
 
     p {
       font-size: var(--step-1);
