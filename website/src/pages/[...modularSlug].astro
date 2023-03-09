@@ -45,7 +45,9 @@ const {page} = Astro.props;
         return <p>No component specified for `{type}`</p>;
       }
 
-      return <Component {...block} lang={page.__i18n_lang}></Component>
+      let attributes = {lang: page.__i18n_lang};
+
+      return <Component {...block} {...attributes}></Component>
     })}
     <details>
       <summary>data</summary>
