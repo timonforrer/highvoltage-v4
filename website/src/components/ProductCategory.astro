@@ -1,11 +1,35 @@
 ---
 const {
-  title
+  _id: categoryId,
+  lang,
+  title,
 } = Astro.props;
 
-console.log(Astro.props)
+import { productVariantControllers } from '../lib/queries';
+import { getSanityData } from '../lib/sanity';
+
+import ProductVariant from './ProductVariant.astro';
+
+const sanitySkus = await getSanityData({
+  query: productVariantControllers,
+  params: {
+    $id: categoryId
+  }
+});
 ---
 
-<div class="center">
+<div class="center stack-m">
   <h2>{title}</h2>
+  <ul class="grid grid--3-columns grid--gap-m">
+    {
+      sanitySkus.map(sku => (
+        <li>
+          <ProductVariant
+            {...sku}
+            {lang}
+          ></ProductVariant>
+        </li>
+      ))
+    }
+  </ul>
 </div>
