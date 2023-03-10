@@ -1,6 +1,4 @@
 import { getAirtableData } from '../lib/airtable';
-import { getSanityData } from '../lib/sanity';
-import { productSkus } from '../lib/queries';
 
 const replacer = ({string, data}) => string.replace(/{{\s*(\w+)\s*}}/g, (match, key) => {
   return typeof data[key] !== 'undefined' ? data[key] : match;
@@ -22,7 +20,16 @@ const basicPopulatedSkus = async ({ baseSkus }) => {
   }
 }
 
+const removeMultiSlash = (string, { keepTrailing } = {}) => {
+  let newString = string.replace(/\/{2,}/g, '/');
+  if (!keepTrailing) {
+    newString = newString.replace(/^\/+|\/+$/g, '')
+  }
+  return newString;
+};
+
 export {
+  basicPopulatedSkus,
+  removeMultiSlash,
   replacer,
-  basicPopulatedSkus
 }
