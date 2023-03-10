@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+import {getSanityData} from '../lib/sanity';
+import {gallery as galleryQuery} from '../lib/queries';
+
+import Image from "../components/Image.astro";
+
+export async function getStaticPaths() {
+  const allGalleryPages = await getSanityData({query: galleryQuery});
+
+  return allGalleryPages.map(gallery => {
+    let { slug: { current: slug } } = gallery.meta;
+
+    return gallery.images.map(page => {
+      slug = slug + '/' + page.image.asset.assetId;
+      slug = slug === "/" ? undefined : slug.replace(/(^\/+)|(\/+$)/g, "");
+      return {
+        params: {
+          gallerySlug: slug,
+        },
+        props: {
+          gallery,
+          page,
+        }
+      }
+    });
+  });
+};
+
+const {
+  gallery,
+  page,
+} = Astro.props;
+---
+
+<Layout title={gallery.meta.title} lang={gallery.__i18n_lang} nonav="true">
+  <div class="stack-xl-2xl">
+    <Image
+      class="max-image"
+      image={page.image}
+      sizes="100vw"
+    ></Image>
+    <!-- <details>
+      <summary>data</summary>
+      <pre>{JSON.stringify(page, null, 2)}</pre>
+    </details> -->
+    </div>
+</Layout>
+
+<style lang="scss" is:global>
+.max-image {
+  img {
+    width: 100%;
+    height: 100vh;
+    object-fit: contain;
+  }
+}
+</style>
