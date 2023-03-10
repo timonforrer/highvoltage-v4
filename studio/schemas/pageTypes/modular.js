@@ -50,7 +50,9 @@ export default {
         },
         {
           name: 'gallery',
-          type: 'gallery'
+          title: 'Gallery',
+          type: 'reference',
+          to: [{type: 'gallery'}],
         }
       ],
     },

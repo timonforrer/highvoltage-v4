@@ -1,8 +1,16 @@
 export default {
   name: 'gallery',
   title: 'Gallery',
-  type: 'object',
+  type: 'document',
+  i18n: true,
+  initialValue: {
+    __i18n_lang: 'de',
+  },
   fields: [
+    {
+      name: 'title',
+      type: 'string'
+    },
     {
       name: 'images',
       type: 'array',

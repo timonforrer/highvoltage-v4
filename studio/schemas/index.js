@@ -1,5 +1,4 @@
 import arrayRichtext from "./object/arrayRichtext";
-import gallery from "./object/gallery";
 import gigs from "./object/gigs";
 import inlinevideo from "./object/inlinevideo";
 import internalCollection from "./object/internalCollection";
@@ -15,6 +14,7 @@ import productSku from "./pageTypes/productSku";
 import productVariant from "./pageTypes/productVariant";
 
 import credits from "./refs/credits";
+import gallery from "./refs/gallery";
 import milestone from "./refs/milestone";
 import providers from "./refs/providers";
 import reviews from "./refs/reviews";
@@ -27,7 +27,6 @@ import videos from "./refs/videos";
 export const schemaTypes = [
   // objects
   arrayRichtext,
-  gallery,
   gigs,
   inlinevideo,
   internalCollection,
@@ -43,6 +42,7 @@ export const schemaTypes = [
   release,
   // refs
   credits,
+  gallery,
   milestone,
   providers,
   reviews,
