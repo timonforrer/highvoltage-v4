@@ -3,18 +3,21 @@ import Layout from '../layouts/Layout.astro'
 
 import {getSanityData} from '../lib/sanity';
 import {modularPages} from '../lib/queries';
-import Section from '../components/Section.astro';
-import VideoHero from '../components/VideoHero.astro';
-import RichText from '../components/RichTextSection.astro';
+
+import Gallery from '../components/Gallery.astro';
 import InternalCollection from '../components/InternalCollection.astro';
 import ProductCategory from '../components/ProductCategory.astro';
+import RichText from '../components/RichTextSection.astro';
+import Section from '../components/Section.astro';
+import VideoHero from '../components/VideoHero.astro';
 
 const Components = {
-  section: Section,
-  videoHero: VideoHero,
-  richtext: RichText,
+  gallery: Gallery,
   internalCollection: InternalCollection,
   productCategory: ProductCategory,
+  richtext: RichText,
+  section: Section,
+  videoHero: VideoHero,
 }
 
 export async function getStaticPaths() {
