@@ -8,8 +8,8 @@ export default {
   },
   fields: [
     {
-      name: 'title',
-      type: 'string'
+      name: 'meta',
+      type: 'meta'
     },
     {
       name: 'images',
@@ -40,4 +40,9 @@ export default {
       ],
     },
   ],
+  preview: {
+    select: {
+      title: 'meta.title' || ''
+    }
+  }
 }
