@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro'
 
-import {getSanityData} from '../lib/sanity';
-import {modularPages} from '../lib/queries';
+import { getSanityData } from '../lib/sanity';
+import { modularPages } from '../lib/queries';
+import { removeMultiSlash } from '../lib/utils';
 
 import Gallery from '../components/Gallery.astro';
 import InternalCollection from '../components/InternalCollection.astro';
@@ -25,7 +26,7 @@ export async function getStaticPaths() {
 
   return allModularPages.map(page => {
     let { slug: { current: slug } } = page.meta;
-    slug = slug === "/" ? undefined : slug.replace(/(^\/+)|(\/+$)/g, "");
+    slug = slug === "/" ? undefined : removeMultiSlash(slug);
     return {
       params: {
         modularSlug: slug,

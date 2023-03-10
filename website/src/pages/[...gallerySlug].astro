@@ -1,20 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro'
 
-import {getSanityData} from '../lib/sanity';
-import {gallery as galleryQuery} from '../lib/queries';
+import { getSanityData } from '../lib/sanity';
+import { gallery as galleryQuery } from '../lib/queries';
+import { removeMultiSlash } from '../lib/utils';
 
 import Image from "../components/Image.astro";
+import { log } from 'console';
 
 export async function getStaticPaths() {
   const allGalleryPages = await getSanityData({query: galleryQuery});
 
   return allGalleryPages.map(gallery => {
-    let { slug: { current: slug } } = gallery.meta;
-
+    
     return gallery.images.map(page => {
+      let { slug: { current: slug } } = gallery.meta;
       slug = slug + '/' + page.image.asset.assetId;
-      slug = slug === "/" ? undefined : slug.replace(/(^\/+)|(\/+$)/g, "");
+      slug = slug === "/" ? undefined : removeMultiSlash(slug);
+      log(slug)
       return {
         params: {
           gallerySlug: slug,

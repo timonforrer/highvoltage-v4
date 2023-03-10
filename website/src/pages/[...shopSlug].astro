@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
 import Picture from '../components/Picture.astro';
 
-import { replacer } from '../lib/utils';
+import { removeMultiSlash, replacer } from '../lib/utils';
 import { getSanityData } from '../lib/sanity';
 import { getAirtableData } from '../lib/airtable';
 import {
@@ -82,7 +82,7 @@ export async function getStaticPaths() {
 
   return sanitySkus.map(page => {
     let { slug: { current: slug } } = page.meta;
-    slug = slug === "/" ? undefined : slug.replace(/(^\/+)|(\/+$)/g, "");
+    slug = slug === "/" ? undefined : removeMultiSlash(slug);
     return {
       params: {
         shopSlug: slug,
