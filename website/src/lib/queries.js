@@ -168,3 +168,16 @@ export const productVariantControllers = `
     asset->
   }
 }`;
+
+export const gallery = `
+*[_type=="gallery"]{
+  ...,
+  images[] {
+    ...,
+    credits->,
+    image {
+      ...,
+      asset->
+    }
+  }
+}`;
