@@ -1,0 +1,22 @@
+---
+import Picture from "./Picture.astro";
+const {
+  meta,
+  images
+} = Astro.props;
+console.log(images[0]);
+---
+
+<ul class="grid grid--3-columns grid--gap-m center">
+  {images.map(item => (
+    <li>
+      <a href={meta.slug.current+'/'+item.image.asset.assetId}>
+        <Picture
+          aspectDesktop="1:1"
+          aspectMobile="1:1"
+          image={item.image}
+        ></Picture>
+      </a>
+    </li>
+  ))}
+</ul>
