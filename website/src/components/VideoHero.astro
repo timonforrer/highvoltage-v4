@@ -15,16 +15,19 @@ const {
   title,
   video
 } = Astro.props;
+
+const { playbackId } = muxvideo.asset;
+
 ---
 
 <section class="video-hero">
   <MuxVideo
     autoplay
     loop
-    poster={backgroundImage.asset.url+'?w=800&q=50'}
-    playbackId={muxvideo.asset.playbackId}
-    playsinline
     muted
+    poster={`https://image.mux.com/${playbackId}/thumbnail.jpg?width=800`}
+    playbackId={playbackId}
+    playsinline
     ></MuxVideo>
   <div class="pin center-v content">
     <div class="center stack-m">
@@ -43,7 +46,6 @@ const {
 <style lang="scss" is:global>
   .video-hero {
     margin-bottom: -4em;
-    min-height: 70vh;
     position: relative;
     z-index: 0;
 
@@ -66,6 +68,7 @@ const {
     }
 
     .content {
+      margin-top: -4em;
       z-index: 1;
     }
   }
@@ -101,6 +104,10 @@ const {
 
     .video-hero {
       margin-bottom: var(--space-l);
+
+      .content {
+        margin-top: 0;
+      }
     }
   }
 </style>
