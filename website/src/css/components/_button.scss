@@ -17,7 +17,7 @@
   }
   &--outlined {
     background-color: transparent;
-    box-shadow: var(--color-primary) 0 0 0 2.5px;
+    box-shadow: var(--color-primary) 0 0 0 2.5px inset;
     color: var(--color-primary);
     &.button--light {
       --color-primary: var(--color-light-primary);
