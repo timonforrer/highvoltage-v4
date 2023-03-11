@@ -147,10 +147,6 @@
     flex: 0 0 auto;
   }
 
-  // > * + * {
-  //   margin-inline-start: 1rem;
-  // }
-
   &.overflowing {
     padding-block-end: 1rem;
   }
@@ -159,4 +155,8 @@
 .space-between {
   display: flex;
   justify-content: space-between;
+}
+
+.flip {
+  transform: scale(-1)
 }
