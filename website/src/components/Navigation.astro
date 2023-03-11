@@ -65,6 +65,11 @@ const {
     position: sticky;
     top: 0;
     z-index: 777;
+
+    & > * {
+      padding-inline-end: 0;
+    }
+
     ul {
       list-style: none;
       margin-inline-start: calc(var(--space-m) * -1);
