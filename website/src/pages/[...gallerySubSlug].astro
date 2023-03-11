@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+import { getSanityData } from '../lib/sanity';
+import { gallery as galleryQuery } from '../lib/queries';
+import { removeMultiSlash } from '../lib/utils';
+
+import Image from "../components/Image.astro";
+
+export async function getStaticPaths() {
+  const allGalleryPages = await getSanityData({query: galleryQuery});
+
+  return allGalleryPages.map(gallery => {
+    return gallery.images.map((page, index) => {
+      const previous = gallery.images[index-1];
+      const next = gallery.images[index+1];
+      let { slug: { current: slug } } = gallery.meta;
+      slug = slug + '/' + page.image.asset.assetId;
+      slug = slug === "/" ? undefined : removeMultiSlash(slug);
+      return {
+        params: {
+          gallerySubSlug: slug,
+        },
+        props: {
+          gallery,
+          next,
+          page,
+          previous,
+        }
+      }
+    });
+  });
+};
+
+const {
+  gallery,
+  next,
+  page,
+  previous,
+} = Astro.props;
+
+const rootUrl = gallery.meta.slug.current;
+const rootUrlWithHash = `${rootUrl}#${page.image.asset.assetId}`;
+const previousUrl = previous
+  && removeMultiSlash(`${rootUrl}/${previous.image.asset.assetId}`, {keepTrailing: true});
+const nextUrl = next
+  && removeMultiSlash(`${rootUrl}/${next.image.asset.assetId}`, {keepTrailing: true});
+
+console.log({next, previous})
+---
+
+<Layout title={gallery.meta.title} lang={gallery.__i18n_lang} nonav="true">
+  <div class="controls pin">
+    { <a href={rootUrlWithHash}>back</a> }
+    { previousUrl && <a href={previousUrl}>previous</a> }
+    { nextUrl && <a href={nextUrl}>next</a> }
+  </div>
+  <div class="stack-xl-2xl">
+    <Image
+      class="max-image"
+      image={page.image}
+      sizes="100vw"
+    ></Image>
+    <!-- <details>
+      <summary>data</summary>
+      <pre>{JSON.stringify(page, null, 2)}</pre>
+    </details> -->
+    </div>
+</Layout>
+
+<style lang="scss" is:global>
+.max-image {
+  img {
+    width: 100%;
+    height: 100vh;
+    height: 100vmin;
+    object-fit: contain;
+  }
+}
+</style>
