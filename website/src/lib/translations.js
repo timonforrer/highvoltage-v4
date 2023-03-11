@@ -7,6 +7,22 @@ const translations = {
     de: 'mehr erfahren',
     en: 'learn more'
   },
+  nextImage: {
+    de: 'nächstes Bild',
+    en: 'next image',
+  },
+  previousImage: {
+    de: 'vorheriges Bild',
+    en: 'previous image',
+  },
+  backToImageOverview: {
+    de: 'zurück zur Bildübersicht',
+    en: 'back to image overview',
+  },
+  showImage: {
+    de: 'Bild ansehen',
+    en: 'show Image',
+  }
 }
 
 export function t(key, lang, transform) {
