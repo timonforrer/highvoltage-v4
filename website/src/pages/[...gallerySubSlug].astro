@@ -1,11 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import Icon from '../components/Icon.astro';
 
 import { getSanityData } from '../lib/sanity';
 import { gallery as galleryQuery } from '../lib/queries';
 import { removeMultiSlash } from '../lib/utils';
 
 import Image from "../components/Image.astro";
+import { t } from '../lib/translations';
 
 export async function getStaticPaths() {
   const allGalleryPages = await getSanityData({query: galleryQuery});
@@ -39,6 +41,8 @@ const {
   previous,
 } = Astro.props;
 
+const lang = gallery.__i18n_lang;
+
 const rootUrl = gallery.meta.slug.current;
 const rootUrlWithHash = `${rootUrl}#${page.image.asset.assetId}`;
 const previousUrl = previous
@@ -46,35 +50,87 @@ const previousUrl = previous
 const nextUrl = next
   && removeMultiSlash(`${rootUrl}/${next.image.asset.assetId}`, {keepTrailing: true});
 
-console.log({next, previous})
 ---
 
-<Layout title={gallery.meta.title} lang={gallery.__i18n_lang} nonav="true">
-  <div class="controls pin">
-    { <a href={rootUrlWithHash}>back</a> }
-    { previousUrl && <a href={previousUrl}>previous</a> }
-    { nextUrl && <a href={nextUrl}>next</a> }
-  </div>
-  <div class="stack-xl-2xl">
-    <Image
-      class="max-image"
-      image={page.image}
-      sizes="100vw"
-    ></Image>
-    <!-- <details>
-      <summary>data</summary>
-      <pre>{JSON.stringify(page, null, 2)}</pre>
-    </details> -->
+<Layout title={gallery.meta.title} lang={lang} nonav="true">
+  <div class="pin">
+    <div class="controls">
+      <a
+        class="button button--light button--rounded button--outlined back"
+        title={t('backToImageOverview', lang, 'capitalize')}
+        href={rootUrlWithHash}>
+        <Icon name="x"></Icon>
+      </a>
+      <div class="previous">
+      { previousUrl &&
+        <a
+          class="button button--light button--rounded"
+          href={previousUrl}
+          title={t('previousImage', lang, 'capitalize')}>
+          <Icon class="flip" name="chevron"></Icon>
+        </a> }
+      </div>
+      <div class="next">
+      { nextUrl &&
+        <a
+          class="button button--light button--rounded"
+          href={nextUrl}
+          title={t('nextImage', lang, 'capitalize')}>
+          <Icon name="chevron"></Icon>
+        </a> }
+      </div>
     </div>
+  </div>
+  <Image
+    class="max-image"
+    image={page.image}
+    sizes="100vw"
+  ></Image>
 </Layout>
 
 <style lang="scss" is:global>
-.max-image {
-  img {
-    width: 100%;
-    height: 100vh;
-    height: 100vmin;
-    object-fit: contain;
+  .controls {
+    height: 100%;
+    pointer-events: none;
+    position: relative;
+
+    a {
+      position: relative;
+      pointer-events: initial;
+      margin: var(--space-s);
+    }
+
+    .previous,
+    .next {
+      align-items: center;
+      bottom: 0;
+      display: flex;
+      height: 100%;
+      position: absolute;
+      top: 0;
+    }
+
+    .back {
+      float: right;
+    }
+    
+    .previous {
+      left: 0;
+    }
+
+    .next {
+      right: 0;
+    }
   }
-}
+
+  .max-image {
+    height: 100vh;
+    height: 100svh;
+
+    img {
+      height: 100%;
+      object-fit: contain;
+      width: 100%;
+    }
+  }
 </style>
