@@ -39,6 +39,14 @@
   }
 }
 
+@media screen and (max-width: 760px) {
+  .grid {
+    &--mobile-no-gap {
+      gap: 0;
+    }
+  }
+}
+
 @supports (width: min(250px, 100%)) {
   .grid {
     &--2-columns {
@@ -121,6 +129,13 @@
 .rounded {
   border-radius: 4px;
   overflow: hidden;
+}
+
+@media screen and (min-width: 760px) {
+  .rounded--desktop-only {
+    border-radius: 4px;
+    overflow: hidden;
+  }
 }
 
 .reel {
