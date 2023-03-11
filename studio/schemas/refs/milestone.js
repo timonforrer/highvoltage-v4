@@ -40,6 +40,7 @@ export default {
           to: [
             {type: 'modular'},
             {type: 'release'},
+            {type: 'gallery'},
           ],
           options: {
             filter: (input) => filterRefByLang(input),

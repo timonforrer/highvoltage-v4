@@ -48,12 +48,6 @@ export default {
           to: [{type: 'productCategory'}],
           options: {filter: filterRefByLang}
         },
-        {
-          name: 'gallery',
-          title: 'Gallery',
-          type: 'reference',
-          to: [{type: 'gallery'}],
-        }
       ],
     },
   ],

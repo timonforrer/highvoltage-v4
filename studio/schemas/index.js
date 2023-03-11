@@ -5,6 +5,7 @@ import internalCollection from "./object/internalCollection";
 import meta from "./object/meta";
 import richtext from "./object/richtext";
 
+import gallery from "./pageTypes/gallery";
 import gig from "./pageTypes/gig";
 import global from "./pageTypes/global";
 import modular from "./pageTypes/modular";
@@ -14,7 +15,6 @@ import productSku from "./pageTypes/productSku";
 import productVariant from "./pageTypes/productVariant";
 
 import credits from "./refs/credits";
-import gallery from "./refs/gallery";
 import milestone from "./refs/milestone";
 import providers from "./refs/providers";
 import reviews from "./refs/reviews";
@@ -33,6 +33,7 @@ export const schemaTypes = [
   meta,
   richtext,
   // page types
+  gallery,
   gig,
   global,
   modular,
@@ -42,7 +43,6 @@ export const schemaTypes = [
   release,
   // refs
   credits,
-  gallery,
   milestone,
   providers,
   reviews,
