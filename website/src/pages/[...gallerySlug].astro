@@ -5,6 +5,7 @@ import Picture from '../components/Picture.astro';
 import { getSanityData } from '../lib/sanity';
 import { gallery as galleryQuery } from '../lib/queries';
 import { removeMultiSlash } from '../lib/utils';
+import { t } from '../lib/translations';
 
 export async function getStaticPaths() {
   const gallery = await getSanityData({query: galleryQuery});
@@ -21,17 +22,18 @@ export async function getStaticPaths() {
   });
 };
 
-
 const {page} = Astro.props;
 
+const lang = page.__i18n_lang
 const rootUrl = page.meta.slug.current;
 ---
 
-<Layout title={page.meta.title} lang={page.__i18n_lang}>
+<Layout title={page.meta.title} lang={lang}>
   <ul class="grid grid--3-columns grid--gap-m center hover-list">
     {page.images.map(item => (
       <li class="hover-list__target">
         <a
+          title={t('showImage', lang, 'capitalize')}
           href={
             removeMultiSlash(`${rootUrl}/${item.image.asset.assetId}`, {keepTrailing: true})
           }
