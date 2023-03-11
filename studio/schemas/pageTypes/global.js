@@ -22,7 +22,10 @@ export default {
         {
           name: 'page',
           type: 'reference',
-          to: [{type: 'modular'}],
+          to: [
+            {type: 'modular'},
+            {type: 'gallery'}
+          ],
           options: {filter: filterRefByLang}
         },
       ],
