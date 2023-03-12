@@ -29,21 +29,5 @@ export default {
       name: 'muxvideo',
       type: 'mux.video'
     },
-    {
-      name: 'backgroundImage',
-      title: 'Background Image',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
-    },
-    {
-      name: 'backgroundVideo',
-      title: 'Background Video',
-      type: 'file',
-      options: {
-        accept: 'video/*'
-      }
-    }
   ],
 }
