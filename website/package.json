@@ -13,12 +13,12 @@
     "copy:components": "mkdir -p dist/@spartan-components/sp-video && cp node_modules/@spartan-components/sp-video/* dist/@spartan-components/sp-video"
   },
   "dependencies": {
-    "@astrojs/image": "^0.15.0",
+    "@astrojs/image": "^0.16.0",
     "@mux/mux-player": "^1.8.0",
     "@portabletext/to-html": "^1.0.4",
     "@spartan-components/sp-video": "^0.1.2",
     "airtable": "^0.11.6",
-    "astro": "^2.0.13",
+    "astro": "^2.1.2",
     "get-youtube-id": "^1.0.1",
     "sharp": "^0.31.3"
   },
