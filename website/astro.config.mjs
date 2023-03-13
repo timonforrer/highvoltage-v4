@@ -8,5 +8,8 @@ export default defineConfig({
   integrations: [image({
     serviceEntryPoint: '@astrojs/image/sharp'
   })],
-  vite: {}
+  vite: {},
+  server: {
+    port: process.env.PORT || 3000,
+  },
 });
