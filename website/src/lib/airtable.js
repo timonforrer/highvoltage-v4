@@ -26,6 +26,8 @@ const fetchHelper = ({ table, view, filter }) => {
   });
 };
 
+export { fetchHelper };
+
 export async function getAirtableData({ base: baseKey, table, view = 'Default', filter = '' }) {
   const config = {
     endpointUrl: 'https://api.airtable.com',
