@@ -16,6 +16,7 @@
     "@astrojs/image": "^0.16.0",
     "@mux/mux-player": "^1.8.0",
     "@portabletext/to-html": "^1.0.4",
+    "@sanity/client": "^5.2.2",
     "@spartan-components/sp-video": "^0.1.2",
     "airtable": "^0.11.6",
     "astro": "^2.1.2",
@@ -26,6 +27,7 @@
     "@portabletext/toolkit": "^2.0.1"
   },
   "devDependencies": {
-    "sass": "^1.58.0"
+    "sass": "^1.58.0",
+    "slugify": "^1.6.5"
   }
 }
