@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cd website && astro build",
     "clean": "rm -rf website/dist",
-    "dev": "cd website && DEV=true astro dev",
+    "dev": "cd website && DEV=true astro dev --port 7777",
     "start": "npm run clean && vercel dev"
   },
   "repository": {
