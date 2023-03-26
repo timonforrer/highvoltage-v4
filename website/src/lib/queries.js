@@ -7,8 +7,10 @@ export const modularPages = `
       "videoHero",
       "section",
       "productCategory",
-      "gallery"
+      "gallery",
+      "form"
     ] => @-> {
+      _type == "form" => @,
       _type == "gallery" => {
         ...,
         images[] {
