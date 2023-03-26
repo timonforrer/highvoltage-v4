@@ -1,0 +1,61 @@
+sp-form {
+  display: block;
+}
+
+form {
+  max-width: 35rem;
+  .input-group,
+  .radio-group {
+    & > span {
+      margin-block-start: var(--space-3xs);
+    }
+  }
+
+  .input-group {
+    --border-radius: 0.25rem;
+    --error-color: red;
+    --primary-color: '#212121';
+    display: block;
+  
+    & > * {
+      display: block;
+    }
+
+    & legend + span[id$=-error] {
+      margin-block-end: var(--space-3xs);
+    }
+  
+    & span[id$=-error] {
+      color: var(--error-color);
+    }
+  
+    input:not([type=radio]) {
+      width: 20rem;
+    }
+  
+    textarea {
+      width: 35rem;
+    }
+  
+    input,
+    textarea {
+      border: 2px solid;
+      border-radius: var(--border-radius);
+      border-color: var(--primary-color);
+      font: inherit;
+      padding: var(--space-2xs) var(--space-xs);
+      transition: border-color 200ms ease;
+      max-width: 100%;
+    }
+  
+    .no-wc input:invalid,
+    [aria-invalid=true] {
+      border-color: var(--error-color);
+    }
+  }
+  
+  .radio-group {
+    display: flex;
+    gap: var(--space-xs);
+  }
+}
