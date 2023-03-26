@@ -15,6 +15,7 @@ import productSku from "./pageTypes/productSku";
 import productVariant from "./pageTypes/productVariant";
 
 import credits from "./refs/credits";
+import form from "./refs/form";
 import milestone from "./refs/milestone";
 import providers from "./refs/providers";
 import reviews from "./refs/reviews";
@@ -43,6 +44,7 @@ export const schemaTypes = [
   release,
   // refs
   credits,
+  form,
   milestone,
   providers,
   reviews,
