@@ -1,0 +1,55 @@
+---
+import { t } from '../../lib/translations';
+import Button from '../Button.astro';
+
+const {
+  lang,
+  inputs
+} = Astro.props;
+---
+
+<sp-form class="center">
+  <form class="stack-l">
+    {inputs.map(input => {
+      const {
+        _type,
+        label,
+        type,
+        id,
+        options,
+      } = input;
+
+      switch (_type) {
+        case 'textInput':
+          return <div class="input-group stack-2xs">
+            <label class="uppercase" for={id}>{label}</label>
+            <input  type={type} name={id} id={id} required />
+          </div>
+        case 'radioInput':
+          return <fieldset class="input-group">
+            <legend class="uppercase">{label}</legend>
+            {options.map(option => (
+              <div class="radio-group">
+                <input required type="radio" name={id} id={option.id} value={option.value}></input>
+                <label for={option.id}>{option.label}</label>
+              </div>
+            ))}
+          </fieldset>
+        case 'textarea':
+          return <div class="input-group stack-2xs">
+            <label class="uppercase" for={id}>{label}</label>
+            <textarea name={id} id={id} cols="30" rows="10" required></textarea>
+          </div>;
+        default:
+          return `no input specified for \`${_type}\``
+      }
+    })}
+    <Button outlined={false} type="submit">{t('submit', lang, 'capitalize')}</Button>
+  </form>
+</sp-form>
+
+
+<script>
+  const {SpForm} = await import('@spartan-components/sp-form/src/SpForm.js');
+  customElements.define('sp-form', SpForm);
+</script>
