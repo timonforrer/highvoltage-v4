@@ -1,9 +1,9 @@
 ---
-const {theme = 'light', outlined = true, href, id} = Astro.props;
+const {theme = 'light', outlined = true, href, id, type} = Astro.props;
 const classes = `button button--${theme} ${outlined && 'button--outlined'} uppercase`
 const Tag = href ? 'a' : 'button';
 ---
 
-<Tag class={classes} {href} {id}>
+<Tag class={classes} {href} {id} {type}>
   <slot/>
 </Tag>
