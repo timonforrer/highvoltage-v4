@@ -4,12 +4,23 @@ import Button from '../Button.astro';
 
 const {
   lang,
-  inputs
+  inputs,
+  _id,
+  successPage
 } = Astro.props;
 ---
 
-<sp-form class="center">
-  <form class="stack-l">
+<sp-form
+  class="center"
+  data-form-id={_id}
+  >
+  <form
+    action="/api/send-email"
+    class="stack-l"
+    method="post"
+    >
+    <input id="id" name="id" value={_id} type="hidden" />
+    <input id="redirect" name="redirect" value={successPage.meta.slug.current} type="hidden" />
     {inputs.map(input => {
       const {
         _type,
@@ -47,7 +58,6 @@ const {
     <Button outlined={false} type="submit">{t('submit', lang, 'capitalize')}</Button>
   </form>
 </sp-form>
-
 
 <script>
   const {SpForm} = await import('@spartan-components/sp-form/src/SpForm.js');
