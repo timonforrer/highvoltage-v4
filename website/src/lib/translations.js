@@ -22,6 +22,10 @@ const translations = {
   showImage: {
     de: 'Bild ansehen',
     en: 'show Image',
+  },
+  submit: {
+    de: 'absenden',
+    en: 'submit'
   }
 }
 
