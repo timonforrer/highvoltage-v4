@@ -17,6 +17,10 @@ export default {
       validation: Rule => Rule.max(155)
     },
     {
+      name: 'noIndex',
+      type: 'boolean'
+    },
+    {
       name: 'socialMediaMetadata',
       title: 'Social Media Metadata',
       type: 'object',
