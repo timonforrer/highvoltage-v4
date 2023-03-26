@@ -10,7 +10,10 @@ export const modularPages = `
       "gallery",
       "form"
     ] => @-> {
-      _type == "form" => @,
+      _type == "form" => {
+        ...,
+        successPage->
+      },
       _type == "gallery" => {
         ...,
         images[] {
@@ -183,3 +186,5 @@ export const gallery = `
     }
   }
 }`;
+
+export const form = `*[_type=="form" && _id match $id]`;
