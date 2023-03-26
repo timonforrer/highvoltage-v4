@@ -4,14 +4,13 @@ export async function getSanityData({query, params = null}) {
   const config = {
     dataset: 'production',
     projectId: '0j5eyb7h',
-    token: import.meta.env.SANITY_TOKEN,
+    token: import.meta.env?.SANITY_TOKEN || process.env.SANITY_TOKEN,
     useCdn: true,
     version: 'v2023-02-03'
   };
 
   // complete url consisting of <project_id>.api.sanity.io/<api version as YYYY-MM-DD>
   const baseUrl = `https://${config.projectId}.api.sanity.io/${config.version}/data/query/${config.dataset}`
-
 
   let url = baseUrl + `?query=${encodedQuery}`;
 
@@ -27,7 +26,7 @@ export async function getSanityData({query, params = null}) {
   const fetchOptions = {
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
-      'Authorization': `Bearer ${import.meta.env.SANITY_TOKEN}`
+      'Authorization': `Bearer ${config.token}`
     }
   };
 
