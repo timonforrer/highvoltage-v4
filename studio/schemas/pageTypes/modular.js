@@ -24,6 +24,13 @@ export default {
           type: 'arrayRichtext'
         },
         {
+          name: 'form',
+          title: 'Form',
+          type: 'reference',
+          to: [{type: 'form'}],
+          options: {filter: filterRefByLang}
+        },
+        {
           name: 'videoHero',
           title: 'Video Hero',
           type: 'reference',
