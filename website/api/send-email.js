@@ -8,7 +8,5 @@ export default async function (req, res) {
   const { redirect, id } = req.body;
   const form = await getSanityData({ query: formQuery, params: {$id: id} });
   
-  
-  
-  res.redirect(redirect);
+  res.status(301).redirect(redirect);
 }
