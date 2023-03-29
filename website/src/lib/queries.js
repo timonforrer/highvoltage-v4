@@ -187,4 +187,18 @@ export const gallery = `
   }
 }`;
 
+export const releases = `
+*[_type=="release"] {
+  ...,
+  artwork {
+    ...,
+    asset->,
+  },
+  body[] {
+    ...
+  },
+  providers->,
+  tracks->,
+}`;
+
 export const form = `*[_type=="form" && _id match $id][0]`;
