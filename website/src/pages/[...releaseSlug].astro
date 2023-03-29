@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Image from "../components/Image.astro";
+
+import { getSanityData } from '../lib/sanity';
+import { releases as releasesQuery } from '../lib/queries';
+import { removeMultiSlash } from '../lib/utils';
+import { t } from '../lib/translations';
+
+export async function getStaticPaths() {
+  const releases = await getSanityData({query: releasesQuery});
+
+  return releases.map(page => {
+    let { slug: { current: slug } } = page.meta;
+    slug = slug === "/" ? undefined : removeMultiSlash(slug);
+    return {
+      params: {
+        releaseSlug: slug,
+      },
+      props: {page}
+    }
+  });
+};
+
+const { page, page: {
+  artwork
+}} = Astro.props;
+---
+
+<Layout title={page.meta.title} lang={page.__i18n_lang}>
+  <section class="artwork-hero">
+    <div
+      class="pin artwork-hero__backdrop"
+      style={{
+        backgroundImage: `url(${artwork.asset.url}?w=50)`
+      }}>
+    </div>
+    <div class="center">
+      <Image
+        image={artwork}
+        sizes="(min-width: 600px) 33vw, 100vw"
+      ></Image>
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss" is:global>
+  .artwork-hero {
+    height: 10em;
+    &__backdrop {
+      background-size: cover;
+      filter: blur(1em);
+      inset: -1;
+      z-index: -1;
+    }
+  }
+</style>
