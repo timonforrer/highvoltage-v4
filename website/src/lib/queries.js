@@ -187,4 +187,4 @@ export const gallery = `
   }
 }`;
 
-export const form = `*[_type=="form" && _id match $id]`;
+export const form = `*[_type=="form" && _id match $id][0]`;
