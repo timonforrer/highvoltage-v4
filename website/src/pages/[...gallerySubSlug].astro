@@ -53,7 +53,12 @@ const nextUrl = next
 ---
 
 <Layout title={gallery.meta.title} lang={lang} nonav="true">
-  <div class="pin">
+  <div class="pin"
+    data-image-id={page.image.asset.assetId}
+    data-previous-url={previousUrl}
+    data-next-url={nextUrl}
+    data-close-url={rootUrl}
+    >
     <div class="controls">
       <a
         class="button button--light button--rounded button--outlined back"
@@ -137,13 +142,40 @@ const nextUrl = next
 </style>
 
 <script>
+  const dataNode = document.querySelector('[data-image-id]');
+  const assetId = dataNode.dataset.imageId;
+  localStorage.setItem('assetId', assetId);
+
   const historyCount = window.localStorage.getItem('historyCount');
-  // check if historyCount exists
+
+  const lastUrl = localStorage.getItem('lastUrl');
+  const currentUrl = window.location.pathname;
+
+  const nextUrl = dataNode.dataset.nextUrl;
+  const previousUrl = dataNode.dataset.previousUrl;
+  const closeUrl = dataNode.dataset.closeUrl;
+
+  localStorage.setItem('lastUrl', currentUrl);
+  console.log({lastUrl, currentUrl, historyCount, nextUrl, previousUrl, closeUrl});
+
   if (historyCount === null) {
-    console.error('cannot access `historyCount`');
-  } else {
+    localStorage.setItem('historyCount', '2');
+  } else if(lastUrl !== currentUrl) {
     let numHistoryCount = Number(historyCount);
     numHistoryCount++;
     window.localStorage.setItem('historyCount', JSON.stringify(numHistoryCount));
   }
+
+  document.addEventListener('keydown', event => {
+    switch (event.key) {
+      case 'ArrowRight':
+        nextUrl !== undefined && (window.location.href = nextUrl);
+        break;
+      case 'ArrowLeft':
+        previousUrl !== undefined && (window.location.href = previousUrl);
+        break;
+      default:
+        break;
+    }
+  })
 </script>

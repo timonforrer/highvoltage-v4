@@ -56,14 +56,20 @@ const rootUrl = page.meta.slug.current;
 </Layout>
 
 <script>
-  const historyCount = window.localStorage.getItem('historyCount');
-  // check if historyCount exists
+  const historyCount = localStorage.getItem('historyCount');
+  const assetId = localStorage.getItem('assetId');
+
   if (historyCount !== null) {
     let numHistoryCount = Number(historyCount);
-    window.localStorage.removeItem('historyCount');
-    window.history.go((-1 * numHistoryCount));
-  } else {
-    // setup localStorage
-    window.localStorage.setItem('historyCount', '1');
+    localStorage.removeItem('historyCount');
+    console.log('removing it!')
+    history.go((-1 * numHistoryCount));
   }
+
+  if (assetId !== null && historyCount === null) {
+    const focusElement = document.getElementById(assetId);
+    focusElement.focus();
+    localStorage.removeItem('assetId');
+  }
+
 </script>
