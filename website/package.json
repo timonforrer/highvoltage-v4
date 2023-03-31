@@ -20,6 +20,7 @@
     "@sanity/client": "^5.2.2",
     "@sendgrid/mail": "^7.7.0",
     "@spartan-components/sp-form": "^0.1.2",
+    "@spartan-components/sp-music-player": "^0.0.4",
     "@spartan-components/sp-video": "^0.1.2",
     "airtable": "^0.11.6",
     "astro": "^2.1.7",
