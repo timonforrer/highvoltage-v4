@@ -26,6 +26,22 @@ const translations = {
   submit: {
     de: 'absenden',
     en: 'submit'
+  },
+  tracks: {
+    de: 'Songs',
+    en: 'tracks'
+  },
+  releaseDate: {
+    de: 'veröffentlicht',
+    en: 'release date'
+  },
+  availableAt: {
+    de: 'verfügbar auf',
+    en: 'available at'
+  },
+  videos: {
+    de: 'videos',
+    en: 'videos'
   }
 }
 
