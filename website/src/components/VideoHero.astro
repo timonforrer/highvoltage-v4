@@ -20,7 +20,7 @@ const { playbackId } = muxvideo.asset;
 
 ---
 
-<section class="video-hero">
+<section class="video-hero backdrop-gradient">
   <MuxVideo
     autoplay
     loop
@@ -54,17 +54,6 @@ const { playbackId } = muxvideo.asset;
       font-weight: bold;
       opacity: 0.8;
       max-width: 30ch;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: linear-gradient(180deg,hsla(0,0%,5%,0),hsla(0,0%,5%,.72) 72.79%,#0e0e0e);
-      display: block;
     }
 
     .content {

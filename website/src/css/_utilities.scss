@@ -175,3 +175,23 @@
 .flip {
   transform: scale(-1)
 }
+
+.backdrop-gradient {
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(180deg, hsla(0, 0%, 5%, 0), hsla(0, 0%, 5%, 0.72) 72.79%, #0e0e0e);
+    display: block;
+    z-index: 0;
+  }
+}
+
+.flex-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em 0.5em;
+}
