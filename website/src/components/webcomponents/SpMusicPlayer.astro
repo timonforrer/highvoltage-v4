@@ -1,0 +1,22 @@
+---
+const {
+  tracks
+} = Astro.props;
+---
+
+
+<sp-music-player style="--primary-color:white;--secondary-color:black">
+  <ol class="emphasized music-tracks stack stack--3">
+    {tracks.map(track => (
+      <li>
+        <p>{track.title}</p>
+        <audio controls src={track.file.asset.url} />
+      </li>
+      ))}
+  </ol>
+</sp-music-player>
+
+<script>
+  const {SpMusicPlayer} = await import('@spartan-components/sp-music-player/src/SpMusicPlayer.js');
+  customElements.define('sp-music-player', SpMusicPlayer);
+</script>
