@@ -1,6 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Image from "../components/Image.astro";
+import MusicProviders from '../components/MusicProviders.astro';
+import Button from '../components/Button.astro';
+import getYoutubeId from 'get-youtube-id';
+
+import SpMusicPlayer from '../components/webcomponents/SpMusicPlayer.astro';
+import SpVideo from '../components/webcomponents/SpVideo.astro';
 
 import { getSanityData } from '../lib/sanity';
 import { releases as releasesQuery } from '../lib/queries';
@@ -23,35 +29,139 @@ export async function getStaticPaths() {
 };
 
 const { page, page: {
-  artwork
+  type,
+  __i18n_lang: lang,
+  meta: {
+    title
+  },
+  artwork,
+  artwork: {
+    asset: {
+      metadata: {
+        dimensions: {
+          height: artworkHeight,
+          width: artworkWidth
+        }
+      }
+    }
+  },
+  providers,
+  releaseDate,
+  tracks: {
+    items: tracks
+  },
+  videos,
 }} = Astro.props;
 ---
 
-<Layout title={page.meta.title} lang={page.__i18n_lang}>
+<Layout title={title} lang={lang} class="stack-m">
   <section class="artwork-hero">
-    <div
-      class="pin artwork-hero__backdrop"
-      style={{
-        backgroundImage: `url(${artwork.asset.url}?w=50)`
-      }}>
+    <div class="pin artwork-hero__backdrop backdrop-gradient">
+      <img
+        src={artwork.asset.url+'?w=50'}
+        width="50"
+        height={(50/artworkWidth)*artworkHeight}
+      />
     </div>
-    <div class="center">
+    <div class="center artwork-hero__content">
       <Image
+        class="artwork-hero__artwork"
         image={artwork}
         sizes="(min-width: 600px) 33vw, 100vw"
       ></Image>
+      <div class="artwork-hero__title stack-s">
+        <div>
+          <p class="as-h2">{type}</p>
+          <h1>{title}</h1>
+        </div>
+        <p class="uppercase">
+          {t('releaseDate', lang, 'capitalize')} {(new Date(releaseDate)).getFullYear()}
+          &middot; {tracks.length} {t('tracks', lang, 'capitalize')}
+        </p>
+      </div>
     </div>
   </section>
+  <section class="center stack-l">
+    <div class="grid grid--2-columns grid--gap-m release-main-info">
+      <div class="stack-m">
+        <h2>{t('tracks', lang, 'capitalize')}</h2>
+        <SpMusicPlayer {tracks} />
+      </div>
+      <div class="stack-m">
+        <h2>{t('availableAt', lang, 'capitalize')}</h2>
+        <MusicProviders
+          appleMusic={providers.highlighted.appleMusic}
+          lang={lang}
+          spotify={providers.highlighted.spotify}
+          youtubeMusic={providers.highlighted.youtubeMusic}
+        />
+        <ul class="flex-list">
+          {providers.items.map(provider => (
+            <li><Button href={provider.url}>{provider.name}</Button></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    {
+      videos &&
+      <div class="stack-m">
+        <h2>{t('videos', lang, 'capitalize')}</h2>
+        <ul class="grid grid--gap-m grid--2-columns">
+          {videos.items.map(video => (
+            <li><SpVideo {lang} set:html=""videoId={getYoutubeId(video.url)} /></li>
+          ))}
+        </ul>
+      </div>
+    }
+  </section>
+  <pre>{JSON.stringify(Astro.props, null, 2)}</pre>
 </Layout>
 
 <style lang="scss" is:global>
   .artwork-hero {
-    height: 10em;
+    position: relative;
+
+    &__artwork {
+      width: 13em;
+      max-width: 50%;
+    }
+
+    &__title {
+      p:not(.uppercase) {
+        text-transform: capitalize;
+      }
+    }
+
+    &__content {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      padding-top: 2em;
+      position: relative;
+      gap: var(--space-s);
+      z-index: 1;
+    }
+
     &__backdrop {
       background-size: cover;
-      filter: blur(1em);
-      inset: -1;
+      height: 13em;
+      overflow: hidden;
       z-index: -1;
+      img {
+        height: 100%;
+        filter: blur(1em);
+        object-fit: cover;
+        transform: scale(1.1);
+        width: 100%;
+      }
+    }
+  }
+
+  .release-main-info {
+    & > *:nth-child(2) {
+      height: fit-content;
+      position: sticky;
+      top: 3.5em;
     }
   }
 </style>
