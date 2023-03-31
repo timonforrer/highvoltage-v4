@@ -1,12 +1,9 @@
 ---
+import MusicProviders from './MusicProviders.astro';
+import Icon from './Icon.astro';
+
 import Image from './Image.astro';
 import {t} from '../lib/translations';
-
-import Spotify from '../svg/spotify.svg?raw';
-import AppleMusicDE from '../svg/apple-music-de.svg?raw';
-import AppleMusicEN from '../svg/apple-music-en.svg?raw';
-import YoutubeMusic from '../svg/youtube-music.svg?raw';
-import Icon from './Icon.astro';
 
 const {
   artwork,
@@ -34,17 +31,12 @@ const {
           &middot; {tracks.items.length} {tracks.items.length === 1 ? 'Song' : 'Songs'}</p>
         <h3>{meta.title}</h3>
       </div>
-      <div class="providers hover-list">
-        <a class="hover-list__target" href={providers.highlighted.youtubeMusic} title="YouTube Music">
-          <Fragment set:html={YoutubeMusic} />
-        </a>
-        <a class="hover-list__target" href={providers.highlighted.spotify} title="Spotify">
-          <Fragment set:html={Spotify} />
-        </a>
-        <a class="hover-list__target" href={providers.highlighted.appleMusic} title="Apple Music">
-          { lang === 'de' ? <Fragment set:html={AppleMusicDE} /> : <Fragment set:html={AppleMusicEN} /> }
-        </a>
-      </div>
+      <MusicProviders
+        appleMusic={providers.highlighted.appleMusic}
+        lang={lang}
+        spotify={providers.highlighted.spotify}
+        youtubeMusic={providers.highlighted.youtubeMusic}
+      />
     </div>
     <a
       href={'/'+meta.slug.current}
@@ -90,21 +82,6 @@ const {
         flex-grow: 1;
         flex-shrink: 1;
         flex-direction: column;
-      }
-    }
-
-    .providers {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2xs) var(--space-m);
-      width: fit-content;
-      z-index: 1;
-      
-      a {
-        flex-basis: 7em;
-        flex-grow: 0;
-        flex-shrink: 1;
       }
     }
 
