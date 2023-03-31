@@ -1,0 +1,43 @@
+---
+import Spotify from '../svg/spotify.svg?raw';
+import AppleMusicDE from '../svg/apple-music-de.svg?raw';
+import AppleMusicEN from '../svg/apple-music-en.svg?raw';
+import YoutubeMusic from '../svg/youtube-music.svg?raw';
+import Icon from './Icon.astro';
+
+const {
+  appleMusic,
+  lang,
+  spotify,
+  youtubeMusic,
+} = Astro.props;
+---
+
+<div class="providers hover-list">
+  <a class="hover-list__target" href={youtubeMusic} title="YouTube Music">
+    <Fragment set:html={YoutubeMusic} />
+  </a>
+  <a class="hover-list__target" href={spotify} title="Spotify">
+    <Fragment set:html={Spotify} />
+  </a>
+  <a class="hover-list__target" href={appleMusic} title="Apple Music">
+    { lang === 'de' ? <Fragment set:html={AppleMusicDE} /> : <Fragment set:html={AppleMusicEN} /> }
+  </a>
+</div>
+
+<style lang="scss" is:global>
+.providers {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-m);
+  width: fit-content;
+  z-index: 1;
+  
+  a {
+    flex-basis: 7em;
+    flex-grow: 0;
+    flex-shrink: 1;
+  }
+}
+</style>
