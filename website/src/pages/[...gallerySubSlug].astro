@@ -58,7 +58,8 @@ const nextUrl = next
       <a
         class="button button--light button--rounded button--outlined back"
         title={t('backToImageOverview', lang, 'capitalize')}
-        href={rootUrlWithHash}>
+        href={rootUrlWithHash}
+        data-root-url={rootUrl}>
         <Icon name="x"></Icon>
       </a>
       <div class="previous">
@@ -134,3 +135,15 @@ const nextUrl = next
     }
   }
 </style>
+
+<script>
+  const historyCount = window.localStorage.getItem('historyCount');
+  // check if historyCount exists
+  if (historyCount === null) {
+    console.error('cannot access `historyCount`');
+  } else {
+    let numHistoryCount = Number(historyCount);
+    numHistoryCount++;
+    window.localStorage.setItem('historyCount', JSON.stringify(numHistoryCount));
+  }
+</script>

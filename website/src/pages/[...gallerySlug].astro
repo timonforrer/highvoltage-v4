@@ -54,3 +54,16 @@ const rootUrl = page.meta.slug.current;
     <pre>{JSON.stringify(page, null, 2)}</pre>
   </details>
 </Layout>
+
+<script>
+  const historyCount = window.localStorage.getItem('historyCount');
+  // check if historyCount exists
+  if (historyCount !== null) {
+    let numHistoryCount = Number(historyCount);
+    window.localStorage.removeItem('historyCount');
+    window.history.go((-1 * numHistoryCount));
+  } else {
+    // setup localStorage
+    window.localStorage.setItem('historyCount', '1');
+  }
+</script>
