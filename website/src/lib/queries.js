@@ -198,7 +198,20 @@ export const releases = `
     ...
   },
   providers->,
-  tracks->,
+  tracks-> {
+    ...,
+    items[] {
+      ...,
+      file {
+        ...,
+        asset->
+      }
+    }
+  },
+  videos-> {
+    ...,
+    items[]->,
+  },
 }`;
 
 export const form = `*[_type=="form" && _id match $id][0]`;
