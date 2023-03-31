@@ -6,7 +6,12 @@ import { globalSettings } from '../lib/queries';
 
 import Navigation from '../components/Navigation.astro';
 
-const { title, lang, nonav } = Astro.props;
+const {
+	class: className,
+	lang,
+	nonav,
+	title,
+} = Astro.props;
 
 const home = lang === 'de' ? '/' : '/en/';
 
@@ -28,7 +33,7 @@ const { nav } = globalData;
 			!nonav &&
 			<Navigation navItems={nav} home={home}></Navigation>
 		}
-		<main>
+		<main class={className}>
 			<slot />
 		</main>
 	</body>
