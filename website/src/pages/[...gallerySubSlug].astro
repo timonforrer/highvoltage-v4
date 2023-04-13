@@ -54,7 +54,7 @@ const nextUrl = next
 
 <Layout title={gallery.meta.title} lang={lang} nonav="true">
   <div class="pin"
-    data-image-id={page.image.asset.assetId}
+    data-asset-id={page.image.asset.assetId}
     data-previous-url={previousUrl}
     data-next-url={nextUrl}
     data-close-url={rootUrl}
@@ -142,30 +142,38 @@ const nextUrl = next
 </style>
 
 <script>
-  const dataNode = document.querySelector('[data-image-id]');
-  const assetId = dataNode.dataset.imageId;
+  import { readNumber } from '../lib/localstorage.js';
+
+  const dataNode = document.querySelector('[data-asset-id]');
+  const {
+    assetId,
+    nextUrl,
+    previousUrl,
+    closeUrl
+  } = dataNode.dataset;
+  // asset id is later used to scroll to image on overview page
   localStorage.setItem('assetId', assetId);
 
-  const historyCount = window.localStorage.getItem('historyCount');
+  const historyCount = readNumber('historyCount');
 
   const lastUrl = localStorage.getItem('lastUrl');
   const currentUrl = window.location.pathname;
 
-  const nextUrl = dataNode.dataset.nextUrl;
-  const previousUrl = dataNode.dataset.previousUrl;
-  const closeUrl = dataNode.dataset.closeUrl;
+  const backOrForwardNav = window.performance.getEntriesByType("navigation")[0].type === 'back_forward';
 
   localStorage.setItem('lastUrl', currentUrl);
-  console.log({lastUrl, currentUrl, historyCount, nextUrl, previousUrl, closeUrl});
+  // console.log({lastUrl, currentUrl, historyCount, nextUrl, previousUrl, closeUrl});
 
   if (historyCount === null) {
     localStorage.setItem('historyCount', '2');
-  } else if(lastUrl !== currentUrl) {
+  }
+
+  if(lastUrl !== currentUrl && !backOrForwardNav) {
     let numHistoryCount = Number(historyCount);
     numHistoryCount++;
     window.localStorage.setItem('historyCount', JSON.stringify(numHistoryCount));
   }
-
+  
   document.addEventListener('keydown', event => {
     switch (event.key) {
       case 'ArrowRight':
