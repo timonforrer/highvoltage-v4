@@ -15,6 +15,10 @@ const translations = {
     de: 'vorheriges Bild',
     en: 'previous image',
   },
+  goBack: {
+    de: 'gehe zurück',
+    en: 'go back'
+  },
   backToImageOverview: {
     de: 'zurück zur Bildübersicht',
     en: 'back to image overview',
