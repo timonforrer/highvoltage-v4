@@ -142,38 +142,7 @@ const nextUrl = next
 </style>
 
 <script>
-  import { readNumber } from '../lib/localstorage.js';
-
-  const dataNode = document.querySelector('[data-asset-id]');
-  const {
-    assetId,
-    nextUrl,
-    previousUrl,
-    closeUrl
-  } = dataNode.dataset;
-  // asset id is later used to scroll to image on overview page
-  localStorage.setItem('assetId', assetId);
-
-  const historyCount = readNumber('historyCount');
-
-  const lastUrl = localStorage.getItem('lastUrl');
-  const currentUrl = window.location.pathname;
-
-  const backOrForwardNav = window.performance.getEntriesByType("navigation")[0].type === 'back_forward';
-
-  localStorage.setItem('lastUrl', currentUrl);
-  // console.log({lastUrl, currentUrl, historyCount, nextUrl, previousUrl, closeUrl});
-
-  if (historyCount === null) {
-    localStorage.setItem('historyCount', '2');
-  }
-
-  if(lastUrl !== currentUrl && !backOrForwardNav) {
-    let numHistoryCount = Number(historyCount);
-    numHistoryCount++;
-    window.localStorage.setItem('historyCount', JSON.stringify(numHistoryCount));
-  }
-  
+   
   document.addEventListener('keydown', event => {
     switch (event.key) {
       case 'ArrowRight':
