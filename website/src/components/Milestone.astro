@@ -8,9 +8,9 @@ const {
   cta,
   date,
   description,
-  _id,
   image,
   lang,
+  slug,
   title
 } = Astro.props;
 
@@ -18,6 +18,12 @@ const formatter = new Intl.DateTimeFormat(lang, {
   year: 'numeric',
   month: 'long',
 });
+
+let backlink = null;
+
+if (cta?.backlink) {
+  backlink = encodeURIComponent(`${slug}#${cta.id}`);
+}
 
 ---
 
@@ -37,7 +43,15 @@ const formatter = new Intl.DateTimeFormat(lang, {
       </div>
       <div class="stack-l">
         <RichText content={description} />
-        { cta && <Button href={cta.slug + (cta.backlink === true ? '?showBacklink' : '')}>{cta.title}<Icon name="chevron" /></Button> }
+        {
+          cta &&
+          <Button
+            href={cta.slug + (backlink ? `?backlink=${backlink}` : '')}
+          >
+            {cta.title}
+            <Icon name="chevron" />
+          </Button>
+        }
       </div>
     </div>
   </div>
