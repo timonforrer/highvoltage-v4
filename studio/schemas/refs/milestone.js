@@ -46,6 +46,12 @@ export default {
             filter: (input) => filterRefByLang(input),
           },
         },
+        {
+          name: 'backlink',
+          type: 'boolean',
+          initialValue: false,
+          description: 'If active, a backlink will be displayed on the linked page. Recommended for gallery pages.',
+        }
       ],
     },
   ],
