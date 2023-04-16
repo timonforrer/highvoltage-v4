@@ -1,0 +1,52 @@
+---
+import Icon from '../../components/Icon.astro';
+import { t } from '../../lib/translations';
+
+
+const {
+  lang
+} = Astro.props;
+---
+
+<back-link data-url="" class="backdrop-gradient" style={{display: 'none'}}>
+  <div class="center">
+    <a>
+      <Icon class="button button--light button--rounded button--outlined" name="arrow-left"></Icon>
+      <span class="uppercase">{t('goBack', lang, 'capitalize')}</span>
+    </a>
+  </div>
+</back-link>
+
+<style lang="scss" is:global>
+  back-link {
+    inset: 0;
+    padding: var(--space-m) 0;
+    position: fixed;
+    top: auto;
+
+    a {
+      align-items: center;
+      display: inline-flex;
+      gap: var(--space-s);
+      position: relative;
+      text-decoration: none;
+      z-index: 1;
+    }
+  }
+</style>
+
+<script>
+  class BackLink extends HTMLElement {
+    static observedAttributes = ['data-url'];
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      console.log({name, oldValue, newValue})
+      if (name === 'data-url' && newValue !== "") {
+        this.style.display = 'block';
+        this.querySelector('a').setAttribute('href', newValue);
+      }
+    }
+  }
+
+  customElements.define('back-link', BackLink);
+</script>
