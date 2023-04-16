@@ -29,7 +29,7 @@ const rootUrl = page.meta.slug.current;
 ---
 
 <Layout title={page.meta.title} lang={lang}>
-  <ul data-gallery-id={page._id} class="grid grid--3-columns grid--gap-m grid--mobile-no-gap center hover-list">
+  <ul class="grid grid--3-columns grid--gap-m grid--mobile-no-gap center hover-list">
     {page.images.map(item => (
       <li class="hover-list__target">
         <a
