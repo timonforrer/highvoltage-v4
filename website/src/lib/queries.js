@@ -75,6 +75,8 @@ export const modularPages = `
               cta {
                 title,
                 "slug": page->meta.slug.current,
+                "id": page->_id,
+                backlink,
               },
             },
             _type == "productVariant" => {
