@@ -49,7 +49,7 @@ const {page} = Astro.props;
         return <p>No component specified for `{type}`</p>;
       }
 
-      let attributes = {lang: page.__i18n_lang};
+      let attributes = {lang: page.__i18n_lang, slug: page.meta.slug.current};
 
       return <Component {...block} {...attributes}></Component>
     })}

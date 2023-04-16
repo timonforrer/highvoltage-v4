@@ -27,6 +27,7 @@ const {
     gap
   },
   renderTitle,
+  slug,
   title,
 } = Astro.props;
 
@@ -63,7 +64,7 @@ if (columns) {
           return <p>No component specified for `{type}`</p>;
         }
 
-        let attributes = {lang};
+        let attributes = {lang, slug};
 
         if (type === 'video') {
           attributes['videoId'] = getYoutubeId(block.url)
