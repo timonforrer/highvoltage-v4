@@ -46,43 +46,26 @@ const { nav } = globalData;
 		.replace(window.location.hash, '');
 
 	const params = new URLSearchParams(window.location.search);
-	const showBacklink = params.get('showBacklink') === '';
-
-	const dataNode = document.querySelector('[data-gallery-id]');
-	const hash = dataNode ? dataNode.dataset.galleryId : null;
+	const backlink = params.get('backlink');
 
 	const backlinkComponent = document.querySelector('back-link');
 
 	const body = document.querySelector('body');
 
 	let {
-		previousUrl,
-		returnUrl,
-		returnHash,
 		associatedUrl,
+		returnUrl,
 	} = localStorage;
 
-	if (showBacklink) {
-		localStorage.setItem('returnUrl', previousUrl);
-		returnUrl = previousUrl;
-		localStorage.setItem('returnHash', hash);
-		returnHash = hash;
+	if (backlink) {
 		localStorage.setItem('associatedUrl', currentUrl);
 		associatedUrl = currentUrl;
+		localStorage.setItem('returnUrl', backlink);
+		returnUrl = backlink;
 	}
 
-	if (returnUrl && currentUrl === associatedUrl) {
-		const backlinkUrl = returnHash ? `${returnUrl}#${returnHash}` : returnUrl;
-		backlinkComponent.setAttribute('data-url', backlinkUrl);
+	if (returnUrl && associatedUrl === currentUrl) {
+		backlinkComponent.setAttribute('data-url', returnUrl);
 		body.classList.add('has-backlink');
 	}
-
-	console.log({
-		previousUrl,
-		returnUrl,
-		associatedUrl,
-		currentUrl
-	})
-
-	localStorage.setItem('previousUrl', currentUrl);
 </script>
