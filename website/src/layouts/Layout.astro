@@ -4,6 +4,7 @@ import '../css/main.scss'
 import { getSanityData } from '../lib/sanity';
 import { globalSettings } from '../lib/queries';
 
+import BackLink from '../components/webcomponents/BackLink.astro';
 import Navigation from '../components/Navigation.astro';
 
 const {
@@ -35,35 +36,53 @@ const { nav } = globalData;
 		}
 		<main class={className}>
 			<slot />
+			<BackLink lang={lang} />
 		</main>
 	</body>
-	<!-- <script type="module">
-
-		const imported = {};
-		let observer = new IntersectionObserver((entries, observerRef) => {
-			entries.forEach(async (entry) => {
-				if (entry.isIntersecting) {
-					const name = entry.target.nodeName.toLowerCase();
-					observerRef.unobserve(entry.target);
-
-					if (!imported[name]) {
-						switch (name) {
-							case 'sp-video':
-								import('../../node_modules/@spartan-components/sp-video/sp-video.js')
-								break;
-							default:
-								break;
-						}
-						imported[name] = true;
-					}
-				}
-			});
-		});
-
-		// Observe all components with the desired class
-		const els = document.querySelectorAll('sp-video');
-		els.forEach((el) => {
-			observer.observe(el);
-		});
-	</script> -->
 </html>
+
+<script>
+	let currentUrl = window.location.pathname
+		.replace(window.location.hash, '');
+
+	const params = new URLSearchParams(window.location.search);
+	const showBacklink = params.get('showBacklink') === '';
+
+	const dataNode = document.querySelector('[data-gallery-id]');
+	const hash = dataNode ? dataNode.dataset.galleryId : null;
+
+	const backlinkComponent = document.querySelector('back-link');
+
+	const body = document.querySelector('body');
+
+	let {
+		previousUrl,
+		returnUrl,
+		returnHash,
+		associatedUrl,
+	} = localStorage;
+
+	if (showBacklink) {
+		localStorage.setItem('returnUrl', previousUrl);
+		returnUrl = previousUrl;
+		localStorage.setItem('returnHash', hash);
+		returnHash = hash;
+		localStorage.setItem('associatedUrl', currentUrl);
+		associatedUrl = currentUrl;
+	}
+
+	if (returnUrl && currentUrl === associatedUrl) {
+		const backlinkUrl = returnHash ? `${returnUrl}#${returnHash}` : returnUrl;
+		backlinkComponent.setAttribute('data-url', backlinkUrl);
+		body.classList.add('has-backlink');
+	}
+
+	console.log({
+		previousUrl,
+		returnUrl,
+		associatedUrl,
+		currentUrl
+	})
+
+	localStorage.setItem('previousUrl', currentUrl);
+</script>
