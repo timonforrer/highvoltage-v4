@@ -29,7 +29,7 @@ const rootUrl = page.meta.slug.current;
 ---
 
 <Layout title={page.meta.title} lang={lang}>
-  <ul class="grid grid--3-columns grid--gap-m grid--mobile-no-gap center hover-list">
+  <ul data-gallery-id={page._id} class="grid grid--3-columns grid--gap-m grid--mobile-no-gap center hover-list">
     {page.images.map(item => (
       <li class="hover-list__target">
         <a
@@ -54,21 +54,3 @@ const rootUrl = page.meta.slug.current;
     <pre>{JSON.stringify(page, null, 2)}</pre>
   </details>
 </Layout>
-
-<script>
-  const historyCount = localStorage.getItem('historyCount');
-  const assetId = localStorage.getItem('assetId');
-
-  if (historyCount !== null) {
-    let numHistoryCount = Number(historyCount);
-    localStorage.removeItem('historyCount');
-    console.log('removing it!')
-    history.go((-1 * numHistoryCount));
-  }
-
-  if (assetId !== null && historyCount === null) {
-    const focusElement = document.getElementById(assetId);
-    focusElement.focus();
-    localStorage.removeItem('assetId');
-  }
-</script>
