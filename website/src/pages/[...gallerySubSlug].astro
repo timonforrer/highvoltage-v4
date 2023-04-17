@@ -53,7 +53,8 @@ const nextUrl = next
 ---
 
 <Layout title={gallery.meta.title} lang={lang} nonav="true">
-  <div class="pin"
+  
+  <div class="pin no-pointer-events"
     data-asset-id={page.image.asset.assetId}
     data-previous-url={previousUrl}
     data-next-url={nextUrl}
@@ -87,6 +88,15 @@ const nextUrl = next
           <Icon name="chevron"></Icon>
         </a> }
       </div>
+      {
+        page.credits &&
+        <div class="pin credits">
+          <p class="uppercase tight">
+            {t('photoBy', lang, 'capitalize')}
+            <a href={page.credits.url}>{page.credits.title}</a>
+          </p>
+        </div>
+      }
     </div>
   </div>
   <Image
@@ -99,13 +109,26 @@ const nextUrl = next
 <style lang="scss" is:global>
   .controls {
     height: 100%;
-    pointer-events: none;
     position: relative;
 
-    a {
-      position: relative;
+    p, a {
       pointer-events: initial;
+    }
+
+    .credits {
+      align-items: flex-end;
+      display: flex;
+      opacity: 0.75;
+      & > * {
+        background: linear-gradient(transparent, black 60%);
+        flex-grow: 1;
+        padding: var(--space-s);
+      }
+    }
+
+    .button {
       margin: var(--space-s);
+      position: relative;
     }
 
     .previous,
