@@ -195,3 +195,7 @@
   flex-wrap: wrap;
   gap: 0.25em 0.5em;
 }
+
+.no-pointer-events {
+  pointer-events: none;
+}
