@@ -3,6 +3,7 @@ import Button from './Button.astro';
 import Icon from './Icon.astro';
 import RichText from './RichText.astro';
 import Picture from './Picture.astro';
+import { removeMultiSlash } from '../lib/utils';
 
 const {
   cta,
@@ -46,7 +47,7 @@ if (cta?.backlink) {
         {
           cta &&
           <Button
-            href={cta.slug + (backlink ? `?backlink=${backlink}` : '')}
+            href={removeMultiSlash(cta.slug) + (backlink ? `?backlink=${backlink}` : '')}
           >
             {cta.title}
             <Icon name="chevron" />

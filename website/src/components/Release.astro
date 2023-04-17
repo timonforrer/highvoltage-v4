@@ -4,6 +4,7 @@ import Icon from './Icon.astro';
 
 import Image from './Image.astro';
 import {t} from '../lib/translations';
+import { removeMultiSlash } from '../lib/utils';
 
 const {
   artwork,
@@ -39,7 +40,7 @@ const {
       />
     </div>
     <a
-      href={'/'+meta.slug.current}
+      href={removeMultiSlash(meta.slug.current)}
       class="breakout-link"
       title={t('learnMore', lang, 'capitalize')}
     >

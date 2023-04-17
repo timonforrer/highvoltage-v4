@@ -1,7 +1,7 @@
 ---
 import Picture from './Picture.astro';
 import Icon from './Icon.astro';
-import { basicPopulatedSkus } from '../lib/utils';
+import { basicPopulatedSkus, removeMultiSlash } from '../lib/utils';
 import { t } from '../lib/translations';
 
 const {
@@ -45,7 +45,7 @@ const variants = productSkus.map(sku => sku.variant);
       </p>
     </div>
     <a
-      href={productSkus[0].meta.slug.current}
+      href={removeMultiSlash(productSkus[0].meta.slug.current)}
       class="breakout-link"
       title={t('learnMore', lang, 'capitalize')}
     >

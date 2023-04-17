@@ -1,4 +1,6 @@
 ---
+import { removeMultiSlash } from '../lib/utils';
+
 export interface Props {
 	title: string;
 	body: string;
@@ -9,7 +11,7 @@ const { href, title, body } = Astro.props;
 ---
 
 <li class="link-card">
-	<a href={href}>
+	<a href={removeMultiSlash(href)}>
 		<h2>
 			{title}
 			<span>&rarr;</span>

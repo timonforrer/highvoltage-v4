@@ -8,6 +8,7 @@ import Release from './Release.astro';
 import ProductVariant from './ProductVariant.astro';
 import InternalCollection from './InternalCollection.astro';
 import Milestone from './Milestone.astro';
+import { removeMultiSlash } from '../lib/utils';
 
 const Components = {
   productVariant: ProductVariant,
@@ -77,7 +78,7 @@ if (columns) {
 
   { cta &&
     <div class="center right-aligned">
-      <Button href={cta.slug}>{cta.title}<Icon name="chevron" /></Button>
+      <Button href={removeMultiSlash(cta.slug)}>{cta.title}<Icon name="chevron" /></Button>
     </div>
   }
 </section>

@@ -41,7 +41,7 @@ const {
     attributeChangedCallback(name, oldValue, newValue) {
       console.log({name, oldValue, newValue})
       if (name === 'data-url' && newValue !== "") {
-        this.style.display = 'block';
+        this.style.display = 'flex';
         this.querySelector('a').setAttribute('href', newValue);
       }
     }

@@ -4,6 +4,7 @@ import { pastGigs, upcomingGigs } from '../../lib/queries';
 import { getAirtableData } from '../../lib/airtable';
 import Icon from '../Icon.astro';
 import { t } from '../../lib/translations';
+import { removeMultiSlash } from '../../lib/utils';
 
 const {
   filterGigs,
@@ -77,7 +78,7 @@ const formatter = new Intl.DateTimeFormat(lang, {
           </div>
           <a
             class="breakout-link"
-            href={gig.meta.slug.current}
+            href={removeMultiSlash(gig.meta.slug.current)}
             title={t('learnMore', lang, 'capitalize')}
           >
             <Icon size={36} name="chevron" />
