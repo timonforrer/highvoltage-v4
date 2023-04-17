@@ -23,11 +23,13 @@ const { playbackId } = muxvideo.asset;
 <section class="video-hero backdrop-gradient">
   <MuxVideo
     autoplay
+    height={muxvideo.asset.data.tracks[0].max_height}
     loop
     muted
     poster={`https://image.mux.com/${playbackId}/thumbnail.jpg?width=800`}
     playbackId={playbackId}
     playsinline
+    width={muxvideo.asset.data.tracks[0].max_width}
     ></MuxVideo>
   <div class="pin center-v content">
     <div class="center stack-m">

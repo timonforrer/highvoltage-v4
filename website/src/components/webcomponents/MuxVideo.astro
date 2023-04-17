@@ -1,21 +1,25 @@
 ---
 const {
   autoplay,
+  height,
   loop,
+  muted,
   poster,
   playbackId,
   playsinline,
-  muted,
+  width,
 } = Astro.props;
 ---
 
 <mux-video
   {autoplay}
+  {height}
   {loop}
+  {muted}
   {poster}
   playback-id={playbackId}
   {playsinline}
-  {muted}
+  {width}
   stream-type="on-demand"
 ></mux-video>
 
@@ -26,5 +30,8 @@ const {
 <style lang="scss" is:global>
   mux-video {
     width: 100%;
+    &::part(video) {
+      height: auto;
+    }
   }
 </style>
