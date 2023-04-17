@@ -20,9 +20,9 @@ const basicPopulatedSkus = async ({ baseSkus }) => {
   }
 }
 
-const removeMultiSlash = (string, { keepTrailing } = {}) => {
-  let newString = string.replace(/\/{2,}/g, '/');
-  if (!keepTrailing) {
+const removeMultiSlash = (string, { removeTrailing } = {}) => {
+  let newString = `/${string}/`.replace(/\/{2,}/g, '/');
+  if (removeTrailing) {
     newString = newString.replace(/^\/+|\/+$/g, '')
   }
   return newString;
@@ -35,7 +35,6 @@ function removeDuplicates({array, key}) {
     ))
   ))
 };
-
 
 export {
   basicPopulatedSkus,
