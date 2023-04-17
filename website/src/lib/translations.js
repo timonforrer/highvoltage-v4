@@ -46,6 +46,10 @@ const translations = {
   videos: {
     de: 'videos',
     en: 'videos'
+  },
+  photoBy: {
+    de: 'Foto von',
+    en: 'Photo by'
   }
 }
 
