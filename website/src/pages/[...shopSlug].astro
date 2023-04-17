@@ -82,7 +82,7 @@ export async function getStaticPaths() {
 
   return sanitySkus.map(page => {
     let { slug: { current: slug } } = page.meta;
-    slug = slug === "/" ? undefined : removeMultiSlash(slug);
+    slug = slug === "/" ? undefined : removeMultiSlash(slug, {'removeTrailing': true});
     return {
       params: {
         shopSlug: slug,
@@ -131,7 +131,11 @@ const all = skus.find(sku => sku.meta.title === page.meta.title);
               variants && variants.map(variant => {
                 const isCurrent = sku === variant.sku;
                 return (
-                  <Button theme="light" outlined={!isCurrent} href={variant.meta.slug.current}>
+                  <Button 
+                    theme="light"
+                    outlined={!isCurrent}
+                    href={removeMultiSlash(variant.meta.slug.current)}
+                  >
                     {variant.variant}
                   </Button>
                 )

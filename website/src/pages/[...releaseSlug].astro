@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
   return releases.map(page => {
     let { slug: { current: slug } } = page.meta;
-    slug = slug === "/" ? undefined : removeMultiSlash(slug);
+    slug = slug === "/" ? undefined : removeMultiSlash(slug, {'removeTrailing': true});
     return {
       params: {
         releaseSlug: slug,

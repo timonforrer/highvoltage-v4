@@ -18,7 +18,7 @@ export async function getStaticPaths() {
       const next = gallery.images[index+1];
       let { slug: { current: slug } } = gallery.meta;
       slug = slug + '/' + page.image.asset.assetId;
-      slug = slug === "/" ? undefined : removeMultiSlash(slug);
+      slug = slug === "/" ? undefined : removeMultiSlash(slug, {'removeTrailing': true});
       return {
         params: {
           gallerySubSlug: slug,
@@ -43,12 +43,12 @@ const {
 
 const lang = gallery.__i18n_lang;
 
-const rootUrl = gallery.meta.slug.current;
+const rootUrl = removeMultiSlash(gallery.meta.slug.current);
 const rootUrlWithHash = `${rootUrl}#${page.image.asset.assetId}`;
 const previousUrl = previous
-  && removeMultiSlash(`${rootUrl}/${previous.image.asset.assetId}`, {keepTrailing: true});
+  && removeMultiSlash(`${rootUrl}/${previous.image.asset.assetId}`);
 const nextUrl = next
-  && removeMultiSlash(`${rootUrl}/${next.image.asset.assetId}`, {keepTrailing: true});
+  && removeMultiSlash(`${rootUrl}/${next.image.asset.assetId}`);
 
 ---
 
@@ -60,18 +60,20 @@ const nextUrl = next
     data-close-url={rootUrl}
     >
     <div class="controls">
-      <a
-        class="button button--light button--rounded button--outlined back"
-        title={t('backToImageOverview', lang, 'capitalize')}
-        href={rootUrlWithHash}
-        data-root-url={rootUrl}>
-        <Icon name="x"></Icon>
-      </a>
+      <div class="close pin">
+        <a
+          class="button button--light button--rounded button--outlined"
+          title={t('backToImageOverview', lang, 'capitalize')}
+          href={rootUrlWithHash}
+          data-root-url={rootUrl}>
+          <Icon name="x"></Icon>
+        </a>
+      </div>
       <div class="previous">
       { previousUrl &&
         <a
           class="button button--light button--rounded"
-          href={previousUrl}
+          href={removeMultiSlash(previousUrl)}
           title={t('previousImage', lang, 'capitalize')}>
           <Icon class="flip" name="chevron"></Icon>
         </a> }
@@ -80,7 +82,7 @@ const nextUrl = next
       { nextUrl &&
         <a
           class="button button--light button--rounded"
-          href={nextUrl}
+          href={removeMultiSlash(nextUrl)}
           title={t('nextImage', lang, 'capitalize')}>
           <Icon name="chevron"></Icon>
         </a> }
@@ -116,8 +118,11 @@ const nextUrl = next
       top: 0;
     }
 
-    .back {
-      float: right;
+    .close {
+      background: radial-gradient(circle at top right, black 0, transparent 120px);
+      a {
+        float: right;
+      }
     }
     
     .previous {
@@ -142,7 +147,13 @@ const nextUrl = next
 </style>
 
 <script>
-   
+  const dataNode = document.querySelector('[data-asset-id]');
+
+  const {
+    nextUrl,
+    previousUrl
+  } = dataNode.dataset;
+
   document.addEventListener('keydown', event => {
     switch (event.key) {
       case 'ArrowRight':

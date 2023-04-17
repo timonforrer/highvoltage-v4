@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 
   return gallery.map(page => {
     let { slug: { current: slug } } = page.meta;
-    slug = slug === "/" ? undefined : removeMultiSlash(slug);
+    slug = slug === "/" ? undefined : removeMultiSlash(slug, {'removeTrailing':true});
     return {
       params: {
         gallerySlug: slug,
@@ -35,7 +35,7 @@ const rootUrl = page.meta.slug.current;
         <a
           title={t('showImage', lang, 'capitalize')}
           href={
-            removeMultiSlash(`${rootUrl}/${item.image.asset.assetId}`, {keepTrailing: true})
+            removeMultiSlash(`${rootUrl}/${item.image.asset.assetId}`)
           }
           id={item.image.asset.assetId}
         >
