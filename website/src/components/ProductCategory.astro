@@ -13,7 +13,8 @@ import ProductVariant from './ProductVariant.astro';
 const sanitySkus = await getSanityData({
   query: productVariantControllers,
   params: {
-    $id: categoryId
+    $id: categoryId,
+    $lang: lang
   }
 });
 ---

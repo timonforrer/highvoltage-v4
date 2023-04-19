@@ -121,7 +121,7 @@ export const globalSettings = `
 }[0]`;
 
 export const productSkus = `
-*[_type=="productSku"]{
+*[_type=="productSku" && __i18n_lang match $lang]{
   ...,
   blocks[] {
     ...,
@@ -146,7 +146,7 @@ export const productSkus = `
 }`;
 
 export const productVariantControllers = `
-*[_type=="productVariant" && productCategory._ref match $id]{
+*[_type=="productVariant" && productCategory._ref match $id && __i18n_lang == $lang]{
   ...,
   blocks[] {
     ...,
