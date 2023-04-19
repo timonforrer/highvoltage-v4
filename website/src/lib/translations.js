@@ -50,6 +50,18 @@ const translations = {
   photoBy: {
     de: 'Foto von',
     en: 'Photo by'
+  },
+  price: {
+    de: 'Preis (ohne Porto)',
+    en: 'Price (without shipping cost)'
+  },
+  outOfStock: {
+    de: 'Dieser Artikel ist derzeit nicht an Lager.',
+    en: 'This item is currently out of stock.'
+  },
+  addToCart: {
+    de: 'in den Warenkorb',
+    en: 'add to cart'
   }
 }
 
