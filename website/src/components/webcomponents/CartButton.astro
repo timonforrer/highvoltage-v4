@@ -1,16 +1,20 @@
 ---
 const {
   lang,
+  itemPrice,
   sku,
   stock,
+  title,
 } = Astro.props;
 ---
 
 <cart-button
   class="stack-xs"
   data-lang={lang}
+  data-item-price={itemPrice}
   data-sku={sku}
   data-static-stock={stock}
+  data-title={title}
 >
 </cart-button>
 
@@ -36,6 +40,7 @@ const {
     </svg>
   `;
 
+  import { addSku } from '../../lib/localStorage';
   import { t } from '../../lib/translations';
   import { render } from '../../lib/utils';
 
@@ -104,6 +109,12 @@ const {
 
     updateCart() {
       this._inCart++;
+
+      addSku({
+        itemPrice: this.dataset.itemPrice,
+        sku: this.sku,
+        title: this.dataset.title,
+      });
 
       // TODO: Add localStorage
       if(this._inCart >= this._stock) {

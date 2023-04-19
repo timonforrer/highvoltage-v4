@@ -131,7 +131,7 @@ const skus = sanitySkus.map(sku => {
     supplementaryImages,
     variants: variant.productSkus,
     variantIdentifier: variant.variantIdentifier,
-    variant
+    variantController: variant
   }
 });
 
@@ -148,6 +148,7 @@ const {
   sku,
   variant,
   variants,
+  variantController,
   variantIdentifier
 } = currentSku;
 
@@ -168,7 +169,7 @@ const airtableData = airtableSkus.find(airtableSku => airtableSku['Artikelnummer
           />
         }
         <div class="stack-m">
-          <h1 class="as-h2">{variant.meta.title}</h1>
+          <h1 class="as-h2">{variantController.meta.title}</h1>
           <ul>
             {bullets.map(bullet => <li>{bullet}</li>)}
           </ul>
@@ -181,9 +182,11 @@ const airtableData = airtableSkus.find(airtableSku => airtableSku['Artikelnummer
             </p>
             <div id="addToCartWrapper">
               <CartButton
+                itemPrice={airtableData['Verkaufspreis Onlineshop']}
                 lang={lang}
                 sku={sku}
                 stock={airtableData['Lager ist']}
+                title={title}
               />
             </div>
           </div>
@@ -230,7 +233,8 @@ const airtableData = airtableSkus.find(airtableSku => airtableSku['Artikelnummer
 
 <details>
   <summary>data</summary>
-  <pre>{JSON.stringify(airtableSkus[0], null, 2)}</pre>
+  <!-- <pre>{JSON.stringify(airtableSkus[0], null, 2)}</pre> -->
+  <pre>{JSON.stringify(currentSku, null, 2)}</pre>
 </details>
 
 <style lang="scss" is:global>
