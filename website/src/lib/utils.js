@@ -36,9 +36,27 @@ function removeDuplicates({array, key}) {
   ))
 };
 
+function render(content, node, mode = 'append') {
+  const template = document.createElement('template');
+  template.innerHTML = content;
+  const parsedContent = template.content.cloneNode(true);
+  switch (mode) {
+    case 'insertAfter':
+      node.parentNode.insertBefore(parsedContent, node.nextSibling);
+      break;
+    case 'insertBefore':
+      node.parentNode.insertBefore(parsedContent, node);
+      break;
+    case 'append':
+      node.appendChild(parsedContent);
+      break;
+  }
+};
+
 export {
   basicPopulatedSkus,
   removeMultiSlash,
   removeDuplicates,
+  render,
   replacer,
 }
