@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
 import Picture from '../components/Picture.astro';
+import CartButton from '../components/webcomponents/CartButton.astro';
 
 import { removeMultiSlash, replacer } from '../lib/utils';
 import { getSanityData } from '../lib/sanity';
@@ -10,74 +11,14 @@ import {
   productSkus,
   productVariantControllers
 } from '../lib/queries';
-
-const sanityProductVariants = await getSanityData({
-  query: productVariantControllers,
-  params: {
-    $id: '*'
-  }
-});
-
-const airtableSkus = await getAirtableData({
-  table: 'Artikel',
-  base: 'shop',
-  view: 'Online',
-});
-
-const sanitySkus = await getSanityData({
-  query: productSkus
-});
-
-const skus = sanitySkus.map(sku => {
-  const variant = sanityProductVariants.find(variant => 
-    variant.productSkus.some(skuObject => skuObject.sku === sku.sku
-  ));
-
-  let supplementaryImages = [];
-
-  if (sku.supplementaryImages && sku.supplementaryImages.length > 0) {
-    supplementaryImages.push(...sku.supplementaryImages);
-  }
-  if (variant.supplementaryImages && variant.supplementaryImages.length > 0) {
-    supplementaryImages.push(...variant.supplementaryImages);
-  }
-
-  let blocks = [];
-
-  if (sku.blocks && sku.blocks.length > 0) {
-    blocks.push(...sku.blocks);
-  }
-  if (variant.blocks && variant.blocks.length > 0) {
-    blocks.push(...variant.blocks);
-  }
-
-  let bulletMap = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'];
-
-  let bullets = bulletMap.map(key => {
-    const skuBullet = sku.bullets && sku.bullets[key];
-    let variantBullet = variant.bullets && variant.bullets[key];
-    return {
-      key,
-      string: skuBullet ?? variantBullet};
-  });
-
-  bullets = bullets.filter(bullet => bullet.string !== undefined);
-  bullets = bullets.map(bullet => replacer({ string: bullet.string, data: sku }));
-
-  return {
-    ...sku,
-    blocks,
-    bullets,
-    mainImage: sku.mainImage ?? variant.mainImage,
-    supplementaryImages,
-    variants: variant.productSkus,
-    variantIdentifier: variant.variantIdentifier
-  }
-});
+import { t } from '../lib/translations';
 
 export async function getStaticPaths() {
   const sanitySkus = await getSanityData({
-    query: productSkus
+    query: productSkus,
+    params: {
+      $lang: '*'
+    }
   });
 
   return sanitySkus.map(page => {
@@ -92,9 +33,112 @@ export async function getStaticPaths() {
   });
 };
 
-const {page} = Astro.props;
+const {
+  page
+} = Astro.props;
+
+const sanityProductVariants = await getSanityData({
+  query: productVariantControllers,
+  params: {
+    $id: '*',
+    $lang: page.__i18n_lang,
+  }
+});
+
+const airtableSkus = await getAirtableData({
+  table: 'Artikel',
+  base: 'shop',
+  view: 'Online',
+});
+
+// all skus from sanity
+const sanitySkus = await getSanityData({
+  query: productSkus,
+  params: {
+    $lang: page.__i18n_lang
+  }
+});
+
+// logic to get content either from sku or variant
+// (usually sku content takes precedence over variant content)
+const skus = sanitySkus.map(sku => {
+  // find variant for sku
+  const variant = sanityProductVariants.find(variant => 
+    variant.productSkus.some(skuObject => skuObject.sku === sku.sku
+  ));
+
+  // placeholder for additional images
+  let supplementaryImages = [];
+
+  // first, add any images from sku
+  if (sku.supplementaryImages && sku.supplementaryImages.length > 0) {
+    supplementaryImages.push(...sku.supplementaryImages);
+  }
+
+  // after, add any images from variant controller
+  if (variant.supplementaryImages && variant.supplementaryImages.length > 0) {
+    supplementaryImages.push(...variant.supplementaryImages);
+  }
+
+  // placeholder for blocks
+  let blocks = [];
+
+  // first, add any blocks from sku
+  if (sku.blocks && sku.blocks.length > 0) {
+    blocks.push(...sku.blocks);
+  }
+
+  // after, add any blocks from variant
+  if (variant.blocks && variant.blocks.length > 0) {
+    blocks.push(...variant.blocks);
+  }
+
+  // max 6 bullets allowed
+  let bulletMap = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'];
+
+  // get content for all bullets from map
+  let bullets = bulletMap.map(key => {
+    // get bullet from sku
+    const skuBullet = sku.bullets && sku.bullets[key];
+    // get bullet from variant
+    let variantBullet = variant.bullets && variant.bullets[key];
+    return {
+      key,
+      // only render variant bullet if sku bullet is empty
+      string: skuBullet ?? variantBullet
+    };
+  });
+
+  // get rid of any empty bullets
+  bullets = bullets.filter(bullet => bullet.string !== undefined);
+
+  // fill content for bullets
+  bullets = bullets.map(bullet => (
+    replacer({
+      string: replacer({
+        string: bullet.string,
+        data: sku
+      }),
+      data: variant
+    })
+  ));
+
+  return {
+    ...sku,
+    blocks,
+    bullets,
+    mainImage: sku.mainImage ?? variant.mainImage,
+    supplementaryImages,
+    variants: variant.productSkus,
+    variantIdentifier: variant.variantIdentifier,
+    variant
+  }
+});
+
+const currentSku = skus.find(sku => sku.sku === page.sku)
 
 const {
+  __i18n_lang: lang,
   bullets,
   mainImage,
   meta: {
@@ -102,13 +146,16 @@ const {
   },
   supplementaryImages,
   sku,
+  variant,
   variants,
   variantIdentifier
-} = skus.find(sku => sku.meta.title === page.meta.title);
-const all = skus.find(sku => sku.meta.title === page.meta.title);
+} = currentSku;
+
+const airtableData = airtableSkus.find(airtableSku => airtableSku['Artikelnummer'] === sku);
+
 ---
 
-<Layout title={page.meta.title} lang={page.__i18n_lang}>
+<Layout title={title} lang={lang}>
   <div class="stack-l">
     <section>
       <div class="center grid grid--2-columns grid--gap-m">
@@ -121,26 +168,43 @@ const all = skus.find(sku => sku.meta.title === page.meta.title);
           />
         }
         <div class="stack-m">
-          <h1 class="as-h2">{title}</h1>
+          <h1 class="as-h2">{variant.meta.title}</h1>
           <ul>
             {bullets.map(bullet => <li>{bullet}</li>)}
           </ul>
-          <div class="stack-xs">
-            <p>{variantIdentifier}</p>
-            {
-              variants && variants.map(variant => {
-                const isCurrent = sku === variant.sku;
-                return (
-                  <Button 
-                    theme="light"
-                    outlined={!isCurrent}
-                    href={removeMultiSlash(variant.meta.slug.current)}
-                  >
-                    {variant.variant}
-                  </Button>
-                )
-              })
-            }
+          <div class="stack-2xs">
+            <p>
+              <span class="uppercase">{t('price', lang, 'capitalize')}<br /></span>
+              <span class="as-h3">
+                <strong>CHF { airtableData['Verkaufspreis Onlineshop'] }</strong>
+              </span>
+            </p>
+            <div id="addToCartWrapper">
+              <CartButton
+                lang={lang}
+                sku={sku}
+                stock={airtableData['Lager ist']}
+              />
+            </div>
+          </div>
+          <div class="stack-2xs">
+            <p class="uppercase">{variantIdentifier}</p>
+            <div class="flex-list">
+              {
+                variants && variants.map(variant => {
+                  const isCurrent = sku === variant.sku;
+                  return (
+                    <Button 
+                      theme="light"
+                      outlined={!isCurrent}
+                      href={removeMultiSlash(variant.meta.slug.current)}
+                    >
+                      {variant.variant}
+                    </Button>
+                  )
+                })
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -166,9 +230,13 @@ const all = skus.find(sku => sku.meta.title === page.meta.title);
 
 <details>
   <summary>data</summary>
-  <pre>{JSON.stringify(all, null, 2)}</pre>
+  <pre>{JSON.stringify(airtableSkus[0], null, 2)}</pre>
 </details>
 
 <style lang="scss" is:global>
-
+ 
 </style>
+
+<script>
+
+</script>
