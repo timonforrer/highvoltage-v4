@@ -1,3 +1,4 @@
+// read from localStorage and parse JSON if needed
 function getStorage(key) {
   let data = localStorage.getItem(key);
   if (data !== null && (data.startsWith('{') || data.startsWith('['))) {
@@ -6,6 +7,7 @@ function getStorage(key) {
   return data;
 }
 
+// write to localStorage with JSON support
 function setStorage(key, _data) {
   let data = _data;
   if (typeof _data !== 'string') {
@@ -14,8 +16,26 @@ function setStorage(key, _data) {
   localStorage.setItem(key, data);
 }
 
-function computeSummary() {}
+// summary of items in cart (totalItems, totalQuantity)
+function computeSummary() {
 
+  const cart_items = getStorage('cart_items');
+
+  let totalPrice = 0;
+  let totalQuantity = 0;
+
+  for (let i = 0; i < cart_items.length; i++) {
+    totalPrice += cart_items[i].itemPrice * cart_items[i].quantity;
+    totalQuantity += cart_items[i].quantity;
+  }
+
+  return {
+    totalPrice,
+    totalQuantity,
+  }
+}
+
+// add sku to localStorage
 function addSku({
   itemPrice,
   sku,
@@ -40,12 +60,25 @@ function addSku({
   }
 
   setStorage('cart_items', cartItems);
+  const summary = computeSummary();
+  setStorage('cart_summary', summary);
+}
 
-  console.log({cartItems, itemAlreadyInCart});
+function removeSku(sku) {
+  const cartItems = getStorage('cart_items');
+  const index = cartItems.findIndex(item => item.sku === sku);
+  cartItems.splice(index, 1);
+
+  setStorage('cart_items', cartItems);
+  const summary = computeSummary();
+  setStorage('summary', summary);
+
+  console.log({cartItems});
 }
 
 export {
   addSku,
   getStorage,
+  removeSku,
   setStorage,
 }
