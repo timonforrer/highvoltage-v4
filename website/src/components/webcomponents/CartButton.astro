@@ -80,6 +80,7 @@ const {
     }
 
     connectedCallback() {
+
       if (this.staticStock <= 0) {
         render(`<p>${t('outOfStock', this.lang)}</p>`, this);
         return;
@@ -111,7 +112,7 @@ const {
       this._inCart++;
 
       addSku({
-        itemPrice: this.dataset.itemPrice,
+        itemPrice: Number(this.dataset.itemPrice),
         sku: this.sku,
         title: this.dataset.title,
       });
