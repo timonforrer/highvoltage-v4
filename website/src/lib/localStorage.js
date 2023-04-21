@@ -1,6 +1,6 @@
 // read from localStorage and parse JSON if needed
 function getStorage(key) {
-  let data = localStorage.getItem(key);
+  const data = localStorage.getItem(key);
   if (data !== null && (data.startsWith('{') || data.startsWith('['))) {
     data = JSON.parse(data);
   }
@@ -8,9 +8,8 @@ function getStorage(key) {
 }
 
 // write to localStorage with JSON support
-function setStorage(key, _data) {
-  let data = _data;
-  if (typeof _data !== 'string') {
+function setStorage(key, data) {
+  if (typeof data !== 'string') {
     data = JSON.stringify(data);
   }
   localStorage.setItem(key, data);
@@ -36,27 +35,21 @@ function computeSummary() {
 }
 
 // add sku to localStorage
-function addSku({
-  itemPrice,
-  sku,
-  title,
- }) {
+function addSku({ itemPrice, sku, title }) {
 
   const cartItems = getStorage('cart_items') ?? [];
   const itemAlreadyInCart = cartItems.some(item => item.sku === sku);
 
-  if (!itemAlreadyInCart) {
+  if (itemAlreadyInCart) {
+    const itemIndex = cartItems.findIndex(item => item.sku === sku);
+    cartItems[itemIndex].quantity++;
+  } else {
     cartItems.push({
       itemPrice,
       sku,
       title,
       quantity: 1
     });
-  }
-
-  if (itemAlreadyInCart) {
-    const itemIndex = cartItems.findIndex(item => item.sku === sku);
-    cartItems[itemIndex].quantity++;
   }
 
   setStorage('cart_items', cartItems);
@@ -71,9 +64,21 @@ function removeSku(sku) {
 
   setStorage('cart_items', cartItems);
   const summary = computeSummary();
-  setStorage('summary', summary);
+  setStorage('cart_summary', summary);
+}
 
-  console.log({cartItems});
+function updateSku(sku, operator) {
+  const cartItems = getStorage('cart_items');
+  const itemIndex = cartItems.findIndex(item => item.sku === sku);
+  if (operator === 'increase') {
+    cartItems[itemIndex].quantity++;
+  }
+  if (operator === 'decrease') {
+    cartItems[itemIndex].quantity--;
+  }
+  setStorage('cart_items', cartItems);
+  const summary = computeSummary();
+  setStorage('cart_summary', summary);
 }
 
 export {
@@ -81,4 +86,5 @@ export {
   getStorage,
   removeSku,
   setStorage,
+  updateSku,
 }
