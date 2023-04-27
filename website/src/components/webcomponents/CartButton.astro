@@ -28,41 +28,23 @@ const {
 </style>
 
 <script>
-  const { default: shoppingCartInnerHTML } = await import(`../../svg/shopping-cart.svg?raw`);
-  const svg = (icon) => `
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
-      ${icon}
-    </svg>
-  `;
-
-  import { addSku } from '../../lib/localStorage';
+  import { shoppingCartIcon } from '../../lib/icons';
+  import { addSku, getSkuFromStorage } from '../../lib/localStorage';
   import { t } from '../../lib/translations';
-  import { render } from '../../lib/utils';
+  import { render, replacer } from '../../lib/utils';
 
   class CartButton extends HTMLElement {
 
-    private _inCart: number;
+    // global variable, keeps track of items in stock
     private _stock: number;
 
     constructor() {
       super();
-      this._inCart = 0;
+      // initially use stale values from last build
       this._stock = this.staticStock;
     }
 
-    set inCart(value) {
-      this._inCart = value;
-    }
-
-    get inCart() {
-      return this._inCart;
-    }
-
+    // shorthand functions to get data
     get sku() {
       return this.dataset.sku;
     }
@@ -81,50 +63,64 @@ const {
 
     connectedCallback() {
 
+      // get current stock from api
+      this.getStock().then(stock => this._stock = stock);
+
+      // do not render button if not in stock
       if (this.staticStock <= 0) {
         render(`<p>${t('outOfStock', this.lang)}</p>`, this);
         return;
       }
 
+      // template used for rendering button
       const buttonTemplate = `
         <button
           id="addToCart"
           class="button button--light uppercase"
         >
-          ${svg(shoppingCartInnerHTML)}
+          ${shoppingCartIcon}
           <span>${t('addToCart', this.lang, 'capitalize')}</span>
         </button>
       `;
 
+      // render button inside <cart-button />
       render(buttonTemplate, this);
 
+      // check if button should be enabled or not
+      this.validateButton();
+
+      // handle button click
       this.addToCartButton.addEventListener('click', () => (
         this.updateCart()
       ));
-
-      this.getStock().then(stock => (
-        this._stock = stock,
-        console.log(`updated _stock to: ${stock}`)
-      ));
     }
 
+    // add sku to localstorage and re-validate, if button should be still enabled
     updateCart() {
-      this._inCart++;
-
       addSku({
         itemPrice: Number(this.dataset.itemPrice),
         sku: this.sku,
         title: this.dataset.title,
       });
 
-      // TODO: Add localStorage
-      if(this._inCart >= this._stock) {
+      this.validateButton();
+    }
+
+    // disable button, if more items in cart than in stock
+    validateButton() {
+      // try to read sku from cart
+      const sku = getSkuFromStorage(this.sku);
+
+      // if in cart, check if not more in cart than in stock
+      if (sku && sku.quantity >= this._stock) {
         this.addToCartButton.setAttribute('disabled', 'true');
-        // TODO: FIX THIS
-        render(`<p>Du kannst nur ${this._stock} Stücke bestellen</p>`, this.addToCartButton, 'insertAfter')
+        const inputString = t('cannotOrderMore', this.lang);
+        const message = replacer({ string: inputString, data: { maxQuantity: this._stock } });
+        render(`<p>${message}</p>`, this.addToCartButton, 'insertAfter');
       }
     }
 
+    // function to get current stock
     async getStock() {
       const response = await fetch(`/api/get-stock?sku=${this.sku}`);
       const { stock } = await response.json();
