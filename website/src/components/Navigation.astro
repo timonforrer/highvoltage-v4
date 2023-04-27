@@ -1,6 +1,7 @@
 ---
 import { removeMultiSlash } from '../lib/utils';
 import VALogo from '../svg/wordmark-chrome-outline.svg?raw';
+import CartIcon from './webcomponents/CartIcon.astro';
 
 const {
   home,
@@ -28,6 +29,7 @@ const {
         return <li><a href={removeMultiSlash(slug)} class="hover-list__target uppercase">{title}</a></li>
       })}
     </ul>
+    <CartIcon href="/test"></CartIcon>
   </div>
 </nav>
 
@@ -62,12 +64,14 @@ const {
     }
   }
   nav.main-nav {
+    overflow: hidden;
     padding-block: var(--space-2xs);
     position: sticky;
     top: 0;
     z-index: 777;
 
     & > * {
+      display: flex;
       padding-inline-end: 0;
     }
 
