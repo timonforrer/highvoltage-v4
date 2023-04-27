@@ -1,0 +1,83 @@
+---
+const {
+  href
+} = Astro.props;
+---
+
+<cart-icon data-href={href}></cart-icon>
+
+<style lang="scss" is:global>
+  cart-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    position: relative;
+    a {
+      // background-color: white;
+      border-radius: 777px;
+      display: inline-block;
+      padding: var(--space-xs);
+      // color: black;
+    }
+    &::before {
+      content: attr(data-cart-count);
+      display: block;
+      background-color: white;
+      border-radius: 777px;
+      color: black;
+      font-size: 0.65em;
+      line-height: 1em;
+      padding: 0.5em 0.75em 0.4em 0.75em;
+      position: absolute;
+      right: -0.55em;
+      top: -0.55em;
+    }
+  }
+</style>
+
+<script>
+  import { shoppingCartIcon } from '../../lib/icons';
+  import { render } from "../../lib/utils";
+  import { getStorage } from '../../lib/localStorage';
+  
+  class CartIcon extends HTMLElement {
+    connectedCallback() {
+      document.addEventListener('modifiedCart', () => this.renderButton(), false);
+      this.renderButton();      
+    }
+
+    get cartButton() {
+      return this.querySelector('a');
+    }
+
+    getCartCount() {
+      const cartSummary = getStorage('cart_summary');
+      const cartCount = cartSummary && cartSummary.totalQuantity;
+      return cartCount;
+    }
+
+    renderButton() {
+      const cartCount = this.getCartCount();
+      const cartButton = this.cartButton;
+
+      const anchorTemplate = `
+        <a
+          href="${this.dataset.href}">
+          ${shoppingCartIcon}
+        </a>`;
+
+      if (cartCount) this.dataset.cartCount = cartCount;
+
+      if (cartCount && !cartButton) {
+        render(anchorTemplate, this)
+      }
+      if (cartCount && cartButton) {
+        cartButton.dataset.cartCount = cartCount;
+      }
+      if (!cartCount && cartButton) {
+        this.cartButton.remove();
+      };
+    }
+  }
+
+  customElements.define('cart-icon', CartIcon);
+</script>
