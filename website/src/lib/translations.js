@@ -62,6 +62,10 @@ const translations = {
   addToCart: {
     de: 'in den Warenkorb',
     en: 'add to cart'
+  },
+  cannotOrderMore: {
+    de: 'Du kannst maximal {{ maxQuantity }} Stück bestellen.',
+    en: 'You can order a maximum of {{ maxQuantity }} pieces.'
   }
 }
 
