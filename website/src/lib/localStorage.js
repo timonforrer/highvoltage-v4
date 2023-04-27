@@ -1,10 +1,18 @@
+const event = new Event('modifiedCart');
+const triggerEvent = function() { document.dispatchEvent(event) };
+
 // read from localStorage and parse JSON if needed
 function getStorage(key) {
-  const data = localStorage.getItem(key);
+  let data = localStorage.getItem(key);
   if (data !== null && (data.startsWith('{') || data.startsWith('['))) {
     data = JSON.parse(data);
   }
   return data;
+}
+
+function getSkuFromStorage(sku) {
+  const cartItems = getStorage('cart_items');
+  return cartItems && cartItems.find(item => item.sku === sku);
 }
 
 // write to localStorage with JSON support
@@ -55,6 +63,7 @@ function addSku({ itemPrice, sku, title }) {
   setStorage('cart_items', cartItems);
   const summary = computeSummary();
   setStorage('cart_summary', summary);
+  triggerEvent();
 }
 
 function removeSku(sku) {
@@ -65,6 +74,7 @@ function removeSku(sku) {
   setStorage('cart_items', cartItems);
   const summary = computeSummary();
   setStorage('cart_summary', summary);
+  triggerEvent();
 }
 
 function updateSku(sku, operator) {
@@ -79,10 +89,12 @@ function updateSku(sku, operator) {
   setStorage('cart_items', cartItems);
   const summary = computeSummary();
   setStorage('cart_summary', summary);
+  triggerEvent();
 }
 
 export {
   addSku,
+  getSkuFromStorage,
   getStorage,
   removeSku,
   setStorage,
