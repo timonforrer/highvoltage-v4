@@ -1,81 +1,64 @@
 ---
+import Icon from '../Icon.astro';
+
 const {
   href
 } = Astro.props;
 ---
 
-<cart-icon data-href={href}></cart-icon>
+<cart-icon>
+  <a href={href}>
+    <Icon name="shopping-cart" />
+  </a>
+</cart-icon>
 
 <style lang="scss" is:global>
+
   cart-icon {
-    display: inline-block;
-    flex-shrink: 0;
-    position: relative;
+    background: linear-gradient(90deg, rgba(14,14,14,0) 0%, rgba(14,14,14,0.8) 20%, rgb(14,14,14) 100%);
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
     a {
-      // background-color: white;
-      border-radius: 777px;
-      display: inline-block;
-      padding: var(--space-xs);
-      // color: black;
-    }
-    &::before {
-      content: attr(data-cart-count);
-      display: block;
-      background-color: white;
-      border-radius: 777px;
-      color: black;
-      font-size: 0.65em;
-      line-height: 1em;
-      padding: 0.5em 0.75em 0.4em 0.75em;
-      position: absolute;
-      right: -0.55em;
-      top: -0.55em;
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+      padding-inline: var(--space-s);
+
+      &[data-cart-count]::before {
+        content: attr(data-cart-count);
+        display: block;
+        background-color: var(--color-light-primary);
+        border-radius: 777px;
+        color: var(--color-dark-primary);
+        font-size: 11px;
+        line-height: 1em;
+        padding: 0.5em 0.65em 0.3em 0.65em;
+        position: absolute;
+        right: var(--space-3xs);
+        top: var(--space-3xs);
+      }
     }
   }
 </style>
 
 <script>
-  import { shoppingCartIcon } from '../../lib/icons';
-  import { render } from "../../lib/utils";
   import { getStorage } from '../../lib/localStorage';
   
   class CartIcon extends HTMLElement {
     connectedCallback() {
+      // update button if cart is modified
       document.addEventListener('modifiedCart', () => this.renderButton(), false);
-      this.renderButton();      
-    }
-
-    get cartButton() {
-      return this.querySelector('a');
-    }
-
-    getCartCount() {
-      const cartSummary = getStorage('cart_summary');
-      const cartCount = cartSummary && cartSummary.totalQuantity;
-      return cartCount;
+      this.renderButton();
     }
 
     renderButton() {
-      const cartCount = this.getCartCount();
-      const cartButton = this.cartButton;
-
-      const anchorTemplate = `
-        <a
-          href="${this.dataset.href}">
-          ${shoppingCartIcon}
-        </a>`;
-
-      if (cartCount) this.dataset.cartCount = cartCount;
-
-      if (cartCount && !cartButton) {
-        render(anchorTemplate, this)
-      }
-      if (cartCount && cartButton) {
-        cartButton.dataset.cartCount = cartCount;
-      }
-      if (!cartCount && cartButton) {
-        this.cartButton.remove();
-      };
+      const cartSummary = getStorage('cart_summary');
+      const cartCount = cartSummary && cartSummary.totalQuantity;
+      const anchor = this.querySelector('a');
+      if (cartCount) anchor.dataset.cartCount = cartCount;
     }
   }
 
