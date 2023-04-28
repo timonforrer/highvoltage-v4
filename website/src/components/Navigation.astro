@@ -6,7 +6,13 @@ import CartIcon from './webcomponents/CartIcon.astro';
 const {
   home,
   navItems,
+  lang,
 } = Astro.props;
+
+const cartURL = {
+  de: '/warenkorb',
+  en: '/en/cart'
+}
 ---
 
 <header>
@@ -29,7 +35,7 @@ const {
         return <li><a href={removeMultiSlash(slug)} class="hover-list__target uppercase">{title}</a></li>
       })}
     </ul>
-    <CartIcon href="/test"></CartIcon>
+    <CartIcon href={cartURL[lang]}></CartIcon>
   </div>
 </nav>
 
