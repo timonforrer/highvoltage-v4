@@ -40,7 +40,7 @@ const {
 
     constructor() {
       super();
-      // initially use stale values from last build
+      // initially use stale stock values from last build
       this._stock = this.staticStock;
     }
 
@@ -62,15 +62,14 @@ const {
     }
 
     connectedCallback() {
-
-      // get current stock from api
-      this.getStock().then(stock => this._stock = stock);
-
       // do not render button if not in stock
       if (this.staticStock <= 0) {
         render(`<p>${t('outOfStock', this.lang)}</p>`, this);
         return;
       }
+
+      // get current stock from api
+      this.getStock().then(stock => this._stock = stock);
 
       // template used for rendering button
       const buttonTemplate = `
