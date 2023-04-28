@@ -1,8 +1,13 @@
 const event = new Event('modifiedCart');
 const triggerEvent = function() { document.dispatchEvent(event) };
 
-// read from localStorage and parse JSON if needed
+/**
+ * 
+ * @param {string} key
+ * @returns {String|Array|Object} data from localStorage
+ */
 function getStorage(key) {
+  // read from localStorage and parse JSON if needed
   let data = localStorage.getItem(key);
   if (data !== null && (data.startsWith('{') || data.startsWith('['))) {
     data = JSON.parse(data);
