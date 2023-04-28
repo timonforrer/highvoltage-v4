@@ -11,6 +11,7 @@ export default {
           {title: 'All Videos', value: 'allVideos'},
           {title: 'All Gigs', value: 'allGigs'},
           {title: 'All Releases', value: 'allReleases'},
+          {title: 'Cart Items', value: 'cartItems'},
         ],
       },
     },
