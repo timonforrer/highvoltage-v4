@@ -1,6 +1,7 @@
 ---
 import AllGigs from './internalCollections/AllGigs.astro';
 import AllReleases from './internalCollections/AllReleases.astro';
+import CartItems from './internalCollections/CartItems.astro';
 
 const {
   collectionName,
@@ -17,4 +18,7 @@ const {
 }
 { collectionName === 'allReleases' &&
   <AllReleases {lang}></AllReleases>
+}
+{ collectionName === 'cartItems' &&
+  <CartItems {lang}></CartItems>
 }
