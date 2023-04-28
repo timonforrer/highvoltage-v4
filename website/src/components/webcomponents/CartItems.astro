@@ -1,0 +1,55 @@
+<cart-items></cart-items>
+
+<style lang="scss" is:global>
+  cart-item {
+    display: block;
+  }
+</style>
+
+<script>
+  import { getStorage, updateSku } from '../../lib/localStorage';
+  import { render } from '../../lib/utils';
+  
+  class CartItems extends HTMLElement {
+    connectedCallback() {
+      document.addEventListener('modifiedCart', () => this.renderCart(), false);
+      this.renderCart();
+    }
+
+    renderCart() {
+      const ul = this.querySelector('ul');
+      if (ul) ul.remove()
+
+      const cartItems = getStorage('cart_items');
+      const cartTemplate = `
+        <ul>
+          ${cartItems.map(item => `
+            <li>
+              <cart-item
+                data-sku="${item.sku}"
+              >
+                <p>${item.title}</p>
+                <button data-operator="decrease">-</button>
+                <span>${item.quantity}</span>
+                <button data-operator="increase">+</button>
+              </cart-item>
+            </li>
+          `).join('')}
+        </ul>`;
+      render(cartTemplate, this);
+    }
+  }
+
+  class CartItem extends HTMLElement {
+    connectedCallback() {
+      const decreaseButton = this.querySelector('[data-operator="decrease"]');
+      const increaseButton = this.querySelector('[data-operator="increase"]');
+      const sku = this.dataset.sku;
+      increaseButton.addEventListener('click', () => updateSku(sku, 'increase'));
+      decreaseButton.addEventListener('click', () => updateSku(sku, 'decrease'));
+    }
+  }
+
+  customElements.define('cart-items', CartItems);
+  customElements.define('cart-item', CartItem);
+</script>
