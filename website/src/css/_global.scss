@@ -27,6 +27,10 @@
   }
 }
 
+main {
+  margin-block-start: var(--space-s);
+}
+
 body.has-backlink {
   margin-bottom: 5em;
 }
