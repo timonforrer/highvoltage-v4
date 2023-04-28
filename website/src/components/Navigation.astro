@@ -64,24 +64,25 @@ const {
     }
   }
   nav.main-nav {
-    overflow: hidden;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
     padding-block: var(--space-2xs);
     position: sticky;
     top: 0;
     z-index: 777;
 
     & > * {
-      display: flex;
       padding-inline-end: 0;
+      position: relative;
     }
 
     ul {
       list-style: none;
-      margin-inline-start: calc(var(--space-m) * -1);
+      margin-inline-start: calc(var(--space-s) * -1);
       padding: 0;
+      padding-inline-end: 3em;
       a {
         display: block;
-        padding: var(--space-s) var(--space-m);
+        padding: var(--space-s);
         text-decoration: none;
       }
     }
