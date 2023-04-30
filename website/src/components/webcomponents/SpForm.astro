@@ -3,6 +3,7 @@ import { t } from '../../lib/translations';
 import Button from '../Button.astro';
 
 const {
+  apiEndpoint,
   lang,
   inputs,
   _id,
@@ -15,12 +16,15 @@ const {
   data-form-id={_id}
   >
   <form
-    action="/api/send-email"
+    action={apiEndpoint}
     class="stack-l"
     method="post"
     >
     <input id="id" name="id" value={_id} type="hidden" />
     <input id="redirect" name="redirect" value={successPage.meta.slug.current} type="hidden" />
+    {(apiEndpoint === '/api/order') && 
+      <input id="cart_items" name="cart_items" type="hidden" />
+    }
     {inputs.map(input => {
       const {
         _type,
@@ -34,8 +38,28 @@ const {
         case 'textInput':
           return <div class="input-group stack-2xs">
             <label class="uppercase" for={id}>{label}</label>
-            <input  type={type} name={id} id={id} required />
-          </div>
+            <input type={type} name={id} id={id} required />
+          </div>;
+        case 'textarea':
+          return <div class="input-group stack-2xs">
+            <label class="uppercase" for={id}>{label}</label>
+            <textarea name={id} id={id} cols="30" rows="10" required></textarea>
+            </div>;
+        case 'numberInput':
+          return <div class="input-group stack-2xs">
+            <label class="uppercase" for={id}>{label}</label>
+            <input type="number" name={id} id={id} required />
+          </div>;
+        case 'selectInput':
+          return <div class="input-group stack-2xs">
+            <label class="uppercase" for={id}>{label}</label>
+            <select name={id} id={id}>
+              <option value=""></option>
+              {options.map(option => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </div>;
         case 'radioInput':
           return <fieldset class="input-group">
             <legend class="uppercase">{label}</legend>
@@ -45,12 +69,7 @@ const {
                 <label for={option.id}>{option.label}</label>
               </div>
             ))}
-          </fieldset>
-        case 'textarea':
-          return <div class="input-group stack-2xs">
-            <label class="uppercase" for={id}>{label}</label>
-            <textarea name={id} id={id} cols="30" rows="10" required></textarea>
-          </div>;
+          </fieldset>;
         default:
           return `no input specified for \`${_type}\``
       }
@@ -60,6 +79,16 @@ const {
 </sp-form>
 
 <script>
+  const form = document.querySelector('form');
+  const apiEndpoint = form.getAttribute('action');
+
+  if (apiEndpoint === '/api/order') {
+    const cart_items_node = form.querySelector('input#cart_items');
+    const { cart_items } = localStorage;
+    const encoded_cart_items = encodeURIComponent(cart_items);
+    cart_items_node.setAttribute('value', encoded_cart_items);
+  }
+
   const {SpForm} = await import('@spartan-components/sp-form/src/SpForm.js');
   customElements.define('sp-form', SpForm);
 </script>
