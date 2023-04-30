@@ -44,6 +44,22 @@ export default {
           ],
         },
         {
+          name: 'numberInput',
+          title: 'Number Input',
+          type: 'object',
+          fields: [
+            {
+              name: 'id',
+              title: 'ID',
+              type: 'string'
+            },
+            {
+              name: 'label',
+              type: 'string'
+            },
+          ],
+        },
+        {
           name: 'radioInput',
           title: 'Radio Input',
           type: 'object',
@@ -70,6 +86,42 @@ export default {
                       title: 'ID',
                       type: 'string'
                     },
+                    {
+                      name: 'value',
+                      type: 'string'
+                    },
+                    {
+                      name: 'label',
+                      type: 'string'
+                    }
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'selectInput',
+          title: 'Select Input',
+          type: 'object',
+          fields: [
+            {
+              name: 'id',
+              title: 'ID',
+              type: 'string'
+            },
+            {
+              name: 'label',
+              type: 'string'
+            },
+            {
+              name: 'options',
+              type: 'array',
+              of: [
+                {
+                  name: 'option',
+                  type: 'object',
+                  fields: [
                     {
                       name: 'value',
                       type: 'string'
@@ -145,5 +197,10 @@ export default {
       to: [{ type: 'modular' }],
       options: {filter: filterRefByLang}
     },
+    {
+      name: 'apiEndpoint',
+      title: 'API Endpoint',
+      type: 'string',
+    }
   ],
 }
