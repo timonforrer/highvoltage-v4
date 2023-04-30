@@ -66,6 +66,26 @@ const translations = {
   cannotOrderMore: {
     de: 'Du kannst maximal {{ maxQuantity }} Stück bestellen.',
     en: 'You can order a maximum of {{ maxQuantity }} pieces.'
+  },
+  showCart: {
+    de: 'Warenkorb anzeigen',
+    en: 'show cart'
+  },
+  increaseQuantity: {
+    de: 'Stückzahl erhöhen',
+    en: 'increase quantity'
+  },
+  decreaseQuantity: {
+    de: 'Stückzahl reduzieren',
+    en: 'decrease quantity'
+  },
+  removeArticle: {
+    de: 'Artikel entfernen',
+    en: 'remove article'
+  },
+  emptyCart: {
+    de: 'Dein Warenkorb ist leer.',
+    en: 'Your cart is empty.'
   }
 }
 
