@@ -80,7 +80,7 @@ const {
 
 <script>
   const form = document.querySelector('form');
-  const apiEndpoint = form.getAttribute('action');
+  const apiEndpoint = form && form.getAttribute('action');
 
   if (apiEndpoint === '/api/order') {
     const cart_items_node = form.querySelector('input#cart_items');
