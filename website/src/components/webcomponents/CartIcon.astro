@@ -15,7 +15,6 @@ const {
 </cart-icon>
 
 <style lang="scss" is:global>
-
   cart-icon {
     background: linear-gradient(90deg, rgba(14,14,14,0) 0%, rgba(14,14,14,0.8) 20%, rgb(14,14,14) 100%);
     bottom: 0;
@@ -52,19 +51,22 @@ const {
   class CartIcon extends HTMLElement {
     connectedCallback() {
       // update button if cart is modified
-      document.addEventListener('modifiedCart', () => this.renderButton(), false);
-      this.renderButton();
+      document.addEventListener('modifiedCart', () => this.renderButton({initial: false}), false);
+      this.renderButton({initial: true});
     }
 
-    renderButton() {
+    renderButton({initial}) {
       const cartSummary = getStorage('cart_summary');
       const cartCount = cartSummary && cartSummary.totalQuantity;
       const anchor = this.querySelector('a');
-      anchor.classList.add('emphasis');
-      setTimeout(() => {
-        anchor.classList.remove('emphasis');
-      }, 400);
+      if (!initial) {
+        anchor.classList.add('emphasis');
+        setTimeout(() => {
+          anchor.classList.remove('emphasis');
+        }, 400);
+      }
       if (cartCount) anchor.dataset.cartCount = cartCount;
+      if (!cartCount) anchor.removeAttribute('data-cart-count');
     }
   }
 
