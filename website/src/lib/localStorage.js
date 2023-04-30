@@ -37,7 +37,7 @@ function computeSummary() {
   let totalQuantity = 0;
 
   for (let i = 0; i < cart_items.length; i++) {
-    totalPrice += cart_items[i].itemPrice * cart_items[i].quantity;
+    totalPrice += cart_items[i].price * cart_items[i].quantity;
     totalQuantity += cart_items[i].quantity;
   }
 
@@ -48,7 +48,7 @@ function computeSummary() {
 }
 
 // add sku to localStorage
-function addSku({ itemPrice, sku, title }) {
+function addSku({ price, sku, title }) {
 
   const cartItems = getStorage('cart_items') ?? [];
   const itemAlreadyInCart = cartItems.some(item => item.sku === sku);
@@ -58,7 +58,7 @@ function addSku({ itemPrice, sku, title }) {
     cartItems[itemIndex].quantity++;
   } else {
     cartItems.push({
-      itemPrice,
+      price,
       sku,
       title,
       quantity: 1

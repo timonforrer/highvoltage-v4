@@ -97,7 +97,7 @@ const {
     // add sku to localstorage and re-validate, if button should be still enabled
     updateCart() {
       addSku({
-        itemPrice: Number(this.dataset.itemPrice),
+        price: Number(this.dataset.itemPrice),
         sku: this.sku,
         title: this.dataset.title,
       });
