@@ -9,14 +9,27 @@ export default async function handler(req, res) {
   Airtable.configure(airtableConfig);
   const airtable = Airtable.base(process.env.AIRTABLE_API_BASE_SHOP);
 
-  // get all gigs from airtable
-  let product = (await fetchHelper({
-    table: airtable('Artikel'),
-    view: 'Lager',
-    filter: `Artikelnummer="${sku}"`
-  }))[0];
+  let stock;
 
-  let stock = product.fields["Lager ist"];
+  if (sku) {
+    const product = (await fetchHelper({
+      table: airtable('Artikel'),
+      view: 'Lager',
+      filter: `Artikelnummer="${sku}"`
+    }))[0];
+    stock = product.fields['Lager ist'];
+  } else {
+    const products = await fetchHelper({
+      table: airtable('Artikel'),
+      view: 'Lager'
+    });
+    stock = products.map(product => {
+      return {
+        sku: product.fields['Artikelnummer'],
+        quantity: product.fields['Lager ist']
+      }
+    });
+  }
 
   return res.json({
     sku,
