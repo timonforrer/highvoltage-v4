@@ -1,4 +1,5 @@
 const { default: shoppingCartInnerHTML } = await import(`../svg/shopping-cart.svg?raw`);
+const { default: trashCanInnerHTML } = await import(`../svg/trash-can.svg?raw`);
 const svg = (icon) => `
   <svg
     width="24"
@@ -11,7 +12,9 @@ const svg = (icon) => `
 `;
 
 const shoppingCartIcon = svg(shoppingCartInnerHTML);
+const trashCanIcon = svg(trashCanInnerHTML);
 
 export {
-  shoppingCartIcon
+  shoppingCartIcon,
+  trashCanIcon,
 };
