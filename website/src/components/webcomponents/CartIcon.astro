@@ -10,7 +10,9 @@ const {
 
 <cart-icon>
   <a href={href} title={t('showCart', lang, 'capitalize')}>
-    <Icon name="shopping-cart" />
+    <div class="wrapper">
+      <Icon name="shopping-cart" />
+    </div>
   </a>
 </cart-icon>
 
@@ -28,18 +30,22 @@ const {
       height: 100%;
       padding-inline: var(--space-s);
 
-      &[data-cart-count]::before {
-        content: attr(data-cart-count);
-        display: block;
-        background-color: var(--color-light-primary);
-        border-radius: 777px;
-        color: var(--color-dark-primary);
-        font-size: 11px;
-        line-height: 1em;
-        padding: 0.5em 0.65em 0.3em 0.65em;
-        position: absolute;
-        right: var(--space-3xs);
-        top: var(--space-3xs);
+      .wrapper {
+        position: relative;
+
+        &[data-cart-count]::before {
+          content: attr(data-cart-count);
+          display: block;
+          background-color: var(--color-light-primary);
+          border-radius: 777px;
+          color: var(--color-dark-primary);
+          font-size: 11px;
+          line-height: 11px;
+          padding: 5.5px 8px;
+          position: absolute;
+          right: 4px;
+          top: 0;
+        }
       }
     }
   }
@@ -58,15 +64,15 @@ const {
     renderButton({initial}) {
       const cartSummary = getStorage('cart_summary');
       const cartCount = cartSummary && cartSummary.totalQuantity;
-      const anchor = this.querySelector('a');
+      const wrapper = this.querySelector('.wrapper') as HTMLElement;
       if (!initial) {
-        anchor.classList.add('emphasis');
+        this.classList.add('emphasis');
         setTimeout(() => {
-          anchor.classList.remove('emphasis');
+          this.classList.remove('emphasis');
         }, 400);
       }
-      if (cartCount) anchor.dataset.cartCount = cartCount;
-      if (!cartCount) anchor.removeAttribute('data-cart-count');
+      if (cartCount) wrapper.dataset.cartCount = cartCount;
+      if (!cartCount) wrapper.removeAttribute('data-cart-count');
     }
   }
 
