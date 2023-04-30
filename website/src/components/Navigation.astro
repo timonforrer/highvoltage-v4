@@ -35,7 +35,7 @@ const cartURL = {
         return <li><a href={removeMultiSlash(slug)} class="hover-list__target uppercase">{title}</a></li>
       })}
     </ul>
-    <CartIcon href={cartURL[lang]}></CartIcon>
+    <CartIcon href={cartURL[lang]} lang={lang}></CartIcon>
   </div>
 </nav>
 
@@ -71,6 +71,7 @@ const cartURL = {
   }
   nav.main-nav {
     border-bottom: 2px solid rgba(255,255,255,0.2);
+    overflow: hidden;
     padding-block: var(--space-2xs);
     position: sticky;
     top: 0;
