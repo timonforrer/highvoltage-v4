@@ -1,13 +1,15 @@
 ---
 import Icon from '../Icon.astro';
+import { t } from '../../lib/translations';
 
 const {
-  href
+  href,
+  lang,
 } = Astro.props;
 ---
 
 <cart-icon>
-  <a href={href}>
+  <a href={href} title={t('showCart', lang, 'capitalize')}>
     <Icon name="shopping-cart" />
   </a>
 </cart-icon>
@@ -58,6 +60,10 @@ const {
       const cartSummary = getStorage('cart_summary');
       const cartCount = cartSummary && cartSummary.totalQuantity;
       const anchor = this.querySelector('a');
+      anchor.classList.add('emphasis');
+      setTimeout(() => {
+        anchor.classList.remove('emphasis');
+      }, 400);
       if (cartCount) anchor.dataset.cartCount = cartCount;
     }
   }
