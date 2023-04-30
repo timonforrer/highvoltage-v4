@@ -109,7 +109,7 @@ const {
       const cartItems = getStorage('cart_items');
       const cartSummary = getStorage('cart_summary');
 
-      const cartTemplate = cartItems.length !== 0
+      const cartTemplate = (cartItems && cartItems.length !== 0)
       ? `<div class="stack-l">
           <ul class="narrow stack-l">
             ${cartItems.map(item => {
