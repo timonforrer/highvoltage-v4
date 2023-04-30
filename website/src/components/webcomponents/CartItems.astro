@@ -1,52 +1,166 @@
-<cart-items></cart-items>
+---
+const {
+  lang
+} = Astro.props;
+---
+<cart-items data-lang={lang}></cart-items>
 
 <style lang="scss" is:global>
+  cart-items {
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  }
   cart-item {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    .controls {
+      display: flex;
+      button + button {
+        margin-inline-start: 1em;
+      }
+      button[disabled=true] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      button[data-operator=remove] {
+        background-color: #b91c1c;
+        color: white;
+        svg {
+          width: 0.95em;
+        }
+        &:hover {
+          background-color: var(--color-dark-lighter);
+        }
+      }
+      span {
+        display: inline-block;
+        font-variant-numeric: tabular-nums;
+        min-width: 2em;
+        text-align: center;
+      }
+      button > svg:first-child,
+      button > svg:last-child {
+        margin-inline: initial;
+        margin-block: initial;
+      }
+    }
   }
 </style>
 
 <script>
-  import { getStorage, updateSku } from '../../lib/localStorage';
-  import { render } from '../../lib/utils';
-  
+  import { getStorage, removeSku, updateSku } from '../../lib/localStorage';
+  import { render, replacer } from '../../lib/utils';
+  import { trashCanIcon } from '../../lib/icons';
+  import { t } from '../../lib/translations';
+
   class CartItems extends HTMLElement {
-    connectedCallback() {
-      document.addEventListener('modifiedCart', () => this.renderCart(), false);
-      this.renderCart();
+
+    async connectedCallback() {
+      const response = await fetch(`/api/get-stock`);
+      const { stock } = await response.json();
+
+      document.addEventListener('modifiedCart', () => this.renderCart(stock), false);
+      this.renderCart(stock);
     }
 
-    renderCart() {
+    renderCart(stock) {
       const ul = this.querySelector('ul');
-      if (ul) ul.remove()
-
+      if (ul) ul.remove();
       const cartItems = getStorage('cart_items');
-      const cartTemplate = `
-        <ul>
-          ${cartItems.map(item => `
+
+      const cartTemplate = cartItems.length !== 0
+      ? `<ul class="narrow stack-l">
+          ${cartItems.map(item => {
+            const itemStock = stock.find(article => item.sku === article.sku);
+            return `
             <li>
               <cart-item
+                data-lang="${this.dataset.lang}"
                 data-sku="${item.sku}"
+                data-stock="${itemStock.quantity}"
+                data-quantity="${item.quantity}"
               >
                 <p>${item.title}</p>
-                <button data-operator="decrease">-</button>
-                <span>${item.quantity}</span>
-                <button data-operator="increase">+</button>
+                <div class="controls">
+                  <button
+                    class="tight button button--light button--small"
+                    data-operator="decrease"
+                    title="${t('decreaseQuantity', this.dataset.lang, 'capitalize')}"
+                  >-</button>
+                  <span>${item.quantity}</span>
+                  <button
+                    class="tight button button--light button--small"
+                    data-operator="increase"
+                    title="${t('increaseQuantity', this.dataset.lang, 'capitalize')}"
+                  >+</button>
+                  <button
+                    class="tight button button--light button--small"
+                    data-operator="remove"
+                    title="${t('removeArticle', this.dataset.lang, 'capitalize')}"
+                  >
+                    ${trashCanIcon}
+                  </button>
+                </div>
               </cart-item>
             </li>
-          `).join('')}
-        </ul>`;
+          `}).join('')}
+        </ul>`
+        : `<p>${t('emptyCart', this.dataset.lang)}</p>`;
+
       render(cartTemplate, this);
+    }
+
+    async getStock() {
+      const response = await fetch(`/api/get-stock`);
+      const { stock } = await response.json();
+      return stock;
     }
   }
 
   class CartItem extends HTMLElement {
     connectedCallback() {
-      const decreaseButton = this.querySelector('[data-operator="decrease"]');
+      const buttons = this.querySelectorAll('[data-operator]');
+      buttons.forEach(button => button.addEventListener('click', e => this.handleClick(e)));
+      this.validateButtons();
+    }
+    
+    validateButtons() {
+      const { quantity: _quantity, stock: _stock, lang } = this.dataset;
+      const quantity = Number(_quantity);
+      const stock = Number(_stock);
       const increaseButton = this.querySelector('[data-operator="increase"]');
-      const sku = this.dataset.sku;
-      increaseButton.addEventListener('click', () => updateSku(sku, 'increase'));
-      decreaseButton.addEventListener('click', () => updateSku(sku, 'decrease'));
+      const decreaseButton = this.querySelector('[data-operator="decrease"]');
+
+      if (quantity >= stock) {
+        increaseButton.setAttribute('disabled', 'true');
+        const inputString = t('cannotOrderMore', lang);
+        const message = replacer({ string: inputString, data: { maxQuantity: stock } });
+        increaseButton.setAttribute('title', message);
+      }
+
+      if (quantity <= 1) {
+        decreaseButton.setAttribute('disabled', 'true');
+      }
+    }
+
+    handleClick(e) {
+      const { operator } = e.target.dataset;
+      const { sku } = this.dataset;
+      switch (operator) {
+        case 'increase':
+          updateSku(sku, 'increase');
+          break;
+        case 'decrease':
+          updateSku(sku, 'decrease');
+          break;
+        case 'remove':
+          removeSku(sku);
+        default:
+          break;
+      }
+      this.validateButtons();
     }
   }
 
