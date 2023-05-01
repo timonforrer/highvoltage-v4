@@ -22,7 +22,7 @@ const {
     >
     <input id="id" name="id" value={_id} type="hidden" />
     <input id="redirect" name="redirect" value={successPage.meta.slug.current} type="hidden" />
-    {(apiEndpoint === '/api/order') && 
+    {(apiEndpoint === '/api/create-order') && 
       <input id="cart_items" name="cart_items" type="hidden" />
     }
     {inputs.map(input => {
@@ -82,7 +82,7 @@ const {
   const form = document.querySelector('form');
   const apiEndpoint = form && form.getAttribute('action');
 
-  if (apiEndpoint === '/api/order') {
+  if (apiEndpoint === '/api/create-order') {
     const cart_items_node = form.querySelector('input#cart_items');
     const { cart_items } = localStorage;
     const encoded_cart_items = encodeURIComponent(cart_items);
