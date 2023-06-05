@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import { getSanityData } from '../lib/sanity';
+import { gigs as gigsQuery } from '../lib/queries';
+import { removeMultiSlash } from '../lib/utils';
+import { t } from '../lib/translations';
+
+export async function getStaticPaths() {
+  const gigs = await getSanityData({query: gigsQuery});
+
+  return gigs.map(page => {
+    let { slug: { current: slug } } = page.meta;
+    slug = slug === "/" ? undefined : removeMultiSlash(slug, {'removeTrailing': true});
+    return {
+      params: {
+        gigSlug: slug,
+      },
+      props: {page}
+    }
+  });
+};
+
+const {
+  page,
+  page: {
+    meta: {
+      title,
+    },
+    __i18n_lang: lang
+  }
+} = Astro.props;
+
+---
+
+<Layout title={title} lang={lang} class="stack-m"></Layout>

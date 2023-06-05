@@ -216,4 +216,8 @@ export const releases = `
   },
 }`;
 
+export const gigs = `
+*[_type=="gig"]
+`;
+
 export const form = `*[_type=="form" && _id match $id][0]`;
