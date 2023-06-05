@@ -13,20 +13,20 @@
     "copy:components": "mkdir -p dist/@spartan-components/sp-video && cp node_modules/@spartan-components/sp-video/* dist/@spartan-components/sp-video"
   },
   "dependencies": {
-    "@astrojs/image": "^0.16.6",
-    "@astrojs/lit": "^2.0.1",
-    "@mux/mux-player": "^1.10.1",
+    "@astrojs/image": "^0.16.9",
+    "@astrojs/lit": "^2.0.2",
+    "@mux/mux-player": "^1.11.0",
     "@portabletext/to-html": "^2.0.0",
-    "@sanity/client": "^5.4.2",
+    "@sanity/client": "^6.1.2",
     "@sendgrid/mail": "^7.7.0",
     "@spartan-components/sp-form": "^0.1.2",
     "@spartan-components/sp-music-player": "^0.0.4",
     "@spartan-components/sp-video": "^0.1.2",
-    "airtable": "^0.11.6",
-    "astro": "^2.3.2",
+    "airtable": "^0.12.1",
+    "astro": "^2.5.7",
     "get-youtube-id": "^1.0.1",
-    "sharp": "^0.31.3",
-    "stripe": "^12.3.0"
+    "sharp": "^0.32.1",
+    "stripe": "^12.8.0"
   },
   "overrides": {
     "@portabletext/toolkit": "^2.0.1"
