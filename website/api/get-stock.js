@@ -12,6 +12,7 @@ export default async function handler(req, res) {
   let stock;
 
   if (sku) {
+    // if sku is provided, fetch stock for that sku
     const product = (await fetchHelper({
       table: airtable('Artikel'),
       view: 'Lager',
@@ -19,6 +20,7 @@ export default async function handler(req, res) {
     }))[0];
     stock = product.fields['Lager ist'];
   } else {
+    // otherwise fetch all products
     const products = await fetchHelper({
       table: airtable('Artikel'),
       view: 'Lager'
